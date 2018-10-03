@@ -42,7 +42,7 @@ public abstract class CourseItem  {
         //TODO: Is any teacher in that courseItem
         return true;
     }
-1
+
     public boolean isTeachersFull(){
         //TODO:
         return true;
