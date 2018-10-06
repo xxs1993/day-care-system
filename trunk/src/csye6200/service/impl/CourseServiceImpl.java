@@ -1,5 +1,6 @@
 package csye6200.service.impl;
 
+import com.google.common.cache.CacheBuilder;
 import csye6200.entity.Course;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
@@ -8,7 +9,7 @@ import csye6200.service.CourseService;
 
 import java.util.List;
 
-public class CourseServiceImpl extends LocalCache implements CourseService {
+public class CourseServiceImpl implements CourseService {
 
 
 
