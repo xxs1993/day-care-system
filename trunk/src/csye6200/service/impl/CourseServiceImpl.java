@@ -1,10 +1,10 @@
 package csye6200.service.impl;
 
+import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import csye6200.entity.Course;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
-import csye6200.service.LocalCache;
 import csye6200.service.CourseService;
 
 import java.util.List;
@@ -12,6 +12,9 @@ import java.util.List;
 public class CourseServiceImpl implements CourseService {
 
 
+//    private Cache<String, List<Course>> cache = CacheBuilder.newBuilder()
+//            .maximumSize(1000)
+//            .build();
 
 
     public List<Course> getCourses(){
