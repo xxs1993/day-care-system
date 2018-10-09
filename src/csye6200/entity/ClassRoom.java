@@ -6,7 +6,7 @@ public class ClassRoom extends CourseItem{
 
     private int capacity;//capacity for students
 
-    public ClassRoom(int id,int capacity) {
+    public ClassRoom(String id, int capacity) {
         super(id);
         this.capacity = capacity;
     }

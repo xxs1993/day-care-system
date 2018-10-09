@@ -13,7 +13,7 @@ public class Student extends Person {
 
     public static final int max_courses_capaticy = 5;
 
-    public Student(String name, int age,int grade,int id) {
+    public Student(String name, int age, int grade, String id) {
         super(name, age,id);
     }
 
