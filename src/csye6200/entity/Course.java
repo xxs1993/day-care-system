@@ -7,7 +7,7 @@ public class Course extends CourseItem{
 
     private int type;// students age range
 
-    public Course(int id,String name, int type) {
+    public Course(String id, String name, int type) {
         super(id);
         this.name = name;
         this.type = type;

@@ -50,10 +50,10 @@ public void testWriteToFile() throws Exception {
 //TODO: Test goes here...
     List<String> list = Lists.newArrayList();
     for(int i=0;i<20;i++){
-        list.add("qq,213,1313,13");
-        list.add("sds,dsd,ddd0,ccc");
+        list.add("qq,[1.2.3],[4.5.6],ddd,1");
+        list.add("sds,[],[],ccc,2");
     }
-    FileUtil.writeToFile("student.csv",list);
+    FileUtil.writeToFile("course.csv",list);
 
 } 
 
@@ -64,8 +64,7 @@ public void testWriteToFile() throws Exception {
 */ 
 public void testReadContents() throws Exception { 
 //TODO: Test goes here...
-    List<String> contents = FileUtil.readContents("student.csv");
-    System.out.println(contents.stream().count());
+
 } 
 
 

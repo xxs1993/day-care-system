@@ -4,18 +4,18 @@ import java.util.List;
 
 public abstract class CourseItem  {
 
-    private int id;
+    private String id;
 
 
     private List<Teacher> teachers;
 
     private List<Student> students;
 
-    protected CourseItem(int id) {
+    protected CourseItem(String id) {
         this.id = id;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

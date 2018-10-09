@@ -6,14 +6,14 @@ public abstract class Person {
 
    private int age;
 
-   private int id;
+   private String id;
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -41,7 +41,7 @@ public abstract class Person {
                 '}';
     }
 
-    protected Person(String name, int age, int id) {
+    protected Person(String name, int age, String id) {
         this.name = name;
         this.age = age;
         this.id = id;
