@@ -19,17 +19,17 @@ public interface CourseService {
 
      List<String> getTeachersIdByCourseId(String id);
 
-     List<Student> getTeachersInCourse(String id);
+     List<Teacher> getTeachersInCourse(String id);
 
-     boolean addCourse(Course course);
+     String addCourse(Course course);
 
      boolean removeCourse(int id);
 
-     boolean addStudents(List<Student> students);
+     boolean addStudents(List<Student> students,String id);
 
-     boolean addTeachers(List<Teacher> teachers);
+     boolean addTeachers(List<Teacher> teachers,String id);
 
-     boolean removeTeachers(List<Integer> list);
+     boolean removeTeachers(List<Integer> list,String id);
 
-     boolean removeStudents(List<Integer> list);
+     boolean removeStudents(List<Integer> list,String id);
 }
