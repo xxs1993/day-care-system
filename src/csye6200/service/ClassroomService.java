@@ -14,7 +14,7 @@ import java.util.List;
 /**
  *
  * @author karen
- * Note: Classroom serves as a class(班级) which is not related to course
+ * Note: Classroom serves as a class(�༶) which is not related to course
  */
 public interface ClassroomService {
     // Get the list of classrooms
@@ -23,31 +23,26 @@ public interface ClassroomService {
      // Get certain classroom object by Id
      ClassRoom getClassroomById(String id);
      
-     // Get the list of student objects with certain classroom Id
+     // Get the list of students assigned to certain classroom
      List<Student> getStudentsInClassroom(String id);
           
      // Get the Id of students who are in certain classroom by the classroom Id
 //     List<String> getStudentsIdByClassroomId(String id);
 //     List<String> getTeachersIdByClassroomId(String id);
      
-     // Get current number of teachers assigned to certain classroom
-     int getTeacherNumber();
+     int getCurrentStudentNumber();
      
      // Get current number of students assigned to certain classroom by age
      int getStudentNumberByAge(int age);
      
-     // Get current available student number by age for certain classroom
-     int getStudentAvailableNumberByAge(int age);
-     
      // Get the max number of students that can be assigned to this classroom by age
      int getMaxStudentNumberInRoomByAge(int age);
      
-     // Get the list of teacher objects with certain classroom Id
+     // Get the list of teacher assigned to certain classroom
      List<Student> getTeachersInClassroom(String id);
      
-     // Get the list of course objects with certain classroom Id
-     List<Course> getCoursesInClassroom(String id);
-     
+     int getCurrentTeacherNumber();
+
      // Add a new classroom to the sytem
      boolean addClassroom(ClassRoom classroom);
      
@@ -66,6 +61,12 @@ public interface ClassroomService {
      // Remove a list of teachers from a classroom
      boolean removeTeachers(List<Integer> list);
      
-     // Check whether a teacher can be assigned to this classroom or not
+     // Check if a teacher can be assigned to this classroom
      boolean isTeacherNeeded();
+     
+     // Check if student group number of certain age reaches the upper limit based on the regulation
+     boolean isGroupMaxByAge(int age);
+     
+     // Check if student of certain age can be assgined to this classroom
+     boolean isStudentAvailableByAge(int age);
 }
