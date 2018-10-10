@@ -8,7 +8,7 @@ public class Student extends Person {
 
     //Key: course id.value: grade
     private Map<Integer,Double> grade;
-
+    
     private int courseCount;
 
     public static final int max_courses_capaticy = 5;
