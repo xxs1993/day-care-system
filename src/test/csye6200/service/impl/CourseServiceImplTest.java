@@ -1,8 +1,16 @@
 package test.csye6200.service.impl; 
 
-import org.junit.Test; 
+import com.google.common.collect.Lists;
+import csye6200.entity.Course;
+import csye6200.entity.Teacher;
+import csye6200.service.impl.CourseServiceImpl;
+import org.junit.Test;
 import org.junit.Before; 
-import org.junit.After; 
+import org.junit.After;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /** 
 * CourseServiceImpl Tester. 
@@ -28,8 +36,21 @@ public void after() throws Exception {
 */ 
 @Test
 public void testGetCourses() throws Exception { 
-//TODO: Test goes here... 
-} 
+//TODO: Test goes here...
+    CourseServiceImpl courseService = new CourseServiceImpl();
+    List<Course> courses = Lists.newArrayList();
+    Course course1 = new Course("C1","123",13);
+    Course course2 = new Course("C2","234",23);
+    List<Teacher> teachers = Lists.newArrayList();
+    teachers.add(new Teacher("123","333","male",123,"T23",1));
+    teachers.add(new Teacher("123","333","female",123,"T3",1));
+    Collections.sort(teachers);
+    course2.setTeachers(teachers);
+    courses.add(course2);
+    courses.add(course1);
+    Collections.sort(courses);
+    System.out.println(courseService.addCourse(course1));
+}
 
 /** 
 * 

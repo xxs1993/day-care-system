@@ -31,10 +31,12 @@ public class Teacher extends Person {
 		return "Teacher [credits=" + credits + ", grade=" + ageRange + "]";
 	}
 
-	public Teacher(String lName, String fName, String gender, int age, String id, int credits, int grade) {
+
+
+	public Teacher(String lName, String fName, String gender, int age, String id,int ageRange) {
 		super(lName, fName, gender, age, id);
-		this.credits = credits;
-		this.ageRange = grade;
+		this.ageRange = ageRange;
+
 	}
 
 

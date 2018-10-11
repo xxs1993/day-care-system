@@ -9,8 +9,10 @@ import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.exception.DatabaseException;
 import csye6200.service.CourseService;
+import csye6200.service.TeacherService;
 import csye6200.util.FileUtil;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -18,32 +20,56 @@ import java.util.stream.Collectors;
 public class CourseServiceImpl implements CourseService {
 
 
+    /**
+     * course data :  id,ageRange,[teacherId1,teacherId2],name
+     * @return
+     */
 
-
+    @Override
     public List<Course> getCourses(){
         List<Course> courses = Lists.newArrayList();
+        //TODO: use teacher service impl
+        TeacherService teacherService = null;
         try {
             List<String> courseContent = FileUtil.readContents(Constants.COURSE_FILE_NAME);
-            if(courseContent.isEmpty()){
+            if(courseContent == null||courseContent.isEmpty()){
                 return courses;
             }
-            List<String> teacherContent = FileUtil.readContents(Constants.TEACHER_FILE_NAME);
-            List<String> studentContent = FileUtil.readContents(Constants.STUDENT_FILE_NAME);
+            List<Teacher> teachers = teacherService.getTeacher();
+            Map<String,Teacher> map = teachers.stream().collect(Collectors.toMap(x->x.getId(),x->x));
+
             //TODO:
             for(String s : courseContent){
-                List<String> conentString = Splitter.on(",").trimResults().splitToList(s);
-                //TODO:
+                List<String> contentString = Splitter.on(",").trimResults().splitToList(s);
+                if(contentString.size()<4){
+                    System.out.println("wrong format of data :" + contentString.toArray().toString());
+                    continue;
+                }
+                Course course = new Course(contentString.get(0),contentString.get(3),Integer.parseInt(contentString.get(1)));
+                String idString = contentString.get(2).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
+                if(idString.isEmpty()){
+                    continue;
+                }
+                List<String> idList = Splitter.on(",").trimResults().splitToList(idString);
+                List<Teacher> teachersInCourse = Lists.newArrayList();
+                for(String s1:idList){
+                    Teacher teacher;
+                    if((teacher = map.get(s1))!=null){
+                        teachersInCourse.add(teacher);
+                    }
+                }
+                course.setTeachers(teachersInCourse);
+                courses.add(course);
 
-//                Course
             }
         }catch (DatabaseException e){
-
+            e.printStackTrace();
         }
        return courses;
     }
 
 
-
+    @Override
     public Course getCourseById(String id){
         if(Strings.isNullOrEmpty(id)){
             return null;
@@ -53,27 +79,9 @@ public class CourseServiceImpl implements CourseService {
         return map.get(id);
     }
 
-    public List<String> getStudentsIdByCourseId(String id){
-        if(Strings.isNullOrEmpty(id)){
-            return null;
-        }
-        Course course = this.getCourseById(id);
-        if(course == null || course.getStudents() == null){
-            return null;
-        }
-        List<String> ids = Lists.transform(course.getStudents(),(x)->x.getId());
-        return Lists.newArrayList(ids);
-    }
 
-    public List<Student> getStudentsInCourse(String id){
-        if(Strings.isNullOrEmpty(id)){
-            return null;
-        }
-        Course course = this.getCourseById(id);
 
-        return course.getStudents();
-    }
-
+    @Override
     public List<String> getTeachersIdByCourseId(String id){
         if(Strings.isNullOrEmpty(id)){
             return null;
@@ -86,6 +94,7 @@ public class CourseServiceImpl implements CourseService {
         return Lists.newArrayList(ids);
     }
 
+    @Override
     public List<Teacher> getTeachersInCourse(String id){
         if(Strings.isNullOrEmpty(id)){
             return null;
@@ -94,38 +103,84 @@ public class CourseServiceImpl implements CourseService {
         return course.getTeachers();
     }
 
+    public List<String> transferCourseToString(List<Course> courses){
+        if(courses==null||courses.isEmpty()){
+            System.out.println("Courses content is empty");
+            return Lists.newArrayList();
+        }
+        List<String> contents = Lists.newArrayList();
+        for(Course course : courses){
+            StringBuilder sb = new StringBuilder();
+            sb.append(course.getId()).append(Constants.STRING_DIVIDER);
+            sb.append(course.getAgeRange()).append(Constants.STRING_DIVIDER);
+            sb.append(Constants.ARRAY_DIVIDER_LEFT);
+            List<Teacher> teachers = course.getTeachers();
+            if(teachers!=null && !teachers.isEmpty()){
+                for(Teacher teacher:teachers){
+                    sb.append(teacher.getId()).append(Constants.STRING_DIVIDER);
+                }
+                sb.deleteCharAt(sb.length()-1);
+            }
+            sb.append(Constants.ARRAY_DIVIDER_RIGHT).append(Constants.STRING_DIVIDER);
+            sb.append(course.getName());
+            contents.add(sb.toString());
 
+        }
+        return contents;
+    }
+
+    @Override
     public String addCourse(Course course){
         //TODO
         if(course==null || Strings.isNullOrEmpty(course.getName())){
             return "";
         }
+        List<Course> courses = this.getCourses();
 
-        return "55";
+        if(courses == null) {
+            courses = Lists.newArrayList();
+        }
+        String newId = initNewID(courses);
+        course.setId(newId);
+        courses.add(course);
+        List<String> contents = this.transferCourseToString(courses);
+        try {
+            FileUtil.writeToFile(Constants.COURSE_FILE_NAME, contents);
+        }catch (Exception e){
+            e.printStackTrace();
+            return "";
+        }
+
+
+        return newId;
     }
 
+    private String initNewID(List<Course> courses){
+        if(courses == null || courses.isEmpty()){
+            return Constants.PREFFIX_COURSE_ID+"1";
+        }
+        Collections.sort(courses);
+        String lastId = courses.get(courses.size()-1).getId();
+        String newId = Constants.PREFFIX_COURSE_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
+        return newId;
+    }
+
+    @Override
     public boolean removeCourse(int id){
         //TODO
         return true;
     }
 
-    public boolean addStudents(List<Student> students,String id){
-        //TODO
-        return true;
-    }
-
+    @Override
     public boolean addTeachers(List<Teacher> teachers,String id){
         //TODO
         return true;
     }
 
+    @Override
     public boolean removeTeachers(List<Integer> list,String id){
         //TODO
         return true;
     }
 
-    public boolean removeStudents(List<Integer> list,String id){
-        //TODO
-        return true;
-    }
 }

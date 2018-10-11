@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 
 import java.util.List;
 
-public abstract class CourseItem  {
+public abstract class CourseItem implements Comparable<CourseItem> {
 
     private String id;
 
@@ -12,11 +12,19 @@ public abstract class CourseItem  {
 
     private List<Teacher> teachers;
 
-//    private List<Student> students;
+
 
     protected CourseItem(String id,int ageRange) {
         this.id = id;
         this.ageRange = ageRange;
+    }
+
+    @Override
+    public int compareTo(CourseItem item){
+        Integer id1 = Integer.parseInt(this.id.substring(1));
+        Integer id2 = Integer.parseInt(item.getId().substring(1));
+        return id1.compareTo(id2);
+
     }
 
     public String getId() {

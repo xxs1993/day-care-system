@@ -1,6 +1,6 @@
 package csye6200.entity;
 
-public abstract class Person {
+public abstract class Person implements Comparable<Person> {
    private String lName;
    
    private String fName;
@@ -11,7 +11,13 @@ public abstract class Person {
 
    private String id;
 
-   
+	@Override
+	public int compareTo(Person person){
+		Integer id1 = Integer.parseInt(this.id.substring(1));
+		Integer id2 = Integer.parseInt(person.getId().substring(1));
+		return id1.compareTo(id2);
+
+	}
 
     public String getId() {
         return id;
@@ -72,8 +78,8 @@ public abstract class Person {
 				+ "]";
 	}
 
-    
-	public Person(String lName, String fName, String gender, int age, String id) {
+
+	protected Person(String lName, String fName, String gender, int age, String id) {
 		this.lName = lName;
 		this.fName = fName;
 		this.gender = gender;
