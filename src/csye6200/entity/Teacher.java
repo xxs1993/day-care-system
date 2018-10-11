@@ -2,16 +2,8 @@ package csye6200.entity;
 
 public class Teacher extends Person {
     private int credits;
-
-    public Teacher(String name, int age, String id) {
-        super(name, age,id);
-    }
-
-    public Teacher(String name, int age, String id, int credits) {
-        super(name, age,id);
-        this.credits = credits;
-    }
-
+    private int ageRange;
+    
     public int getCredits() {
         return credits;
     }
@@ -19,4 +11,27 @@ public class Teacher extends Person {
     public void setCredits(int credits) {
         this.credits = credits;
     }
+    
+    
+    
+    public int getGrade() {
+		return ageRange;
+	}
+
+	public void setGrade(int grade) {
+		this.ageRange = grade;
+	}
+
+	@Override
+	public String toString() {
+		return "Teacher [credits=" + credits + ", grade=" + ageRange + "]";
+	}
+
+	public Teacher(String lName, String fName, String gender, int age, String id, int credits, int grade) {
+		super(lName, fName, gender, age, id);
+		this.credits = credits;
+		this.ageRange = grade;
+	}
+
+
 }
