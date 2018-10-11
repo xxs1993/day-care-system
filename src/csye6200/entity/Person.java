@@ -74,7 +74,6 @@ public abstract class Person {
 
     
 	public Person(String lName, String fName, String gender, int age, String id) {
-		super();
 		this.lName = lName;
 		this.fName = fName;
 		this.gender = gender;

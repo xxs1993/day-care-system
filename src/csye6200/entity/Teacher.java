@@ -1,8 +1,12 @@
 package csye6200.entity;
 
+import java.util.List;
+
 public class Teacher extends Person {
     private int credits;
     private int ageRange;
+    private List<Student> students;
+
     
     public int getCredits() {
         return credits;

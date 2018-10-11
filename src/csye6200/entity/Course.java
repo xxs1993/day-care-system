@@ -5,12 +5,11 @@ public class Course extends CourseItem{
 
     private String name;
 
-    private int type;// students age range
+//    private int type;// students age range
 
-    public Course(String id, String name, int type) {
-        super(id);
+    public Course(String id, String name, int ageRange) {
+        super(id,ageRange);
         this.name = name;
-        this.type = type;
     }
 
     public String getName() {

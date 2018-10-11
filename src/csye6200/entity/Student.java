@@ -7,12 +7,10 @@ public class Student extends Person {
 
 
     //Key: course id.value: grade
-    private Map<Integer,Double> grade;
+    private Map<String, Double> grade;
     
     private int courseCount;
 
-    public static final int max_courses_capaticy = 5;
-    
     private boolean reguStatus;
     
     private String immDate;
@@ -20,15 +18,8 @@ public class Student extends Person {
     private double gpa;
 
 
-
-	public Student(String lName, String fName, String gender, int age, String id, Map<Integer, Double> grade,
-			int courseCount, boolean reguStatus, String immDate, double gpa) {
+	public Student(String lName, String fName, String gender, int age, String id) {
 		super(lName, fName, gender, age, id);
-		this.grade = grade;
-		this.courseCount = courseCount;
-		this.reguStatus = reguStatus;
-		this.immDate = immDate;
-		this.gpa = gpa;
 	}
 
 	public int getCourseCount() {
@@ -39,11 +30,11 @@ public class Student extends Person {
         this.courseCount = courseCount;
     }
 
-    public Map<Integer,Double> getGrade() {
+    public Map<String, Double> getGrade() {
         return grade;
     }
 
-    public void setGrade(Map<Integer,Double> grade) {
+    public void setGrade(Map<String, Double> grade) {
         this.grade = grade;
     }
     

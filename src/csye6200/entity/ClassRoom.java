@@ -6,8 +6,8 @@ public class ClassRoom extends CourseItem{
 
     private int capacity;//capacity for students
 
-    public ClassRoom(String id, int capacity) {
-        super(id);
+    public ClassRoom(String id,int ageRange, int capacity) {
+        super(id,ageRange);
         this.capacity = capacity;
     }
 
@@ -15,8 +15,8 @@ public class ClassRoom extends CourseItem{
         return capacity;
     }
 
-    public void setCredits(int credits){
-        //TODO: add credits for teachers
+    public void setCapacity(int capacity){
+        this.capacity = capacity;
     }
 
     
