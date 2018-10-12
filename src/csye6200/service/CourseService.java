@@ -13,9 +13,6 @@ public interface CourseService {
 
      Course getCourseById(String id);
 
-     List<String> getStudentsIdByCourseId(String id);
-
-     List<Student> getStudentsInCourse(String id);
 
      List<String> getTeachersIdByCourseId(String id);
 
@@ -25,11 +22,9 @@ public interface CourseService {
 
      boolean removeCourse(int id);
 
-     boolean addStudents(List<Student> students,String id);
 
      boolean addTeachers(List<Teacher> teachers,String id);
 
      boolean removeTeachers(List<Integer> list,String id);
 
-     boolean removeStudents(List<Integer> list,String id);
 }
