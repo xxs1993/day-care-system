@@ -68,4 +68,14 @@ public class StudentServiceImpl implements StudentService{
         return true;
     }
     
+    
+    public String showCourses(Student stu){
+        int stuAge = stu.getAge();
+        return getCourseInfoByAgeRange(stuAge);
+    }
+    
+    String getCourseInfoByAgeRange(int age){
+        return "";
+    }
+    
 }
