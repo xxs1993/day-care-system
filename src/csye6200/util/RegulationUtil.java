@@ -14,23 +14,22 @@ public class RegulationUtil {
 //    get database of teachers teaching that age  
 //    assign student to the first teacher of database that satisfied the ratio
 //    teacher's groupsize attribute value increases by one
-    static void assginStuToTeacher(int age){
-        int ratio;
-        if(age<6){
-        //age not satisfied! Error!
-        }else if(age>=6 && age <=12){
-            ratio = 4;   
-        }else if(age>12 && age <=24){
-            ratio = 5;
-        }else if(age>24 && age <=35){
-            ratio = 6;
-        }else if(age>35 && age <=47){
-            ratio = 8;
-        }else if(age>47 && age <=59){
-            ratio = 12;
-        }else{
-            ratio = 15;
-        }
+    static int maxStuAmount(String ageRange){
+        int maxStuAmount=0;
+        if(ageRange=="6-12")
+            maxStuAmount = 4;
+        else if(ageRange=="13-24")
+            maxStuAmount = 5;
+        else if(ageRange=="25-35")
+            maxStuAmount = 6;
+        else if(ageRange=="36-47")
+            maxStuAmount = 8;
+        else if(ageRange=="48-59")
+            maxStuAmount = 12;
+        else 
+            maxStuAmount = 15;
+            return maxStuAmount;
+        //TO DO
             //pass parameter age to Teacher.class
             //get database of teachers teaching those ages
             //get the first teacher that satisfies teacher.groupsize+1<=ratio
@@ -42,17 +41,17 @@ public class RegulationUtil {
 //    assign teacher to the first classroom of database that satisfied the ratio
 //    classroom's groupsize attribute value increases by one
 //    set connection between student&classroom, teacher&classroom
-    void assignTeacherToClassRoom(int age, int tid){
-        int maxSize;
-        if(age>=6 && age <= 37){
-            maxSize = 3;
-        }else{
-            maxSize = 2;
-            
-        }
+    static int maxGroupAmount(String ageRange){
+        int maxGroupAmount;
+        if(ageRange=="6-12"||ageRange=="13-24"||ageRange=="25-35"||ageRange=="36-47")
+            maxGroupAmount = 3;
+        else
+            maxGroupAmount = 2;
+        return maxGroupAmount;
             //pass parameter tid to Classroom.class
             //get database of classroom that matches teacher's group
             //get the first classroom that satisfies classroom.size+1<=maxSize
             //classroom.size+1, set connection attributes among stu&classroom&teacher
+            
     }
 }

@@ -10,6 +10,8 @@ import java.util.Vector;
 public interface CourseService {
 
      List<Course> getCourses();
+     
+     List<Course>getCoursesByAgeRange(int age);
 
      Course getCourseById(String id);
 
