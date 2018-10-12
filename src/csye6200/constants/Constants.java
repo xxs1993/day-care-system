@@ -11,5 +11,13 @@ public class Constants {
 
     public static final String STRING_DIVIDER = ",";
 
+    public static final String ARRAY_DIVIDER_LEFT = "[";
+
+    public static final String ARRAY_DIVIDER_RIGHT = "]";
+
+    public static final String PREFFIX_COURSE_ID = "C";
+
+
+
 
 }
