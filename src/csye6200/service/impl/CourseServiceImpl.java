@@ -5,7 +5,6 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import csye6200.constants.Constants;
 import csye6200.entity.Course;
-import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.exception.DatabaseException;
 import csye6200.service.CourseService;
@@ -29,48 +28,51 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getCourses(){
         List<Course> courses = Lists.newArrayList();
         //TODO: use teacher service impl
-        TeacherService teacherService = null;
         try {
             List<String> courseContent = FileUtil.readContents(Constants.COURSE_FILE_NAME);
             if(courseContent == null||courseContent.isEmpty()){
                 return courses;
             }
-            List<Teacher> teachers = teacherService.getTeacher();
-            Map<String,Teacher> map = teachers.stream().collect(Collectors.toMap(x->x.getId(),x->x));
+//            List<Teacher> teachers = teacherService.getTeacher();
+//            Map<String,Teacher> map = teachers.stream().collect(Collectors.toMap(x->x.getId(),x->x));
+            courses = transferStringToCourse(courseContent);
 
-            //TODO:
-            for(String s : courseContent){
-                List<String> contentString = Splitter.on(",").trimResults().splitToList(s);
-                if(contentString.size()<4){
-                    System.out.println("wrong format of data :" + contentString.toArray().toString());
-                    continue;
-                }
-                Course course = new Course(contentString.get(0),contentString.get(3),Integer.parseInt(contentString.get(1)));
-                String idString = contentString.get(2).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
-                if(idString.isEmpty()){
-                    continue;
-                }
-                List<String> idList = Splitter.on(",").trimResults().splitToList(idString);
-                List<Teacher> teachersInCourse = Lists.newArrayList();
-                for(String s1:idList){
-                    Teacher teacher;
-                    if((teacher = map.get(s1))!=null){
-                        teachersInCourse.add(teacher);
-                    }
-                }
-                course.setTeachers(teachersInCourse);
-                courses.add(course);
-
-            }
         }catch (DatabaseException e){
             e.printStackTrace();
         }
        return courses;
     }
 
+    private List<Course> transferStringToCourse(List<String> contents){
+        List<Course> courses = Lists.newArrayList();
+        for(String s : contents){
+            List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
+            if(contentString.size()<4){
+                System.out.println("wrong format of data :" + contentString.toArray().toString());
+                continue;
+            }
+            Course course = new Course(contentString.get(0),contentString.get(3),Integer.parseInt(contentString.get(1)));
+            String idString = contentString.get(2).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
+            if(idString.isEmpty()){
+                continue;
+            }
+            List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
+            List<Teacher> teachersInCourse = Lists.newArrayList();
+            for(String s1:idList){
+                Teacher teacher = new Teacher("","","",0,s1,"");
+                teachersInCourse.add(teacher) ;
+            }
+            course.setTeachers(teachersInCourse);
+            courses.add(course);
+
+        }
+        return courses;
+    }
+
 
     @Override
     public List<Course>getCoursesByAgeRange(int age){
+        //TODO
         return null;
     }
 

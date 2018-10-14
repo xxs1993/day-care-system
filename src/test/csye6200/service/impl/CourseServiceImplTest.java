@@ -42,8 +42,8 @@ public void testGetCourses() throws Exception {
     Course course1 = new Course("C1","123",13);
     Course course2 = new Course("C2","234",23);
     List<Teacher> teachers = Lists.newArrayList();
-    teachers.add(new Teacher("123","333","male",123,"T23",1));
-    teachers.add(new Teacher("123","333","female",123,"T3",1));
+    teachers.add(new Teacher("123","333","male",123,"T23","1"));
+    teachers.add(new Teacher("123","333","female",123,"T3","1"));
     Collections.sort(teachers);
     course2.setTeachers(teachers);
     courses.add(course2);

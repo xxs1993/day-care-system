@@ -1,7 +1,9 @@
 package csye6200.entity;
 
 public abstract class Person implements Comparable<Person> {
-   private String lName;
+	private String id;
+
+	private String lName;
    
    private String fName;
    
@@ -9,7 +11,6 @@ public abstract class Person implements Comparable<Person> {
 
    private int age;
 
-   private String id;
 
 	@Override
 	public int compareTo(Person person){

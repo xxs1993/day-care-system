@@ -18,18 +18,19 @@ public class Teacher extends Person {
     
     
     
-    public int getGrade() {
-		//return ageRange;
+    public String getAgeRange() {
+		return ageRange;
 	}
 
-	public void setGrade(int grade) {
-		//this.ageRange = grade;
+	public void setAgeRange(int grade) {
+		this.ageRange = ageRange;
 	}
 
 	@Override
 	public String toString() {
 		return "Teacher [credits=" + credits + ", grade=" + ageRange + "]";
 	}
+
 
 
 
