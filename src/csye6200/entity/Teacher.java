@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Teacher extends Person {
     private int credits;
-    private String ageRange;
+    private int ageRange;
     private List<Student> students;
 
     
@@ -18,12 +18,22 @@ public class Teacher extends Person {
     
     
     
-    public String getAgeRange() {
+    public int getAgeRange() {
 		return ageRange;
+    
 	}
+    
+    public int setAgeRange(int ageRange) {
+    	return this.ageRange = ageRange;
+    }
 
-	public void setAgeRange(int grade) {
-		this.ageRange = ageRange;
+	
+	public void setStudents(List<Student> student) {
+		this.students = student;
+	}
+	
+	public List<Student> getStudents() {
+		return students;
 	}
 
 	@Override
@@ -33,8 +43,7 @@ public class Teacher extends Person {
 
 
 
-
-	public Teacher(String lName, String fName, String gender, int age, String id,String ageRange) {
+	public Teacher(String id, String lName, String fName, String gender, int age, int ageRange) {
 		super(lName, fName, gender, age, id);
 		this.ageRange = ageRange;
 
