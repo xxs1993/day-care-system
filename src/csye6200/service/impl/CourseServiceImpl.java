@@ -59,7 +59,7 @@ public class CourseServiceImpl implements CourseService {
             List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
             List<Teacher> teachersInCourse = Lists.newArrayList();
             for(String s1:idList){
-                Teacher teacher = new Teacher("","","",0,s1,"");
+                Teacher teacher = new Teacher(s1,"","","",0,0);
                 teachersInCourse.add(teacher) ;
             }
             course.setTeachers(teachersInCourse);
