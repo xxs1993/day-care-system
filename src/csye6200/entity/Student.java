@@ -7,17 +7,52 @@ public class Student extends Person {
 
 
     //Key: course id.value: grade
-    private Map<String, Double> grade;
+    //private Map<String, Double> grade;
     
-    private int courseCount;
+    //private int courseCount;
 
-    private boolean reguStatus;
+    //private boolean reguStatus;
     
     private String immDate;
+
+	public Student(String lName, String fName, String gender, int age, String id, String immDate) {
+		super(lName, fName, gender, age, id);
+		this.immDate = immDate;
+	}
+
+	public String getImmDate() {
+		return immDate;
+	}
+
+	public void setImmDate(String immDate) {
+		this.immDate = immDate;
+	}
     
-    private double gpa;
+    private String fatherName;
+    
+    private String motherName;
 
+	public String getFatherName() {
+		return fatherName;
+	}
 
+	public void setFatherName(String fatherName) {
+		this.fatherName = fatherName;
+	}
+
+	public String getMotherName() {
+		return motherName;
+	}
+
+	public void setMotherName(String motherName) {
+		this.motherName = motherName;
+	}
+    
+    
+    
+    //private double gpa;
+
+/*
 	public Student(String lName, String fName, String gender, int age, String id) {
 		super(lName, fName, gender, age, id);
 	}
@@ -70,5 +105,5 @@ public class Student extends Person {
 				+ immDate + "]";
 	}
 
-    
+*/    
 }

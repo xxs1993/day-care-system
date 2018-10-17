@@ -28,9 +28,6 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public List<Student> getStudent() {
-<<<<<<< HEAD
-       return null;
-=======
         List<Student> students = Lists.newArrayList();
         try {
             List<String> studentContent = FileUtil.readContents(Constants.STUDENT_FILE_NAME);
@@ -43,8 +40,8 @@ public class StudentServiceImpl implements StudentService{
             e.printStackTrace();
         }
        return students;
->>>>>>> 682ac9ed9919196cc8103d45c2547c004b53b895
     }
+
     
     private List<Student> transferStringToStudent(List<String> studentContent) {
         List<Course> students = Lists.newArrayList();
