@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface StudentService {
     //Get the list of students
-    List<Student> getStudnet();
+    List<Student> getStudent();
     //Get certain student object by id
     Student getStudentByID(String id);
     //get the course student registered
@@ -23,16 +23,21 @@ public interface StudentService {
     List<ClassRoom>getClassroom();
     
     //add new students to the system
-    boolean addStudent(Student student);
+    String addStudent(Student student);
     //remove students from the system
-    boolean removeStudent(int id);
-    //student register courses
+    String removeStudent(int id);
+
+    
+    /*
     boolean addCourse(List<Course> courses);
     //student drop courses
     boolean removeCourse(List<Integer> list);
-    //not sure lol
+    */
+    
+
     boolean addClassroom(List<ClassRoom> classrooms);
     //not sure lol
     boolean removeClassroom(List<Integer> list);
+	//List<Student> getStudent();
 
 }
