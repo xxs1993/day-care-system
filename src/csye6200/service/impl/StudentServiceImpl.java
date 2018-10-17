@@ -18,10 +18,9 @@ import java.util.List;
 public class StudentServiceImpl implements StudentService{
 
     @Override
-    public List<Student> getStudnet() {
+    public List<Student> getStudent() {
        return null;
     }
-
     
     @Override
     public Student getStudentByID(String id) {
