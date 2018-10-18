@@ -9,6 +9,9 @@ public class Constants {
 
     public static final String CLASSROOM_FILE_NAME = "classRoom.csv";
 
+    public static final String REGISTRATION_FILE_NAME = "registration.csv";
+
+
     public static final String STRING_DIVIDER = ",";
 
     public static final String ARRAY_STRING_DIVIDER = ";";
@@ -19,6 +22,8 @@ public class Constants {
     public static final String ARRAY_DIVIDER_RIGHT = "]";
 
     public static final String PREFFIX_COURSE_ID = "C";
+
+
 
 
 
