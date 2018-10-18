@@ -28,6 +28,10 @@ public class RegistrationDaoImpl implements RegistrationDao {
             e.printStackTrace();
             return registrations;
         }
+        if (contents == null) {
+            System.out.println("No content found for registration");
+            return registrations;
+        }
         for (String s : contents) {
             //split items by ","
             List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
@@ -36,8 +40,8 @@ public class RegistrationDaoImpl implements RegistrationDao {
                 continue;
             }
             Registration registration = new Registration(contentString.get(0));
-            registration.setTimeDisplay(contents.get(1));
-            registration.setRegisterTime(DateUtil.stringToDate(contents.get(1)));
+            registration.setTimeDisplay(contentString.get(1));
+            registration.setRegisterTime(DateUtil.stringToDate(contentString.get(1)));
             registrations.add(registration);
         }
         return registrations;

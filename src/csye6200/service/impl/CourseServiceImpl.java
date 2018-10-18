@@ -1,14 +1,11 @@
 package csye6200.service.impl;
 
-import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import csye6200.constants.Constants;
 import csye6200.entity.Course;
 import csye6200.entity.Teacher;
-import csye6200.exception.DatabaseException;
 import csye6200.service.CourseService;
-import csye6200.service.TeacherService;
 import csye6200.util.FileUtil;
 import dao.CourseDao;
 import dao.impl.CourseDaoImpl;
