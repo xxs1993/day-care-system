@@ -12,6 +12,11 @@ import dao.CourseDao;
 import java.util.List;
 
 public class CourseDaoImpl implements CourseDao {
+    /**
+     * course csv format
+     * id,ageRange,[teacherId1;TeacherId2],name
+     */
+
 
     @Override
     public  List<Course> getCourses(){
@@ -24,20 +29,23 @@ public class CourseDaoImpl implements CourseDao {
             return courses;
         }
         for (String s : contents) {
-            List<String> contentString = Splitter.on(csye6200.constants.Constants.STRING_DIVIDER).trimResults().splitToList(s);
+            //split items by ","
+            List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
             if (contentString.size() < 4) {
                 System.out.println("wrong format of data :" + contentString.toArray().toString());
                 continue;
             }
-            csye6200.entity.Course course = new csye6200.entity.Course(contentString.get(0), contentString.get(3), Integer.parseInt(contentString.get(1)));
-            String idString = contentString.get(2).replace(csye6200.constants.Constants.ARRAY_DIVIDER_LEFT, "").replace(csye6200.constants.Constants.ARRAY_DIVIDER_RIGHT, "").trim();
+            Course course = new Course(contentString.get(0), contentString.get(3), Integer.parseInt(contentString.get(1)));
+            //get teacher id string and remove [ ]
+            String idString = contentString.get(2).replace(Constants.ARRAY_DIVIDER_LEFT, "").replace(Constants.ARRAY_DIVIDER_RIGHT, "").trim();
             if (idString.isEmpty()) {
                 continue;
             }
-            List<String> idList = Splitter.on(csye6200.constants.Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
-            List<csye6200.entity.Teacher> teachersInCourse = Lists.newArrayList();
+            //get id list by splitting ";"
+            List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
+            List<Teacher> teachersInCourse = Lists.newArrayList();
             for (String s1 : idList) {
-                csye6200.entity.Teacher teacher = new Teacher(s1, "", "", "", 0, 0);
+                Teacher teacher = new Teacher(s1, "", "", "", 0, 0);
                 teachersInCourse.add(teacher);
             }
             course.setTeachers(teachersInCourse);
@@ -56,7 +64,7 @@ public class CourseDaoImpl implements CourseDao {
             return ;
         }
         List<String> contents = Lists.newArrayList();
-        for (csye6200.entity.Course course : courses) {
+        for (Course course : courses) {
             StringBuilder sb = new StringBuilder();
             sb.append(course.getId()).append(csye6200.constants.Constants.STRING_DIVIDER);
             sb.append(course.getAgeRange()).append(csye6200.constants.Constants.STRING_DIVIDER);

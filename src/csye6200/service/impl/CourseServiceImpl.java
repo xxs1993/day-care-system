@@ -10,6 +10,8 @@ import csye6200.exception.DatabaseException;
 import csye6200.service.CourseService;
 import csye6200.service.TeacherService;
 import csye6200.util.FileUtil;
+import dao.CourseDao;
+import dao.impl.CourseDaoImpl;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,48 +28,11 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public List<Course> getCourses(){
-        List<Course> courses = Lists.newArrayList();
-        //TODO: use teacher service impl
-        try {
-            List<String> courseContent = FileUtil.readContents(Constants.COURSE_FILE_NAME);
-            if(courseContent == null||courseContent.isEmpty()){
-                return courses;
-            }
-//            List<Teacher> teachers = teacherService.getTeacher();
-//            Map<String,Teacher> map = teachers.stream().collect(Collectors.toMap(x->x.getId(),x->x));
-            courses = transferStringToCourse(courseContent);
-
-        }catch (DatabaseException e){
-            e.printStackTrace();
-        }
-       return courses;
+        CourseDao courseDao = new CourseDaoImpl();
+        return courseDao.getCourses();
     }
 
-    private List<Course> transferStringToCourse(List<String> contents){
-        List<Course> courses = Lists.newArrayList();
-        for(String s : contents){
-            List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
-            if(contentString.size()<4){
-                System.out.println("wrong format of data :" + contentString.toArray().toString());
-                continue;
-            }
-            Course course = new Course(contentString.get(0),contentString.get(3),Integer.parseInt(contentString.get(1)));
-            String idString = contentString.get(2).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
-            if(idString.isEmpty()){
-                continue;
-            }
-            List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
-            List<Teacher> teachersInCourse = Lists.newArrayList();
-            for(String s1:idList){
-                Teacher teacher = new Teacher(s1,"","","",0,0);
-                teachersInCourse.add(teacher) ;
-            }
-            course.setTeachers(teachersInCourse);
-            courses.add(course);
 
-        }
-        return courses;
-    }
 
 
     @Override
