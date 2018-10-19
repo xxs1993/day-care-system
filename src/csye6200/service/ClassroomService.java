@@ -18,7 +18,7 @@ import java.util.List;
  */
 public interface ClassroomService {
     // Get the list of classrooms
-     List<ClassRoom> getClassroom();
+     List<ClassRoom> getClassrooms();
      
      // Get certain classroom object by Id
      ClassRoom getClassroomById(String id);
@@ -30,16 +30,16 @@ public interface ClassroomService {
 //     List<String> getStudentsIdByClassroomId(String id);
 //     List<String> getTeachersIdByClassroomId(String id);
      
-     int getCurrentStudentNumber();
+     int getCurrentStudentNumber(String id);
      
-     // Get current number of students assigned to certain classroom by age
+/*     // Get current number of students assigned to certain classroom by age
      int getStudentNumberByAge(int age);
      
      // Get the max number of students that can be assigned to this classroom by age
-     int getMaxStudentNumberInRoomByAge(int age);
+     int getMaxStudentNumberInRoomByAge(int age);*/
      
      // Get the list of teacher assigned to certain classroom
-     List<Student> getTeachersInClassroom(String id);
+     List<Teacher> getTeachersInClassroom(String id);
      
      int getCurrentTeacherNumber();
 
@@ -47,19 +47,8 @@ public interface ClassroomService {
      boolean addClassroom(ClassRoom classroom);
      
      // Remove a classroom from the sytem
-     boolean removeClassroom(int id);
-     
-     // Add a list of students to a classroom
-     boolean assignStudents(List<Student> students);
-     
-     // Add a list of teachers to a classroom
-     boolean assignTeachers(List<Teacher> teachers);
-     
-     // Remove a list of students from a classroom
-     boolean removeStudents(List<Integer> list);
-     
-     // Remove a list of teachers from a classroom
-     boolean removeTeachers(List<Integer> list);
+     boolean removeClassroom(String id);
+/*     
      
      // Check if a teacher can be assigned to this classroom
      boolean isTeacherNeeded();
@@ -68,5 +57,12 @@ public interface ClassroomService {
      boolean isGroupMaxByAge(int age);
      
      // Check if student of certain age can be assgined to this classroom
-     boolean isStudentAvailableByAge(int age);
+     boolean isStudentAvailableByAge(int age);*/
+     
+
+     String addTeacher(Teacher teacher,String id);
+
+     String removeTeacher(String teacherId, String id);
+
+     boolean IsFull(String id);
 }

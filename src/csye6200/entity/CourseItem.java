@@ -11,7 +11,9 @@ public abstract class CourseItem implements Comparable<CourseItem> {
     private int ageRange;
 
     private List<Teacher> teachers;
-
+    
+    public CourseItem() {
+    }
 
 
     protected CourseItem(String id,int ageRange) {

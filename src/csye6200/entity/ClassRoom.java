@@ -11,7 +11,10 @@ public class ClassRoom extends CourseItem{
         this.capacity = capacity;
     }
 
-    public int getCapacity() {
+    public ClassRoom() {
+	}
+
+	public int getCapacity() {
         return capacity;
     }
 
