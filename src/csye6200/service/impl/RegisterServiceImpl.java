@@ -5,8 +5,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import csye6200.entity.Registration;
 import csye6200.service.RegisterService;
-import dao.RegistrationDao;
-import dao.impl.RegistrationDaoImpl;
+import csye6200.dao.RegistrationDao;
+import csye6200.dao.impl.RegistrationDaoImpl;
 
 import java.time.LocalDate;
 import java.util.List;

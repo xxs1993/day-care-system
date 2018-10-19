@@ -7,8 +7,8 @@ import csye6200.entity.Course;
 import csye6200.entity.Teacher;
 import csye6200.service.CourseService;
 import csye6200.util.FileUtil;
-import dao.CourseDao;
-import dao.impl.CourseDaoImpl;
+import csye6200.dao.CourseDao;
+import csye6200.dao.impl.CourseDaoImpl;
 
 import java.util.Collections;
 import java.util.List;

@@ -1,13 +1,13 @@
-package dao.impl;
+package csye6200.dao.impl;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import csye6200.constants.Constants;
+import csye6200.dao.RegistrationDao;
 import csye6200.entity.Registration;
 import csye6200.exception.DatabaseException;
 import csye6200.util.DateUtil;
 import csye6200.util.FileUtil;
-import dao.RegistrationDao;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package dao;
+package csye6200.dao;
 
 import csye6200.entity.Course;
 

@@ -1,4 +1,4 @@
-package dao.impl;
+package csye6200.dao.impl;
 
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
@@ -7,7 +7,7 @@ import csye6200.entity.Course;
 import csye6200.entity.Teacher;
 import csye6200.exception.DatabaseException;
 import csye6200.util.FileUtil;
-import dao.CourseDao;
+import csye6200.dao.CourseDao;
 
 import java.util.List;
 
@@ -19,12 +19,12 @@ public class CourseDaoImpl implements CourseDao {
 
 
     @Override
-    public  List<Course> getCourses(){
+    public List<Course> getCourses() {
         List<Course> courses = Lists.newArrayList();
-        List<String> contents ;
+        List<String> contents;
         try {
             contents = FileUtil.readContents(Constants.COURSE_FILE_NAME);
-        }catch (DatabaseException e){
+        } catch (DatabaseException e) {
             e.printStackTrace();
             return courses;
         }
@@ -58,10 +58,10 @@ public class CourseDaoImpl implements CourseDao {
 
 
     @Override
-    public void updateCourses(List<Course> courses){
+    public void updateCourses(List<Course> courses) {
         if (courses == null || courses.isEmpty()) {
             System.out.println("Courses content is empty");
-            return ;
+            return;
         }
         List<String> contents = Lists.newArrayList();
         for (Course course : courses) {
@@ -83,7 +83,7 @@ public class CourseDaoImpl implements CourseDao {
         }
         try {
             FileUtil.writeToFile(Constants.COURSE_FILE_NAME, contents);
-        }catch (DatabaseException e){
+        } catch (DatabaseException e) {
             e.printStackTrace();
         }
     }
