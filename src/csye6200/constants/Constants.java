@@ -23,6 +23,10 @@ public class Constants {
 
     public static final String PREFFIX_COURSE_ID = "C";
 
+    public static final String MAX_GROUP_AMOUNT = "maxGroupAmount";
+
+    public static final String MAX_STUDENT_AMOUNT = "maxStuAmount";
+
 
 
 

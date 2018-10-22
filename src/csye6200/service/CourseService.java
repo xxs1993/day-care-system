@@ -22,7 +22,7 @@ public interface CourseService {
 
      String addCourse(Course course);
 
-     boolean removeCourse(int id);
+     boolean removeCourse(String id);
 
 
      boolean addTeachers(List<Teacher> teachers,String id);

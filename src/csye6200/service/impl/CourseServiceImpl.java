@@ -72,31 +72,7 @@ public class CourseServiceImpl implements CourseService {
         return course.getTeachers();
     }
 
-    public List<String> transferCourseToString(List<Course> courses){
-        if(courses==null||courses.isEmpty()){
-            System.out.println("Courses content is empty");
-            return Lists.newArrayList();
-        }
-        List<String> contents = Lists.newArrayList();
-        for(Course course : courses){
-            StringBuilder sb = new StringBuilder();
-            sb.append(course.getId()).append(Constants.STRING_DIVIDER);
-            sb.append(course.getAgeRange()).append(Constants.STRING_DIVIDER);
-            sb.append(Constants.ARRAY_DIVIDER_LEFT);
-            List<Teacher> teachers = course.getTeachers();
-            if(teachers!=null && !teachers.isEmpty()){
-                for(Teacher teacher:teachers){
-                    sb.append(teacher.getId()).append(Constants.STRING_DIVIDER);
-                }
-                sb.deleteCharAt(sb.length()-1);
-            }
-            sb.append(Constants.ARRAY_DIVIDER_RIGHT).append(Constants.STRING_DIVIDER);
-            sb.append(course.getName());
-            contents.add(sb.toString());
 
-        }
-        return contents;
-    }
 
     @Override
     public String addCourse(Course course){
@@ -112,15 +88,8 @@ public class CourseServiceImpl implements CourseService {
         String newId = initNewID(courses);
         course.setId(newId);
         courses.add(course);
-        List<String> contents = this.transferCourseToString(courses);
-        try {
-            FileUtil.writeToFile(Constants.COURSE_FILE_NAME, contents);
-        }catch (Exception e){
-            e.printStackTrace();
-            return "";
-        }
-
-
+        CourseDao courseDao = new CourseDaoImpl();
+        courseDao.updateCourses(courses);
         return newId;
     }
 
@@ -135,14 +104,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean removeCourse(int id){
-        //TODO
-        return true;
+    public boolean removeCourse(String id) {
+        if (Strings.isNullOrEmpty(id)) {
+            return false;
+        }
+        List<Course> courses = this.getCourses();
+        for (Course course : courses) {
+            if (id.equals(course.getId())) {
+                courses.remove(course);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
     public boolean addTeachers(List<Teacher> teachers,String id){
         //TODO
+        List<Course> courses = this.getCourses();
         return true;
     }
 

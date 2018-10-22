@@ -14,10 +14,10 @@ import java.util.Map;
 
 public class RegisterServiceImpl implements RegisterService {
 
-    private RegistrationDao registrationDao = new RegistrationDaoImpl();
 
     @Override
     public List<Registration> getAllRegistration() {
+        RegistrationDao registrationDao = new RegistrationDaoImpl();
         return registrationDao.getAllRegistration();
     }
 
@@ -75,7 +75,8 @@ public class RegisterServiceImpl implements RegisterService {
         if (reg == null || Strings.isNullOrEmpty(reg.getStudentId()) || Strings.isNullOrEmpty(reg.getTimeDisplay())) {
             return;
         }
-        List<Registration> list = Lists.newArrayList();
+        RegistrationDao registrationDao = new RegistrationDaoImpl();
+        List<Registration> list = this.getAllRegistration();
         if (list == null) {
             list = Lists.newArrayList();
         }
