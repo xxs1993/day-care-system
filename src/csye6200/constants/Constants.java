@@ -22,14 +22,9 @@ public class Constants {
     public static final String ARRAY_DIVIDER_RIGHT = "]";
 
     public static final String PREFFIX_COURSE_ID = "C";
-
-    public static final String MAX_GROUP_AMOUNT = "maxGroupAmount";
-
-    public static final String MAX_STUDENT_AMOUNT = "maxStuAmount";
-
-
-
-
-
+    
+    public static final String PREFFIX_STUDENT_ID = "S";
+    
+    public static final String PREFFIX_TEACHER_ID = "T";
 
 }
