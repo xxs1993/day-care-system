@@ -80,7 +80,7 @@ public class StudentDaoImpl implements StudentDao {
 		}
 		Collections.sort(students);
 		String lastId = students.get(students.size() - 1).getId();
-		String newId = String.valueOf(Integer.parseInt(lastId.substring(1)) + 1);
+		String newId = Constants.PREFFIX_STUDENT_ID + String.valueOf(Integer.parseInt(lastId.substring(1)) + 1);
 		return newId;
 	}
 
