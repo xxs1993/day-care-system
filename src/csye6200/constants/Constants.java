@@ -27,4 +27,8 @@ public class Constants {
     
     public static final String PREFFIX_TEACHER_ID = "T";
 
+    public static final String MAX_GROUP_AMOUNT = "mapGroupAmount";
+
+    public static final String MAX_STUDENT_AMOUNT = "maxStudentAmount";
+
 }
