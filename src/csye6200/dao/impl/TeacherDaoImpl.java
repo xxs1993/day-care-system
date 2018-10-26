@@ -40,14 +40,19 @@ public class TeacherDaoImpl implements TeacherDao {
 		            	List<String> teacherString = Splitter.on(",").trimResults().splitToList(s);
 		            	
 		            	// deal with wrong csv format;
-		            	if(teacherString.size() < 8) {
+		            	if(teacherString.size() < 7) {
                             System.out.println("wrong format of data :" + Arrays.toString(teacherString.toArray()));
 		            		continue;
 		            	}
-		            	Teacher t = new Teacher(teacherString.get(0),teacherString.get(1),teacherString.get(2),teacherString.get(3),Integer.parseInt(teacherString.get(4)),
-		            		Integer.parseInt(teacherString.get(6)));
+		            	Teacher t = new Teacher();
+                                t.setId(teacherString.get(0));
+                                t.setlName(teacherString.get(1));
+                                t.setfName(teacherString.get(2));
+                                t.setGender(teacherString.get(3));
+                                t.setAge(Integer.parseInt(teacherString.get(4)));
+                                t.setAgeRange(Integer.parseInt(teacherString.get(5)));
 		            	//get students list string;
-		            	String studentsID = teacherString.get(8).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
+		            	String studentsID = teacherString.get(6).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
 		            	if(studentsID.isEmpty()){
 		            		continue;
 		            	}
@@ -100,6 +105,7 @@ public class TeacherDaoImpl implements TeacherDao {
                     sb.append(t.getlName()).append(Constants.STRING_DIVIDER);
                     sb.append(t.getfName()).append(Constants.STRING_DIVIDER);
                     sb.append(t.getGender()).append(Constants.STRING_DIVIDER);
+                    sb.append(t.getAge()).append(Constants.STRING_DIVIDER);
 	            sb.append(t.getAgeRange()).append(Constants.STRING_DIVIDER);
 	            sb.append(Constants.ARRAY_DIVIDER_LEFT);
 	            List<Student> students = t.getStudents();
@@ -109,7 +115,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	                }
 	                sb.deleteCharAt(sb.length()-1);
 	            }
-	            sb.append(Constants.ARRAY_DIVIDER_RIGHT).append(Constants.STRING_DIVIDER);
+	            sb.append(Constants.ARRAY_DIVIDER_RIGHT);
 	            contents.add(sb.toString());
 
 	        }

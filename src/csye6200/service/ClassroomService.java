@@ -14,7 +14,7 @@ import java.util.List;
 /**
  *
  * @author karen
- * Note: Classroom serves as a class(°à¼¶) which is not related to course
+ * Note: Classroom serves as a class which is not related to course
  */
 public interface ClassroomService {
     // Get the list of classrooms

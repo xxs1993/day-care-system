@@ -38,9 +38,9 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
         
         for(Teacher t : teacherServiceImpl.getTeacher()) {
             Object row[] = new Object[model.getColumnCount()];
-            //row[0] = t;
-            row[1] =t.getfName();
-            row[2] =t.getlName();
+            row[0] =t.getId();
+            row[1] =t.getlName();
+            row[2] =t.getfName();
             model.addRow(row);
             }
         }
