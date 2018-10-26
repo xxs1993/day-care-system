@@ -14,6 +14,7 @@ import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.exception.DatabaseException;
 import csye6200.service.StudentService;
+import csye6200.service.impl.StudentServiceImpl;
 import csye6200.util.FileUtil;
 
 public class TeacherDaoImpl implements TeacherDao {
@@ -26,7 +27,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	public List<Teacher> readTeacher() {
 		// TODO Auto-generated method stub
 		List<Teacher> teacherList = Lists.newArrayList();
-		StudentService ss = null;
+		StudentService ss =new StudentServiceImpl();
 			try {
 				 List<String> teacherContent = FileUtil.readContents(Constants.TEACHER_FILE_NAME);
 		            if(teacherContent == null||teacherContent.isEmpty()){
@@ -75,7 +76,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		// TODO Auto-generated method stub
 		List<String> contents = this.transferTeacherToString(teachers);
 		try {
-			FileUtil.writeToFile(Constants.CLASSROOM_FILE_NAME, contents);
+			FileUtil.writeToFile(Constants.TEACHER_FILE_NAME, contents);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

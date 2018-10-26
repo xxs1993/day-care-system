@@ -15,7 +15,7 @@ import com.google.common.base.Strings;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.ClassroomService;
-import dao.impl.ClassroomDaoImpl;
+import csye6200.dao.impl.ClassroomDaoImpl;
 import csye6200.entity.ClassRoom;
 
 /**

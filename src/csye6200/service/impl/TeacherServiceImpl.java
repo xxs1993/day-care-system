@@ -34,7 +34,7 @@ public class TeacherServiceImpl implements TeacherService{
 	
 	
 	@Override
-	public boolean addTeacher(Teacher teacher) {
+	public Teacher addTeacher(Teacher teacher) {
 		/*if(teacher == null || Strings.isNullOrEmpty(teacher.getfName())) {
 			return "";
 		}
@@ -55,8 +55,8 @@ public class TeacherServiceImpl implements TeacherService{
 			return "";
 		}
 		return teacherID;*/
-		if (teacher == null || Strings.isNullOrEmpty(teacher.getId())) {
-			return false;
+		if (teacher == null) {
+			return teacher;
 		}
 		
 		TeacherDaoImpl tdi = new TeacherDaoImpl();
@@ -70,7 +70,7 @@ public class TeacherServiceImpl implements TeacherService{
 		teacher.setId(newId);
 		teachers.add(teacher);
 		// write into Teacher cvs file
-		return tdi.writeTeacher(teachers);
+		return teacher;
 		
 	}
 	@Override

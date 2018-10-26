@@ -11,7 +11,7 @@ public interface TeacherService {
     // Get certain Teacher object by Id
 	Teacher getTeacherById(String id);
 	// Add a new teacher to the system;
-    boolean addTeacher(Teacher teacher);
+    Teacher addTeacher(Teacher teacher);
    // delete a teacher from system;
     boolean deleteTeacher(String id);
     

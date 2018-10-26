@@ -29,6 +29,9 @@ public class StudentDaoImpl implements StudentDao {
             e.printStackTrace();
             return students;
         }
+        if(contents==null || contents.isEmpty() ){
+            return students;
+        }
         for (String s : contents) {
             //split items by ","
             List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);

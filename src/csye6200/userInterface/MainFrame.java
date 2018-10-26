@@ -7,10 +7,11 @@ package csye6200.userInterface;
  */
 
 
+import csye6200.entity.Teacher;
 import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentPanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
-
+import csye6200.service.impl.TeacherServiceImpl;
 import java.awt.CardLayout;
 import javax.swing.JOptionPane;
 
@@ -18,12 +19,14 @@ import javax.swing.JOptionPane;
  * @author Alvin
  */
 public class MainFrame extends javax.swing.JFrame {
-
+    private TeacherServiceImpl tsi;
+    private Teacher t;
     /**
      * Creates new form Main
      */
     public MainFrame() {
         initComponents();
+        tsi=new TeacherServiceImpl();
     }
 
     /**
@@ -113,7 +116,7 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeacherActionPerformed
-        ManageTeacherPanel mtp = new ManageTeacherPanel(RightPanel);
+        ManageTeacherPanel mtp = new ManageTeacherPanel(RightPanel, tsi);
         RightPanel.add("AgencyWorkAreaPanel", mtp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);

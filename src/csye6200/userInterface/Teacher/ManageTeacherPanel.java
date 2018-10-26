@@ -5,23 +5,46 @@
  */
 package csye6200.userInterface.Teacher;
 
+import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+import csye6200.service.impl.TeacherServiceImpl;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * @author Alvin
  */
 public class ManageTeacherPanel extends javax.swing.JPanel {
     JPanel RightPanel;
+    TeacherServiceImpl teacherServiceImpl;
+    Teacher teacher;
 
     /**
      * Creates new form StudentWorkPanel
      */
 
-    public ManageTeacherPanel(JPanel rp) {
+    public ManageTeacherPanel(JPanel rp,TeacherServiceImpl tsi) {
         initComponents();
         RightPanel = rp;
+        teacherServiceImpl=tsi;
+        populateTable();
     }
+    public void populateTable(){
+        int rowCount = tblTeacher.getRowCount();
+        DefaultTableModel model = (DefaultTableModel)tblTeacher.getModel();
+        for(int i=rowCount-1;i>=0;i--) {
+            model.removeRow(i);
+        }
+        
+        for(Teacher t : teacherServiceImpl.getTeacher()) {
+            Object row[] = new Object[model.getColumnCount()];
+            //row[0] = t;
+            row[1] =t.getfName();
+            row[2] =t.getlName();
+            model.addRow(row);
+            }
+        }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -34,94 +57,92 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        tblTeacher = new javax.swing.JTable();
+        btnEnroll = new javax.swing.JButton();
+        btnView = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Teacher ");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-                new Object[][]{
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null},
-                        {null, null, null, null}
-                },
-                new String[]{
-                        "Teacher ID", "Title 2", "Title 3", "Title 4"
-                }
+        tblTeacher.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Teacher ID", "First Name", "Last Name"
+            }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblTeacher);
 
-        jButton1.setText("Enroll Teacher");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnEnroll.setText("Enroll Teacher");
+        btnEnroll.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnEnrollActionPerformed(evt);
             }
         });
 
-        jButton2.setText("View Detail");
+        btnView.setText("View Detail");
 
         jButton4.setText("Delete");
+        jButton4.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(53, 53, 53)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGroup(layout.createSequentialGroup()
-                                                                .addComponent(jButton4)
-                                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGap(15, 15, 15)
-                                                .addComponent(jLabel1)))
-                                .addContainerGap(63, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(btnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnEnroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel1)))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addComponent(jLabel1)
-                                .addGap(46, 46, 46)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jButton4)
-                                        .addComponent(jButton1))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton2)
-                                .addContainerGap(29, Short.MAX_VALUE))
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addComponent(jLabel1)
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(btnEnroll))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnView)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CreateTeacherPanel ctp = new CreateTeacherPanel(RightPanel);
+    private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
+        CreateTeacherPanel ctp = new CreateTeacherPanel(RightPanel,teacherServiceImpl);
         RightPanel.add("CreateNewFlightPanel", ctp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnEnrollActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnEnroll;
+    private javax.swing.JButton btnView;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblTeacher;
     // End of variables declaration//GEN-END:variables
 
-    void populateTable() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+
 }
