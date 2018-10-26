@@ -45,13 +45,13 @@ public class ClassroomServiceImpl implements ClassroomService {
 		List<Teacher> teacherList = this.getClassroomById(id).getTeachers();
 		for (Teacher t : teacherList) {
 			if (t.getId() == teacher.getId()) {
-				return "Teacher " + teacher.getName() + "with Id " + teacher.getId()
+				return "Teacher " + teacher.getlName()+teacher.getfName() + "with Id " + teacher.getId()
 						+ " has been assigned to classroom " + id;
 			}
 		}
 		teacherList.add(teacher);
 		this.getClassroomById(id).setTeachers(teacherList);
-		return "Teacher " + teacher.getName() + " has been assigned to classroom " + id;
+		return "Teacher " + teacher.getfName()+ " has been assigned to classroom " + id;
 	}
 
 	public List<Student> getStudentsInClassroom(String id) {

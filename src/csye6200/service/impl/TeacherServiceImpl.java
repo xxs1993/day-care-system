@@ -69,6 +69,7 @@ public class TeacherServiceImpl implements TeacherService{
 		String newId = tdi.initNewID(teachers);
 		teacher.setId(newId);
 		teachers.add(teacher);
+                tdi.writeTeacher(teachers);
 		// write into Teacher cvs file
 		return teacher;
 		
@@ -78,13 +79,13 @@ public class TeacherServiceImpl implements TeacherService{
 		List<Student> studentList = this.getTeacherById(id).getStudents();
 		for (Student t : studentList) {
 			if (t.getId() == student.getId()) {
-				return "Student " + student.getName() + "with Id " + student.getId()
+				return "Student " + student.getlName()+student.getfName() + "with Id " + student.getId()
 						+ " has been assigned to Teacher " + id;
 			}
 		}
 		studentList.add(student);
 		this.getTeacherById(id).setStudents(studentList);
-		return "Student" + student.getName() + " has been assigned to Teacher " + id;
+		return "Student" + student.getlName()+student.getfName() + " has been assigned to Teacher " + id;
 	}
 	
 	

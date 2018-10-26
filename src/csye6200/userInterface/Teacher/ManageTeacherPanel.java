@@ -67,12 +67,12 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
 
         tblTeacher.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Teacher ID", "First Name", "Last Name"
+                "Teacher ID", "First Name", "Last Name", "Age Range"
             }
         ));
         jScrollPane1.setViewportView(tblTeacher);

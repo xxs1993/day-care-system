@@ -28,14 +28,6 @@ public abstract class Person implements Comparable<Person> {
         this.id = id;
     }
 
-    public String getName() {
-        return lName;
-    }
-
-    public void setName(String name) {
-        this.lName = name;
-    }
-
     public int getAge() {
         return age;
     }

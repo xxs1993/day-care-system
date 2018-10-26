@@ -33,10 +33,11 @@ public class StudentServiceImpl implements StudentService{
         for(Student student : students){
             StringBuilder sb = new StringBuilder();
             sb.append(student.getId()).append(Constants.STRING_DIVIDER);
+            sb.append(student.getlName());
+            sb.append(student.getfName());
             sb.append(student.getAge()).append(Constants.STRING_DIVIDER);
             sb.append(Constants.ARRAY_DIVIDER_LEFT);
             sb.append(Constants.ARRAY_DIVIDER_RIGHT).append(Constants.STRING_DIVIDER);
-            sb.append(student.getName());
             contents.add(sb.toString());
 
         }
@@ -55,7 +56,7 @@ public class StudentServiceImpl implements StudentService{
 
     @Override
     public String addStudent(Student student) {
-        if(student==null || Strings.isNullOrEmpty(student.getName())){
+        if(student==null || Strings.isNullOrEmpty(student.getfName())){
             return "";
         }
         List<Student> students = this.getStudent();

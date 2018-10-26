@@ -30,5 +30,7 @@ public class Constants {
     public static final String MAX_GROUP_AMOUNT = "mapGroupAmount";
 
     public static final String MAX_STUDENT_AMOUNT = "maxStudentAmount";
+    
+    public static final int REGULATION_TYPE_1 = 6;
 
 }

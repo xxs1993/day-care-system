@@ -76,8 +76,9 @@ public class TeacherDaoImpl implements TeacherDao {
 	public boolean writeTeacher(List<Teacher> teachers) {
 		// TODO Auto-generated method stub
 		List<String> contents = this.transferTeacherToString(teachers);
+                System.out.println(Arrays.toString(contents.toArray()));
 		try {
-			FileUtil.writeToFile(Constants.CLASSROOM_FILE_NAME, contents);
+			FileUtil.writeToFile(Constants.TEACHER_FILE_NAME, contents);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -96,6 +97,9 @@ public class TeacherDaoImpl implements TeacherDao {
 	        for(Teacher t : teachers){
 	            StringBuilder sb = new StringBuilder();
 	            sb.append(t.getId()).append(Constants.STRING_DIVIDER);
+                    sb.append(t.getlName()).append(Constants.STRING_DIVIDER);
+                    sb.append(t.getfName()).append(Constants.STRING_DIVIDER);
+                    sb.append(t.getGender()).append(Constants.STRING_DIVIDER);
 	            sb.append(t.getAgeRange()).append(Constants.STRING_DIVIDER);
 	            sb.append(Constants.ARRAY_DIVIDER_LEFT);
 	            List<Student> students = t.getStudents();
@@ -106,7 +110,6 @@ public class TeacherDaoImpl implements TeacherDao {
 	                sb.deleteCharAt(sb.length()-1);
 	            }
 	            sb.append(Constants.ARRAY_DIVIDER_RIGHT).append(Constants.STRING_DIVIDER);
-	            sb.append(t.getName());
 	            contents.add(sb.toString());
 
 	        }
@@ -115,11 +118,11 @@ public class TeacherDaoImpl implements TeacherDao {
 	// Initialize an Id for a new Teacher 
 	 public String initNewID(List<Teacher> teachers){
 	        if(teachers == null || teachers.isEmpty()){
-	            return Constants.PREFFIX_COURSE_ID+"1";
+	            return Constants.PREFFIX_TEACHER_ID+"1";
 	        }
 	        Collections.sort(teachers);
 	        String lastId = teachers.get(teachers.size()-1).getId();
-	        String newId = Constants.PREFFIX_COURSE_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
+	        String newId = Constants.PREFFIX_TEACHER_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
 	        return newId;
 	    }
 
