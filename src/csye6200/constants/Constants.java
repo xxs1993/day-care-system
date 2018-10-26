@@ -32,5 +32,14 @@ public class Constants {
     public static final String MAX_STUDENT_AMOUNT = "maxStudentAmount";
     
     public static final int REGULATION_TYPE_1 = 6;
-
+    
+    public static final int REGULATION_TYPE_2 =13;
+    
+    public static final int REGULATION_TYPE_3 =25;
+    
+    public static final int REGULATION_TYPE_4 =36;
+    
+    public static final int REGULATION_TYPE_5 =46;
+    
+    public static final int REGULATION_TYPE_6 =60;
 }
