@@ -1,5 +1,6 @@
 package csye6200.dao.impl;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	public List<Teacher> readTeacher() {
 		// TODO Auto-generated method stub
 		List<Teacher> teacherList = Lists.newArrayList();
-		StudentService ss =new StudentServiceImpl();
+        StudentService ss = new StudentServiceImpl();
 			try {
 				 List<String> teacherContent = FileUtil.readContents(Constants.TEACHER_FILE_NAME);
 		            if(teacherContent == null||teacherContent.isEmpty()){
@@ -40,7 +41,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		            	
 		            	// deal with wrong csv format;
 		            	if(teacherString.size() < 8) {
-		            		System.out.println("wrong format of data :" + teacherString.toArray().toString());
+                            System.out.println("wrong format of data :" + Arrays.toString(teacherString.toArray()));
 		            		continue;
 		            	}
 		            	Teacher t = new Teacher(teacherString.get(0),teacherString.get(1),teacherString.get(2),teacherString.get(3),Integer.parseInt(teacherString.get(4)),
@@ -76,7 +77,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		// TODO Auto-generated method stub
 		List<String> contents = this.transferTeacherToString(teachers);
 		try {
-			FileUtil.writeToFile(Constants.TEACHER_FILE_NAME, contents);
+			FileUtil.writeToFile(Constants.CLASSROOM_FILE_NAME, contents);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
