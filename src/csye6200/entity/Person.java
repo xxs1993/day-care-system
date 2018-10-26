@@ -87,5 +87,9 @@ public abstract class Person implements Comparable<Person> {
 		this.age = age;
 		this.id = id;
 	}
+
+	protected Person() {
+
+	}
 	
 }

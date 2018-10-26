@@ -14,6 +14,9 @@ public class Student extends Person {
 		this.immDate = immDate;
 	}
 
+	public Student() {
+	}
+
 	public String getImmDate() {
 		return immDate;
 	}

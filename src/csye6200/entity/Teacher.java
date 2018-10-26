@@ -42,6 +42,8 @@ public class Teacher extends Person {
 	}
 
 
+	public Teacher() {
+	}
 
 	public Teacher(String id, String lName, String fName, String gender, int age, int ageRange) {
 		super(lName, fName, gender, age, id);
