@@ -1,9 +1,6 @@
 package csye6200.dao.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Splitter;
@@ -36,7 +33,7 @@ public class ClassroomDaoImpl implements ClassroomDao {
 				List<String> contentString = Splitter.on(",").trimResults().splitToList(cr);
 				// Handle wrong cvs data format
 				if (contentString.size() < 4) {
-					System.out.println("wrong format of data :" + contentString.toArray().toString());
+                    System.out.println("wrong format of data :" + Arrays.toString(contentString.toArray()));
 					continue;
 				}
 				ClassRoom classroom = new ClassRoom(contentString.get(0), Integer.parseInt(contentString.get(1)),

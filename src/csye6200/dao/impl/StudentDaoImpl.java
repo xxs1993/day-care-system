@@ -1,5 +1,6 @@
 package csye6200.dao.impl;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class StudentDaoImpl implements StudentDao {
             //split items by ","
             List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
             if (contentString.size() < 8) {
-                System.out.println("wrong format of data :" + contentString.toArray().toString());
+                System.out.println("wrong format of data :" + Arrays.toString(contentString.toArray()));
                 continue;
             }
             Student student = new Student(contentString.get(0), contentString.get(1),contentString.get(2), Integer.parseInt(contentString.get(3)),

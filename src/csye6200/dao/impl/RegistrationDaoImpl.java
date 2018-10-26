@@ -9,6 +9,7 @@ import csye6200.exception.DatabaseException;
 import csye6200.util.DateUtil;
 import csye6200.util.FileUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class RegistrationDaoImpl implements RegistrationDao {
@@ -36,7 +37,7 @@ public class RegistrationDaoImpl implements RegistrationDao {
             //split items by ","
             List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
             if (contentString.size() < 2) {
-                System.out.println("wrong format of data :" + contentString.toArray().toString());
+                System.out.println("wrong format of data :" + Arrays.toString(contentString.toArray()));
                 continue;
             }
             Registration registration = new Registration(contentString.get(0));
