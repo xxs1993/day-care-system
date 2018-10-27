@@ -38,17 +38,17 @@ public class CourseDaoImpl implements CourseDao {
             Course course = new Course(contentString.get(0), contentString.get(3), Integer.parseInt(contentString.get(1)));
             //get teacher id string and remove [ ]
             String idString = contentString.get(2).replace(Constants.ARRAY_DIVIDER_LEFT, "").replace(Constants.ARRAY_DIVIDER_RIGHT, "").trim();
-            if (idString.isEmpty()) {
-                continue;
+            if (!idString.isEmpty()) {
+                List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
+                List<Teacher> teachersInCourse = Lists.newArrayList();
+                for (String s1 : idList) {
+                    Teacher teacher = new Teacher(s1, "", "", "", 0, 0);
+                    teachersInCourse.add(teacher);
+                }
+                course.setTeachers(teachersInCourse);
             }
             //get id list by splitting ";"
-            List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(idString);
-            List<Teacher> teachersInCourse = Lists.newArrayList();
-            for (String s1 : idList) {
-                Teacher teacher = new Teacher(s1, "", "", "", 0, 0);
-                teachersInCourse.add(teacher);
-            }
-            course.setTeachers(teachersInCourse);
+
             courses.add(course);
 
         }
