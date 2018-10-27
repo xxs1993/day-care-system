@@ -69,7 +69,7 @@ public class TeacherServiceImpl implements TeacherService{
 		String newId = tdi.initNewID(teachers);
 		teacher.setId(newId);
 		teachers.add(teacher);
-                tdi.writeTeacher(teachers);
+        tdi.writeTeacher(teachers);
 		// write into Teacher cvs file
 		return teacher;
 		

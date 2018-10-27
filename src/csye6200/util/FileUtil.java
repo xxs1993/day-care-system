@@ -84,6 +84,7 @@ public class FileUtil {
              return getContents(fileName);
             });
         }catch (ExecutionException e){
+            e.printStackTrace();
             System.out.println("Error occurred when getting cache");
         }
 

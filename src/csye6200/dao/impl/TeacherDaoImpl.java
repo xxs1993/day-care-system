@@ -53,21 +53,21 @@ public class TeacherDaoImpl implements TeacherDao {
                                 t.setAgeRange(Integer.parseInt(teacherString.get(5)));
 		            	//get students list string;
 		            	String studentsID = teacherString.get(6).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
-		            	if(studentsID.isEmpty()){
-		            		continue;
+		            	if(!studentsID.isEmpty()){
+							List<String> idList = Splitter.on(",").trimResults().splitToList(studentsID);
+
+							//get students objects by id;
+							List<Student> studentsWithTC = Lists.newArrayList();
+							for(String id : idList) {
+								Student st;
+								if((st = map.get(id))!=null){
+									studentsWithTC.add(st);
+								}
+							}
+							t.setStudents(studentsWithTC);
 		            	}
 		            	// get students id;
-		            	List<String> idList = Splitter.on(",").trimResults().splitToList(studentsID);
-		            	
-		            	//get students objects by id;
-		            	List<Student> studentsWithTC = Lists.newArrayList();
-		            	for(String id : idList) {
-			            	Student st;
-			            	if((st = map.get(id))!=null){
-		                        studentsWithTC.add(st);
-			            	}
-		            	}
-		            	t.setStudents(studentsWithTC);
+
 		            	teacherList.add(t);
 		            }
 			}catch (DatabaseException e){
