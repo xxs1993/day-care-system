@@ -3,13 +3,11 @@ package csye6200.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
 
 import com.google.common.collect.Lists;
-import com.sun.xml.internal.ws.util.StringUtils;
 import csye6200.dao.impl.TeacherDaoImpl;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
