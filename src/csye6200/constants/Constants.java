@@ -11,6 +11,8 @@ public class Constants {
 
     public static final String REGISTRATION_FILE_NAME = "registration.csv";
 
+    public static final String PROPERTIE_FILE_NAME = "email.properties";
+
 
     public static final String STRING_DIVIDER = ",";
 
