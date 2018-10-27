@@ -8,7 +8,8 @@ package csye6200.userInterface.Teacher;
 import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
-import csye6200.service.impl.TeacherServiceImpl;
+import csye6200.service.TeacherService;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,17 +17,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageTeacherPanel extends javax.swing.JPanel {
     JPanel RightPanel;
-    TeacherServiceImpl teacherServiceImpl;
+    TeacherService teacherService;
     Teacher teacher;
 
     /**
      * Creates new form StudentWorkPanel
      */
 
-    public ManageTeacherPanel(JPanel rp,TeacherServiceImpl tsi) {
+    public ManageTeacherPanel(JPanel rp,TeacherService ts) {
         initComponents();
         RightPanel = rp;
-        teacherServiceImpl=tsi;
+        teacherService=ts;
         populateTable();
     }
     public void populateTable(){
@@ -36,7 +37,7 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
             model.removeRow(i);
         }
         
-        for(Teacher t : teacherServiceImpl.getTeacher()) {
+        for(Teacher t : teacherService.getTeacher()) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =t.getId();
             row[1] =t.getlName();
@@ -60,7 +61,7 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
         tblTeacher = new javax.swing.JTable();
         btnEnroll = new javax.swing.JButton();
         btnView = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Teacher ");
@@ -85,9 +86,18 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
         });
 
         btnView.setText("View Detail");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Delete");
-        jButton4.setEnabled(false);
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -100,7 +110,7 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton4)
+                                .addComponent(btnDelete)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -119,7 +129,7 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton4)
+                    .addComponent(btnDelete)
                     .addComponent(btnEnroll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnView)
@@ -128,17 +138,43 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
-        CreateTeacherPanel ctp = new CreateTeacherPanel(RightPanel,teacherServiceImpl);
-        RightPanel.add("CreateNewFlightPanel", ctp);
+        CreateTeacherPanel ctp = new CreateTeacherPanel(RightPanel,teacherService);
+        RightPanel.add("CreateTeacherPanel", ctp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnEnrollActionPerformed
 
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+    int row = tblTeacher.getSelectedRow();
+        if(row<0) {
+             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String ts = (String)tblTeacher.getValueAt(row, 0);
+        teacherService.deleteTeacher(ts);
+        populateTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        int row = tblTeacher.getSelectedRow();
+        if(row<0) {
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String ts=(String)tblTeacher.getValueAt(row, 0);
+        Teacher t=teacherService.getTeacherById(ts);
+        ViewPanel vp = new ViewPanel(RightPanel,teacherService,t);
+        RightPanel.add("ViewPanel", vp);
+        CardLayout layout = (CardLayout) RightPanel.getLayout();
+        layout.next(RightPanel);
+        
+    }//GEN-LAST:event_btnViewActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnEnroll;
     private javax.swing.JButton btnView;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblTeacher;
