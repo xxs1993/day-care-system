@@ -21,5 +21,7 @@ public interface TeacherService {
     String deleteStudent(String studentId, String id);
     //get the student list;
     List<Student> getStudent(String id);
+
+    boolean updateTeacher(Teacher teacher);
     
 }

@@ -1,12 +1,15 @@
 package csye6200.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
 
+import com.google.common.collect.Lists;
+import com.sun.xml.internal.ws.util.StringUtils;
 import csye6200.dao.impl.TeacherDaoImpl;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
@@ -25,10 +28,16 @@ public class TeacherServiceImpl implements TeacherService{
 			return null;
 		}
 		// put all Teachers into a Map with structure of <Teacher id, teacher object>
-		Map<String, Teacher> map = getTeacher().stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
-		return map.get(id);
+		List<Teacher> list = this.getTeacher().stream().filter((x)->{
+			if(id.equals(x.getId())) return true;
+			return false;
+		}).collect(Collectors.toList());
+		if(list == null || list.isEmpty()){
+			return null;
+		}
+		return list.get(0);
 
-	};
+	}
 	
 	
 	
@@ -76,7 +85,17 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 	@Override
 	public String addStudent(Student student,String id){
-		List<Student> studentList = this.getTeacherById(id).getStudents();
+		if(student == null || Strings.isNullOrEmpty(id)){
+			return "Invalid params";
+		}
+		Teacher teacher = this.getTeacherById(id);
+		if(teacher == null){
+			return String.format("No teacher record found by id:%s",id);
+		}
+		List<Student> studentList = teacher.getStudents();
+		if(studentList == null){
+			studentList = Lists.newArrayList();
+		}
 		for (Student t : studentList) {
 			if (t.getId() == student.getId()) {
 				return "Student " + student.getlName()+student.getfName() + "with Id " + student.getId()
@@ -84,7 +103,8 @@ public class TeacherServiceImpl implements TeacherService{
 			}
 		}
 		studentList.add(student);
-		this.getTeacherById(id).setStudents(studentList);
+		teacher.setStudents(studentList);
+		this.updateTeacher(teacher);
 		return "Student" + student.getlName()+student.getfName() + " has been assigned to Teacher " + id;
 	}
 	
@@ -97,8 +117,24 @@ public class TeacherServiceImpl implements TeacherService{
 	
 	@Override
 	public boolean deleteTeacher(String id) {
+		if(Strings.isNullOrEmpty(id)){
+			return false;
+		}
+		boolean result = false;
 		List<Teacher> list = this.getTeacher();
-		list.remove(this.getTeacherById(id));
+		if(list == null || list.isEmpty()){
+			return result;
+		}
+		for(Teacher t : list){
+			if(id.equals(t.getId())){
+				list.remove(t);
+				result = true;
+				break;
+			}
+		}
+		if(!result) {
+			return result;
+		}
 		// instantiate an TeacherImpl object to call write method in ClassroomDao
 		TeacherDaoImpl tdi = new TeacherDaoImpl();
 		return tdi.writeTeacher(list);
@@ -108,26 +144,48 @@ public class TeacherServiceImpl implements TeacherService{
 	public String deleteStudent(String studentId, String id) {
 		List<Teacher> teachers = this.getTeacher();
 		Teacher teacher = this.getTeacherById(id);
-		TeacherDaoImpl tdi = new TeacherDaoImpl();
-		
+
 		if (teachers == null)
 			return "Please enter a correct teacher Id!";
 		else {
 			List<Student> students = this.getStudent(id);
+			if(students == null || students.isEmpty()){
+			    return "No students found";
+            }
 			for(Student t: students) {
-				if(t.getId() == studentId) {
+				if(t.getId().equals(studentId)) {
 					students.remove(t);
 					break;
 				}
 			}
 			teacher.setStudents(students);
-			for (int i = 0; i < teachers.size(); i++) {
-				if (teachers.get(i).getId() == teacher.getId())
-					teachers.set(i, teacher);
-			}
-			tdi.writeTeacher(teachers);
+			this.updateTeacher(teacher);
 			return "Student " + studentId + " has been removde from Teacher " + id;
 		}
+	}
+
+	@Override
+	public boolean updateTeacher(Teacher teacher){
+		if(teacher == null || Strings.isNullOrEmpty(teacher.getId())){
+			return false;
+		}
+		List<Teacher> list = this.getTeacher();
+		if(list == null ||list.isEmpty()){
+			return false;
+		}
+		boolean result = false;
+		for(Teacher t : list){
+			if(teacher.getId().equals(t.getId())){
+				Collections.replaceAll(list,t,teacher);
+				result = true;
+				break;
+			}
+		}
+		if(!result){
+			return false;
+		}
+		TeacherDaoImpl tdi = new TeacherDaoImpl();
+		return tdi.writeTeacher(list);
 	}
 	
 	
