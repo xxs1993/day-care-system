@@ -10,7 +10,9 @@ import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.TeacherService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -25,6 +27,14 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentWorkPanel
      */
+private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
+     put(6,"6-12");
+     put(13,"13-24");
+     put(25,"25-35");
+     put(36,"36-47");
+     put(48,"48-59");
+     put(60,"60 up");
+    }};
 
     public ManageTeacherPanel(JPanel rp,TeacherService ts) {
         initComponents();
@@ -44,7 +54,7 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
             row[0] =t.getId();
             row[1] =t.getfName();
             row[2] =t.getlName();
-            row[3] =t.getAgeRange();
+            row[3] =MAP.get(t.getAgeRange());
             model.addRow(row);
             }
         }

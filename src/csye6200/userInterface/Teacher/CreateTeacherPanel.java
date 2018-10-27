@@ -192,18 +192,25 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
         Teacher teacher=new Teacher();
         if(Strings.isNullOrEmpty(txtFirstName.getText())){
             JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
         }
         if(Strings.isNullOrEmpty(txtLastName.getText())){
-            JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Last Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
         }
         if(txtGender.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Gender can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
         }
-        if(txtAge.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
-        }
+        try{
+            Integer.parseInt(txtAge.getText());
+        }catch(NumberFormatException exc){
+            JOptionPane.showMessageDialog(null,"Only Numbers Allowed as Age");
+            return;
+            }
         if(comboAgeRange.getSelectedItem()==null){
-            JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"Please Select Age Range","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
         }
         teacher.setfName(txtFirstName.getText());
         teacher.setlName(txtLastName.getText());
