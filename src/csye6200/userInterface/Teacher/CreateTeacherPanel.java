@@ -5,11 +5,15 @@
  */
 package csye6200.userInterface.Teacher;
 
+
+import com.google.common.base.Strings;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
 import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,7 +26,14 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
     /**
      * Creates new form CreateTeacherPanel
      */
-
+    private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
+     put("6-12",6);
+     put("13-24",13);
+     put("25-35",25);
+     put("36-47",36);
+     put("48-59",48);
+     put("60 up",60);
+    }};
 
     CreateTeacherPanel(JPanel RightPanel, TeacherService teacherService) {
         initComponents();
@@ -30,7 +41,14 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
         this.teacherService=teacherService;
         
         comboAgeRange.removeAllItems();
-        
+        String AgeRangeType[]={"6-12","13-24","25-35","36-47", "48-59","60 up"};
+        comboAgeRange.addItem(AgeRangeType[0]);
+        comboAgeRange.addItem(AgeRangeType[1]);
+        comboAgeRange.addItem(AgeRangeType[2]);
+        comboAgeRange.addItem(AgeRangeType[3]);
+        comboAgeRange.addItem(AgeRangeType[4]);
+        comboAgeRange.addItem(AgeRangeType[5]);
+    
     }
 
     /**
@@ -95,34 +113,32 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(129, 129, 129)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(66, 66, 66)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnBack)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel7))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(66, 66, 66)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnBack)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
+                        .addGap(51, 51, 51)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(171, 171, 171)
-                                .addComponent(btnEnroll))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(51, 51, 51)
-                                .addComponent(comboAgeRange, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(jLabel1)))
-                .addContainerGap(163, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(comboAgeRange, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
+                        .addComponent(btnEnroll)
+                        .addGap(114, 114, 114))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,19 +189,37 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
-        try{
         Teacher teacher=new Teacher();
+        if(Strings.isNullOrEmpty(txtFirstName.getText())){
+            JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(Strings.isNullOrEmpty(txtLastName.getText())){
+            JOptionPane.showMessageDialog(null,"Last Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if(txtGender.getText().isEmpty()){
+            JOptionPane.showMessageDialog(null,"Gender can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        try{
+            Integer.parseInt(txtAge.getText());
+        }catch(NumberFormatException exc){
+            JOptionPane.showMessageDialog(null,"Only Numbers Allowed as Age");
+            return;
+            }
+        if(comboAgeRange.getSelectedItem()==null){
+            JOptionPane.showMessageDialog(null,"Please Select Age Range","Warining",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
         teacher.setfName(txtFirstName.getText());
         teacher.setlName(txtLastName.getText());
         teacher.setGender(txtGender.getText());
         teacher.setAge(Integer.parseInt(txtAge.getText()));
+        teacher.setAgeRange(MAP.get(comboAgeRange.getSelectedItem()));
         teacherService.addTeacher(teacher);
         JOptionPane.showMessageDialog(null,"Teacher Enrolled!!");
-        }catch(Exception e){
-            System.out.println("fail");
-        }
-        
-        
+                
     }//GEN-LAST:event_btnEnrollActionPerformed
 
     private void comboAgeRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAgeRangeActionPerformed

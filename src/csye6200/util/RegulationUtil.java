@@ -29,7 +29,7 @@ private static int maxStuAmount(int ageRange) {
             maxStuAmount = 5;
     else if (ageRange < 36)
             maxStuAmount = 6;
-    else if (ageRange < 46)
+    else if (ageRange < 48)
             maxStuAmount = 8;
     else if (ageRange < 60)
             maxStuAmount = 12;

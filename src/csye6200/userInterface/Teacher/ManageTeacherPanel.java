@@ -5,10 +5,14 @@
  */
 package csye6200.userInterface.Teacher;
 
+import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.TeacherService;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +27,14 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
     /**
      * Creates new form StudentWorkPanel
      */
+private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
+     put(6,"6-12");
+     put(13,"13-24");
+     put(25,"25-35");
+     put(36,"36-47");
+     put(48,"48-59");
+     put(60,"60 up");
+    }};
 
     public ManageTeacherPanel(JPanel rp,TeacherService ts) {
         initComponents();
@@ -40,8 +52,9 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
         for(Teacher t : teacherService.getTeacher()) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =t.getId();
-            row[1] =t.getlName();
-            row[2] =t.getfName();
+            row[1] =t.getfName();
+            row[2] =t.getlName();
+            row[3] =MAP.get(t.getAgeRange());
             model.addRow(row);
             }
         }
@@ -68,15 +81,27 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
 
         tblTeacher.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Teacher ID", "First Name", "Last Name", "Age Range"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblTeacher);
+        if (tblTeacher.getColumnModel().getColumnCount() > 0) {
+            tblTeacher.getColumnModel().getColumn(0).setResizable(false);
+            tblTeacher.getColumnModel().getColumn(1).setResizable(false);
+            tblTeacher.getColumnModel().getColumn(2).setResizable(false);
+            tblTeacher.getColumnModel().getColumn(3).setResizable(false);
+        }
 
         btnEnroll.setText("Enroll Teacher");
         btnEnroll.addActionListener(new java.awt.event.ActionListener() {
@@ -151,7 +176,12 @@ public class ManageTeacherPanel extends javax.swing.JPanel {
             return;
         }
         String ts = (String)tblTeacher.getValueAt(row, 0);
+        List<Student> getS=teacherService.getStudent(ts);
+        if(getS==null || getS.isEmpty()){
         teacherService.deleteTeacher(ts);
+        }else{
+            JOptionPane.showMessageDialog(null,"This teacher have assigned student(s)","Warning",JOptionPane.WARNING_MESSAGE);
+        }
         populateTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 

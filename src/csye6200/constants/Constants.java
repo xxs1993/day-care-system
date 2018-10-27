@@ -41,7 +41,7 @@ public class Constants {
     
     public static final int REGULATION_TYPE_4 =36;
     
-    public static final int REGULATION_TYPE_5 =46;
+    public static final int REGULATION_TYPE_5 =48;
     
     public static final int REGULATION_TYPE_6 =60;
 }
