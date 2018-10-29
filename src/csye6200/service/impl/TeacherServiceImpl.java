@@ -3,22 +3,43 @@ package csye6200.service.impl;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
 
 import com.google.common.collect.Lists;
+import csye6200.dao.impl.StudentDaoImpl;
 import csye6200.dao.impl.TeacherDaoImpl;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
 
 public class TeacherServiceImpl implements TeacherService{
+
+
 	@Override
 	public List<Teacher> getTeacher(){
 		// instantiate an TeacherDaoImpl object to call read method in TeacherDao
 		TeacherDaoImpl td = new TeacherDaoImpl();
-		return td.readTeacher();
+		List<Teacher> teachers = td.readTeacher();
+		StudentDaoImpl sdl = new StudentDaoImpl();
+		List<Student> students = sdl.readStudents();
+		final Map<String,Student> map = students.stream().collect(Collectors.toMap(x->x.getId(),x->x));
+		if(map == null || map.isEmpty()){
+			return teachers;
+		}
+		for(Teacher t: teachers){
+			List<Student> temp = t.getStudents();
+			if(temp == null || temp.isEmpty()){
+				continue;
+			}
+			for(Student s :temp){
+				s = map.get(s.getId());
+			}
+			t.setStudents(temp);
+		}
+		return teachers;
 	    }
 	@Override
 	public Teacher getTeacherById(String id) {

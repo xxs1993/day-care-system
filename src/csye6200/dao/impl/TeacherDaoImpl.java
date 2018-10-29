@@ -28,14 +28,12 @@ public class TeacherDaoImpl implements TeacherDao {
 	public List<Teacher> readTeacher() {
 		// TODO Auto-generated method stub
 		List<Teacher> teacherList = Lists.newArrayList();
-        StudentService ss = new StudentServiceImpl();
 			try {
 				 List<String> teacherContent = FileUtil.readContents(Constants.TEACHER_FILE_NAME);
 		            if(teacherContent == null||teacherContent.isEmpty()){
 		                return teacherList;
 		            }
-		            List<Student> student = ss.getStudent();
-		            Map<String,Student> map = student.stream().collect(Collectors.toMap(x->x.getId(),x->x));
+
 		            for(String s : teacherContent) {
 		            	List<String> teacherString = Splitter.on(",").trimResults().splitToList(s);
 		            	
@@ -59,10 +57,9 @@ public class TeacherDaoImpl implements TeacherDao {
 							//get students objects by id;
 							List<Student> studentsWithTC = Lists.newArrayList();
 							for(String id : idList) {
-								Student st;
-								if((st = map.get(id))!=null){
-									studentsWithTC.add(st);
-								}
+								Student st = new Student();
+								st.setId(id);
+								studentsWithTC.add(st);
 							}
 							t.setStudents(studentsWithTC);
 		            	}
