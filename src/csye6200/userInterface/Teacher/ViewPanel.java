@@ -132,7 +132,11 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
 
         jLabel4.setText("Gender:");
 
+        txtGender.setEditable(false);
+
         jLabel5.setText("Age:");
+
+        txtAge.setEditable(false);
 
         btnBack.setText("<<Back  ");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
