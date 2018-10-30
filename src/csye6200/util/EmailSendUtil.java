@@ -77,9 +77,8 @@ public class EmailSendUtil {
 
             message.setText(content);
 
-            //
             Transport.send(message);
-            System.out.println("Sent message successfully....");
+            System.out.println("Send email successfully");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

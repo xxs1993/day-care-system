@@ -8,12 +8,14 @@ package csye6200.userInterface;
 
 
 import csye6200.entity.Teacher;
+import csye6200.timer.RegistrationTimer;
 import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentPanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
 import csye6200.service.impl.TeacherServiceImpl;
 import csye6200.userInterface.registration.ManageRegistrationPanel;
 import java.awt.CardLayout;
+import java.util.concurrent.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,11 +24,15 @@ import javax.swing.JOptionPane;
 public class MainFrame extends javax.swing.JFrame {
     private TeacherServiceImpl tsi;
     private Teacher t;
+    private ScheduledExecutorService pool;
     /**
      * Creates new form Main
      */
     public MainFrame() {
         initComponents();
+        pool = Executors.newScheduledThreadPool(3);
+        //TODO:delay changes to 0 when in presentation
+        pool.scheduleAtFixedRate(new RegistrationTimer(),1,24, TimeUnit.HOURS);
         tsi=new TeacherServiceImpl();
     }
 

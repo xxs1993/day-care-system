@@ -20,7 +20,7 @@ public class RegistrationTimer extends TimerTask {
             }
             String subject = "Registration remind";
             StringBuilder content = new StringBuilder();
-            content.append(list.size()).append(" students are not registered this year");
+            content.append(list.size()).append(" student(s) is(are) not registered this year \n");
             content.append(Arrays.toString(list.toArray()));
             EmailSendUtil.sendEmail(subject,content.toString());
             System.out.println(Arrays.toString(list.toArray()));
