@@ -17,7 +17,7 @@ import csye6200.util.FileUtil;
 public class StudentDaoImpl implements StudentDao {
     /**
      * student csv format
-     * lName, fName, gender, age, id, fatherName, motherName
+     * id，lName, fName, gender, age, fatherName, motherName
      */
 	
     @Override
@@ -85,16 +85,6 @@ public class StudentDaoImpl implements StudentDao {
         }
         return contents;
     }
-    
-	// Initialize an Id for a new student
-	public String initNewID(List<Student> students) {
-		if (students == null || students.isEmpty()) {
-			return "1";
-		}
-		Collections.sort(students);
-		String lastId = students.get(students.size() - 1).getId();
-		String newId = Constants.PREFFIX_STUDENT_ID + String.valueOf(Integer.parseInt(lastId.substring(1)) + 1);
-		return newId;
-	}
+
 
 }

@@ -78,16 +78,14 @@ public class FileUtil {
 
     public static List<String>  readContents(final String fileName) throws DatabaseException{
 
-        List<String> result = null;
+        List<String> result ;
         try {
-             result =  cache.get(fileName,()->{
-             return getContents(fileName);
-            });
+             result =  cache.get(fileName,()-> getContents(fileName));
         }catch (ExecutionException e){
             e.printStackTrace();
             System.out.println("Error occurred when getting cache");
+            throw new DatabaseException(e.getMessage());
         }
-
       return result;
     }
 
