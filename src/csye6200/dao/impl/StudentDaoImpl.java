@@ -17,7 +17,7 @@ import csye6200.util.FileUtil;
 public class StudentDaoImpl implements StudentDao {
     /**
      * student csv format
-     * lName, fName, gender, age, id, fatherName, motherName, immDate
+     * lName, fName, gender, age, id, fatherName, motherName
      */
 	
     @Override
@@ -36,12 +36,18 @@ public class StudentDaoImpl implements StudentDao {
         for (String s : contents) {
             //split items by ","
             List<String> contentString = Splitter.on(Constants.STRING_DIVIDER).trimResults().splitToList(s);
-            if (contentString.size() < 8) {
+            if (contentString.size() < 7) {
                 System.out.println("wrong format of data :" + Arrays.toString(contentString.toArray()));
                 continue;
             }
-            Student student = new Student(contentString.get(0), contentString.get(1),contentString.get(2), Integer.parseInt(contentString.get(3)),
-            		contentString.get(4), contentString.get(5),contentString.get(6), contentString.get(7));
+            Student student = new Student();
+            student.setId(contentString.get(0));
+            student.setfName(contentString.get(2));
+            student.setlName(contentString.get(1));
+            student.setGender(contentString.get(3));
+            student.setAge(Integer.parseInt(contentString.get(4)));
+            student.setFatherName(contentString.get(5));
+            student.setMotherName(contentString.get(6));
             students.add(student);
         }
         return students;
@@ -60,7 +66,7 @@ public class StudentDaoImpl implements StudentDao {
 		}
 	}
 	
-    public List<String> transferStudentToString(List<Student> students){
+    private List<String> transferStudentToString(List<Student> students){
         if(students==null||students.isEmpty()){
             System.out.println("Students content is empty");
             return Lists.newArrayList();
@@ -68,11 +74,14 @@ public class StudentDaoImpl implements StudentDao {
         List<String> contents = Lists.newArrayList();
         for(Student student : students){
             StringBuilder sb = new StringBuilder();
+            sb.append(student.getId()).append(Constants.STRING_DIVIDER);
+            sb.append(student.getlName()).append(Constants.STRING_DIVIDER);
+            sb.append(student.getfName()).append(Constants.STRING_DIVIDER);
+            sb.append(student.getGender()).append(Constants.STRING_DIVIDER);
+            sb.append(student.getAge()).append(Constants.STRING_DIVIDER);
             sb.append(student.getFatherName()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getMotherName()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getImmDate());
+            sb.append(student.getMotherName());
             contents.add(sb.toString());
-
         }
         return contents;
     }

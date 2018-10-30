@@ -9,8 +9,8 @@ import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import csye6200.constants.Constants;
+import csye6200.dao.StudentDao;
 import csye6200.dao.impl.StudentDaoImpl;
-import csye6200.util.FileUtil;
 import csye6200.entity.Student;
 import csye6200.service.StudentService;
 
@@ -24,25 +24,7 @@ public class StudentServiceImpl implements StudentService{
 		return sd.readStudents();
     }
 
-    public List<String> transferStudentToString(List<Student> students){
-        if(students==null||students.isEmpty()){
-            System.out.println("Students content is empty");
-            return Lists.newArrayList();
-        }
-        List<String> contents = Lists.newArrayList();
-        for(Student student : students){
-            StringBuilder sb = new StringBuilder();
-            sb.append(student.getId()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getlName());
-            sb.append(student.getfName());
-            sb.append(student.getAge()).append(Constants.STRING_DIVIDER);
-            sb.append(Constants.ARRAY_DIVIDER_LEFT);
-            sb.append(Constants.ARRAY_DIVIDER_RIGHT).append(Constants.STRING_DIVIDER);
-            contents.add(sb.toString());
 
-        }
-        return contents;
-    }
 
 	@Override
     public Student getStudentByID(String id) {
@@ -64,43 +46,40 @@ public class StudentServiceImpl implements StudentService{
         if(students == null) {
             students = Lists.newArrayList();
         }
+        StudentDao studentDao = new StudentDaoImpl();
         String newId = initNewID(students);
         student.setId(newId);
         students.add(student);
-        List<String> contents = this.transferStudentToString(students);
-        try {
-            FileUtil.writeToFile(Constants.COURSE_FILE_NAME, contents);
-        }catch (Exception e){
-            e.printStackTrace();
-            return "";
-        }
-
-
+        studentDao.writeStudent(students);
         return newId;
     }
 
+    @Deprecated
     @Override
     public String removeStudent(int id) {
-       return "not done yet.";
+       //
+        return "not done yet.";
     }
     
     private String initNewID(List<Student> students){
         if(students == null || students.isEmpty()){
-            return Constants.PREFFIX_COURSE_ID+"1";
+            return Constants.PREFFIX_STUDENT_ID+"1";
         }
         Collections.sort(students);
         String lastId = students.get(students.size()-1).getId();
-        String newId = Constants.PREFFIX_COURSE_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
+        String newId = Constants.PREFFIX_STUDENT_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
         return newId;
     }
 
-    
+
+    @Override
     public String showCourses(Student stu){
         int stuAge = stu.getAge();
         return getCourseInfoByAgeRange(stuAge);
     }
-    
-    String getCourseInfoByAgeRange(int age){
+
+    @Override
+    public String getCourseInfoByAgeRange(int age){
         return "";
     }
     

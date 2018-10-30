@@ -11,15 +11,37 @@ import java.util.List;
  * @author Alvin
  */
 public interface StudentService {
-    //Get the list of students
+
+    /**
+     * Get the list of students
+     * @return
+     */
     List<Student> getStudent();
-    //Get certain student object by id
+
+    /**
+     *  Get certain student object by id
+     * @param id
+     * @return
+     */
     Student getStudentByID(String id);
-    //get the course student registered
-    
-    //add new students to the system
+
+
+    /**
+     *  add new students to the system
+     * @param student
+     * @return
+     */
     String addStudent(Student student);
-    //remove students from the system
+
+    /**
+     *  remove students from the system
+     * @param id
+     * @return
+     */
     String removeStudent(int id);
+
+    String showCourses(Student stu);
+
+    String getCourseInfoByAgeRange(int age);
 
 }
