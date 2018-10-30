@@ -1,9 +1,6 @@
 package csye6200.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
@@ -34,10 +31,7 @@ public class TeacherServiceImpl implements TeacherService{
 			if(temp == null || temp.isEmpty()){
 				continue;
 			}
-			for(Student s :temp){
-				s = map.get(s.getId());
-			}
-			t.setStudents(temp);
+			t.setStudents(temp.stream().map(x->map.get(x.getId())).collect(Collectors.toList()));
 		}
 		return teachers;
 	    }

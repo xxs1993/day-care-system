@@ -12,7 +12,9 @@ import csye6200.service.impl.RegisterServiceImpl;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -43,6 +45,8 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
         jScrollPanel = new javax.swing.JScrollPane();
         registrationTable = new javax.swing.JTable();
         registrationTypeCombo = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        totalLabel = new javax.swing.JLabel();
 
         setEnabled(false);
 
@@ -51,6 +55,7 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
 
         registrationTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+
             },
             new String [] {
                 "Student ID", "Registration Time"
@@ -80,32 +85,48 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
             }
         });
 
+        jButton1.setText("View Detail");
+
+        totalLabel.setText("Total: 0");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
                             .addGap(15, 15, 15)
                             .addComponent(jLabel1))
                         .addGroup(layout.createSequentialGroup()
                             .addGap(63, 63, 63)
-                            .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(71, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(totalLabel)
+                                    .addGap(419, 419, 419)
+                                    .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jButton1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
-                .addGap(7, 7, 7)
-                .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(totalLabel)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addContainerGap(57, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -132,9 +153,21 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
         RegisterService reService = new RegisterServiceImpl();
         List<Registration> list;
         if(type == 0){
-            list = reService.getAllRegistration();
+            List<Registration> all = reService.getAllRegistration();
+            if(all==null || all.isEmpty()){
+                return;
+            }
+            list = all.stream().filter((x)->{
+                if(x.getRegisterTime().getYear() == LocalDate.now().getYear()){
+                    return true;
+                }
+                return false;
+            }).collect(Collectors.toList());
         }else{
             List<String> unregisteredStudentsId = reService.getUnregisteredStudentsId();
+            if(unregisteredStudentsId==null || unregisteredStudentsId.isEmpty()){
+                return ;
+            }
             list = Lists.transform(unregisteredStudentsId,(x)->{
                 Registration re = new Registration();
                 re.setStudentId(x);
@@ -151,13 +184,16 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
             row[1] = f.getTimeDisplay();
             model.addRow(row);
         }
+        totalLabel.setText("Total: "+list.size());
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JTable registrationTable;
     private javax.swing.JComboBox<String> registrationTypeCombo;
+    private javax.swing.JLabel totalLabel;
     // End of variables declaration//GEN-END:variables
 }
