@@ -55,7 +55,8 @@ public class ManageStudentPanel extends javax.swing.JPanel {
             row[0] =s.getId();
             row[1] =s.getfName();
             row[2] =s.getlName();
-            row[3] =s.getFatherName();
+            row[3] =s.getGender();
+            row[4] = s.getAge();
             model.addRow(row);
             }
     }
@@ -87,7 +88,7 @@ public class ManageStudentPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Student ID", "Title 2", "Title 3", "Title 4"
+                "Student ID", "First Name", "Last Name", "Gender", "Age"
             }
         ));
         jScrollPane1.setViewportView(jTable1);

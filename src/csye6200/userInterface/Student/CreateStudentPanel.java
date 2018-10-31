@@ -224,14 +224,15 @@ public class CreateStudentPanel extends javax.swing.JPanel {
         student.setAge(Integer.parseInt(txtAge.getText()));
         student.setFatherName(txtDad.getText());
         student.setMotherName(txtMom.getText());
-        
+        String id = studentService.addStudent(student);
+        student.setId(id);
         LocalDate date= LocalDate.now();
         re.setStudentId(student.getId());
         re.setTimeDisplay(DateUtil.dateToString(date));
         re.setRegisterTime(date);
         
         registerService.addRegistrationRecord(re);
-        studentService.addStudent(student);
+
         JOptionPane.showMessageDialog(null,"Student Enrolled!!");
                 
     }//GEN-LAST:event_btnEnrollActionPerformed

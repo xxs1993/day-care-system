@@ -7,6 +7,8 @@ package csye6200.userInterface;
  */
 import csye6200.entity.*;
 import csye6200.service.impl.ClassroomServiceImpl;
+import csye6200.service.impl.RegisterServiceImpl;
+import csye6200.service.impl.StudentServiceImpl;
 import csye6200.timer.RegistrationTimer;
 import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentPanel;
@@ -134,7 +136,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTeacherActionPerformed
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        ManageStudentPanel msp = new ManageStudentPanel(RightPanel);
+        ManageStudentPanel msp = new ManageStudentPanel(RightPanel,new StudentServiceImpl(),new RegisterServiceImpl());
         RightPanel.add("AgencyWorkAreaPanel", msp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
