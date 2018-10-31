@@ -54,12 +54,59 @@ public class StudentServiceImpl implements StudentService{
         return newId;
     }
 
-    @Deprecated
+
     @Override
-    public String removeStudent(int id) {
-       //
-        return "not done yet.";
+    public boolean removeStudent(String id) {
+		if(Strings.isNullOrEmpty(id)){
+			return false;
+		}
+		boolean result = false;
+		List<Student> list = this.getStudent();
+		if(list == null || list.isEmpty()){
+			return result;
+		}
+		for(Student t : list){
+			if(id.equals(t.getId())){
+				list.remove(t);
+				result = true;
+				break;
+			}
+		}
+		if(!result) {
+			return result;
+		}
+		// instantiate an TeacherImpl object to call write method in ClassroomDao
+		StudentDaoImpl tdi = new StudentDaoImpl();
+		return tdi.writeStudent(list);
     }
+
+    
+    @Override
+    public boolean updateStudent(Student student){
+       if(student == null || Strings.isNullOrEmpty(student.getId())){
+			return false;
+		}
+		List<Student> list = this.getStudent();
+		if(list == null ||list.isEmpty()){
+			return false;
+		}
+		boolean result = false;
+		for(Student t : list){
+			if(student.getId().equals(t.getId())){
+				Collections.replaceAll(list,t,student);
+				result = true;
+				break;
+			}
+		}
+		if(!result){
+			return false;
+		}
+		StudentDaoImpl tdi = new StudentDaoImpl();
+		return tdi.writeStudent(list);
+        
+    }
+    
+
     
     private String initNewID(List<Student> students){
         if(students == null || students.isEmpty()){
@@ -70,7 +117,8 @@ public class StudentServiceImpl implements StudentService{
         String newId = Constants.PREFFIX_STUDENT_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
         return newId;
     }
-
+    
+    
 
     @Override
     public String showCourses(Student stu){
