@@ -33,7 +33,9 @@ public class ManageStudentPanel extends javax.swing.JPanel {
      * Creates new form StudentWorkPanel
      */
 
-    public ManageStudentPanel(JPanel rp, StudentServiceImpl ss, RegisterService re) {
+
+
+    public ManageStudentPanel(JPanel rp, StudentService ss, RegisterService re) {
         initComponents();
         RightPanel = rp;
         studentService=ss;
