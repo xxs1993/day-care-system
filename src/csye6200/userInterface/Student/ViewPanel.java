@@ -338,7 +338,7 @@ public class ViewPanel extends javax.swing.JPanel {
         student.setGender(txtGender.getText());
         student.setAge(Integer.parseInt(txtAge.getText()));
         //need updateStudent api;
-        studentService.updateStudent(student);
+//        studentService.updateStudent(student);
         JOptionPane.showMessageDialog(null, "Update Successfully!!");
     }//GEN-LAST:event_btnSaveActionPerformed
 

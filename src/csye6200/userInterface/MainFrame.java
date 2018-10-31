@@ -6,8 +6,6 @@ package csye6200.userInterface;
  * and open the template in the editor.
  */
 import csye6200.entity.*;
-import csye6200.service.RegisterService;
-import csye6200.service.StudentService;
 import csye6200.service.impl.ClassroomServiceImpl;
 import csye6200.service.impl.RegisterServiceImpl;
 import csye6200.service.impl.StudentServiceImpl;
@@ -31,8 +29,6 @@ public class MainFrame extends javax.swing.JFrame {
     private ClassRoom cr;
     private Teacher t;
     private ScheduledExecutorService pool;
-    private StudentService ss;
-    private RegisterService re;
 
     /**
      * Creates new form Main
@@ -44,8 +40,6 @@ public class MainFrame extends javax.swing.JFrame {
         pool.scheduleAtFixedRate(new RegistrationTimer(), 1, 24, TimeUnit.HOURS);
         tsi = new TeacherServiceImpl();
         crsi = new ClassroomServiceImpl();
-        ss = new StudentServiceImpl();
-        re = new RegisterServiceImpl();
     }
 
     /**
@@ -142,7 +136,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTeacherActionPerformed
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        ManageStudentPanel msp = new ManageStudentPanel(RightPanel,ss,re);
+        ManageStudentPanel msp = new ManageStudentPanel(RightPanel,new StudentServiceImpl(),new RegisterServiceImpl());
         RightPanel.add("AgencyWorkAreaPanel", msp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
