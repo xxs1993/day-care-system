@@ -11,6 +11,7 @@ import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -81,13 +82,14 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
             if(students==null||students.isEmpty()){
                 return;
             }
+            System.out.println(students.size());
             for(Student s: students){
             row[0] =s.getId();
             row[1] =s.getfName();
             row[2] =s.getlName();
             model.addRow(row);
+            
             }
-        
 
     }
     /**

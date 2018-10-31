@@ -248,8 +248,8 @@ public class ViewPanel extends javax.swing.JPanel {
         RightPanel.remove(this);
         Component[] componentArray = RightPanel.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        ManageTeacherPanel manageTeacherPanel = (ManageTeacherPanel) component;
-        manageTeacherPanel.populateTable();
+        ManageStudentPanel manageStudentPanel = (ManageStudentPanel) component;
+        manageStudentPanel.populateTable();
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.previous(RightPanel);
     }

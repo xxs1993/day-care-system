@@ -10,6 +10,7 @@ import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.TeacherService;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,6 +58,8 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
             row[3] =MAP.get(t.getAgeRange());
             model.addRow(row);
             }
+                System.out.println(Arrays.toString(teacherService.getTeacher().toArray()));
+
         }
 
 

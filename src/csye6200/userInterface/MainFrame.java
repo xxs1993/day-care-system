@@ -7,14 +7,11 @@ package csye6200.userInterface;
  */
 import csye6200.entity.*;
 import csye6200.service.impl.ClassroomServiceImpl;
-import csye6200.service.impl.StudentServiceImpl;
-import csye6200.service.impl.VaccineServiceImpl;
 import csye6200.timer.RegistrationTimer;
 import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentPanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
 import csye6200.service.impl.TeacherServiceImpl;
-import csye6200.userInterface.immunization.ManageImmunizationPanel;
 import csye6200.userInterface.registration.ManageRegistrationPanel;
 import java.awt.CardLayout;
 import java.util.concurrent.*;
@@ -137,7 +134,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTeacherActionPerformed
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        ManageStudentPanel msp = new ManageStudentPanel(RightPanel,new StudentServiceImpl());
+        ManageStudentPanel msp = new ManageStudentPanel(RightPanel);
         RightPanel.add("AgencyWorkAreaPanel", msp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
@@ -151,10 +148,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClassroomActionPerformed
 
     private void btnImmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImmuActionPerformed
-        ManageImmunizationPanel mcp = new ManageImmunizationPanel(RightPanel);
-        RightPanel.add("AgencyWorkAreaPanel", mcp);
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        JOptionPane.showMessageDialog(null, "123");
     }//GEN-LAST:event_btnImmuActionPerformed
 
     private void btnRegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistActionPerformed

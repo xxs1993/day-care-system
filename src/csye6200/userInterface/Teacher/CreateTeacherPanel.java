@@ -87,6 +87,12 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Teacher Information");
 
+        txtFirstName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFirstNameActionPerformed(evt);
+            }
+        });
+
         btnBack.setText("<<Back  ");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -225,6 +231,10 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
     private void comboAgeRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAgeRangeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboAgeRangeActionPerformed
+
+    private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFirstNameActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

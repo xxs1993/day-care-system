@@ -5,10 +5,14 @@
  */
 package csye6200.userInterface.Student;
 
+import csye6200.entity.Registration;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.StudentService;
+
 import csye6200.entity.Student;
+import csye6200.service.RegisterService;
+import csye6200.service.impl.StudentServiceImpl;
 //import csye6200.entity.Teacher;
 import csye6200.userInterface.Student.ViewPanel;
 import java.util.List;
@@ -24,16 +28,19 @@ public class ManageStudentPanel extends javax.swing.JPanel {
     JPanel RightPanel;
     StudentService studentService;
     Student student;
+    RegisterService registerService;
     /**
      * Creates new form StudentWorkPanel
      */
 
-    public ManageStudentPanel(JPanel rp, StudentService ss) {
+    public ManageStudentPanel(JPanel rp, StudentServiceImpl ss, RegisterService re) {
         initComponents();
         RightPanel = rp;
         studentService=ss;
-        populateTable();
-    }
+        registerService=re;
+        populateTable();    }
+
+ 
 
     public void populateTable() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
@@ -146,7 +153,7 @@ public class ManageStudentPanel extends javax.swing.JPanel {
 
     //enroll button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CreateStudentPanel csp = new CreateStudentPanel(RightPanel);
+        CreateStudentPanel csp = new CreateStudentPanel(RightPanel, studentService, registerService);
         RightPanel.add("CreateNewStudentPanel", csp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
