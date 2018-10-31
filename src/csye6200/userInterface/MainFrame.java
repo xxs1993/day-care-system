@@ -5,9 +5,8 @@ package csye6200.userInterface;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
-import csye6200.entity.Teacher;
+import csye6200.entity.*;
+import csye6200.service.impl.ClassroomServiceImpl;
 import csye6200.timer.RegistrationTimer;
 import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentPanel;
@@ -22,9 +21,13 @@ import javax.swing.JOptionPane;
  * @author Alvin
  */
 public class MainFrame extends javax.swing.JFrame {
+
     private TeacherServiceImpl tsi;
+    private ClassroomServiceImpl crsi;
+    private ClassRoom cr;
     private Teacher t;
     private ScheduledExecutorService pool;
+
     /**
      * Creates new form Main
      */
@@ -32,8 +35,9 @@ public class MainFrame extends javax.swing.JFrame {
         initComponents();
         pool = Executors.newScheduledThreadPool(3);
         //TODO:delay changes to 0 when in presentation
-        pool.scheduleAtFixedRate(new RegistrationTimer(),1,24, TimeUnit.HOURS);
-        tsi=new TeacherServiceImpl();
+        pool.scheduleAtFixedRate(new RegistrationTimer(), 1, 24, TimeUnit.HOURS);
+        tsi = new TeacherServiceImpl();
+        crsi = new ClassroomServiceImpl();
     }
 
     /**
@@ -137,7 +141,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnStudentActionPerformed
 
     private void btnClassroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassroomActionPerformed
-        ManageClassroomPanel mcp = new ManageClassroomPanel(RightPanel);
+        ManageClassroomPanel mcp = new ManageClassroomPanel(RightPanel, crsi);
         RightPanel.add("AgencyWorkAreaPanel", mcp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
@@ -149,7 +153,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnRegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistActionPerformed
         // TODO add your handling code here:
-         ManageRegistrationPanel mcp = new ManageRegistrationPanel(RightPanel);
+        ManageRegistrationPanel mcp = new ManageRegistrationPanel(RightPanel);
         RightPanel.add("RegisterPanel", mcp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);

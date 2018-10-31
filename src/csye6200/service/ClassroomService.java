@@ -34,10 +34,12 @@ public interface ClassroomService {
      int getCurrentTeacherNumber();
 
      // Add a new classroom to the sytem
-     boolean addClassroom(ClassRoom classroom);
+     String addClassroom(ClassRoom classroom);
      
      // Remove a classroom from the sytem
-     boolean removeClassroom(String id);
+     String removeClassroom(String id);
+     
+     String updateClassroom(String id);
 
      String addTeacher(Teacher teacher,String id);
 

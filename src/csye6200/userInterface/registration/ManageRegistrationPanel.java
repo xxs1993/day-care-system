@@ -5,6 +5,7 @@
  */
 package csye6200.userInterface.registration;
 
+import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import csye6200.entity.Registration;
 import csye6200.service.RegisterService;
@@ -14,6 +15,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.util.List;
+//import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -168,12 +170,21 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
             if(unregisteredStudentsId==null || unregisteredStudentsId.isEmpty()){
                 return ;
             }
-            list = Lists.transform(unregisteredStudentsId,(x)->{
+            Function<String, Registration> f = new Function<String, Registration>() {
+            public Registration apply(String x) {
                 Registration re = new Registration();
                 re.setStudentId(x);
                 re.setTimeDisplay("");
-                return re;
-            });
+                return re; 
+            }
+        };
+            list = Lists.transform(unregisteredStudentsId,f);
+//            list = Lists.transform(unregisteredStudentsId,(x)->{
+//                Registration re = new Registration();
+//                re.setStudentId(x);
+//                re.setTimeDisplay("");
+//                return re; 
+//            });
         }
         if(list == null || list.isEmpty()){
             return;
