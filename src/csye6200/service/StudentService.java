@@ -38,7 +38,9 @@ public interface StudentService {
      * @param id
      * @return
      */
-    String removeStudent(int id);
+    boolean removeStudent(String id);
+    
+    boolean updateStudent(Student student);
 
     String showCourses(Student stu);
 
