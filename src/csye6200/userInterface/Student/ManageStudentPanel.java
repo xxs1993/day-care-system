@@ -15,6 +15,8 @@ import csye6200.service.RegisterService;
 import csye6200.service.impl.StudentServiceImpl;
 //import csye6200.entity.Teacher;
 import csye6200.userInterface.Student.ViewPanel;
+
+import java.util.Collections;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -50,7 +52,10 @@ public class ManageStudentPanel extends javax.swing.JPanel {
             model.removeRow(i);
         }
         
-        for(Student s : studentService.getStudent()) {
+        List<Student> sort = studentService.getStudent();
+        if(sort == null || sort.isEmpty()) return;
+        Collections.sort(sort);
+        for(Student s : sort) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =s.getId();
             row[1] =s.getfName();
