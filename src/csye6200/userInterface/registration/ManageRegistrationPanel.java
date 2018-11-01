@@ -8,8 +8,13 @@ package csye6200.userInterface.registration;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import csye6200.entity.Registration;
+import csye6200.entity.Student;
 import csye6200.service.RegisterService;
+import csye6200.service.StudentService;
 import csye6200.service.impl.RegisterServiceImpl;
+import csye6200.service.impl.StudentServiceImpl;
+import csye6200.userInterface.Student.ViewPanel;
+import java.awt.CardLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -47,8 +52,9 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
         jScrollPanel = new javax.swing.JScrollPane();
         registrationTable = new javax.swing.JTable();
         registrationTypeCombo = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        viewDetailBtn = new javax.swing.JButton();
         totalLabel = new javax.swing.JLabel();
+        send = new javax.swing.JButton();
 
         setEnabled(false);
 
@@ -87,48 +93,57 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setText("View Detail");
+        viewDetailBtn.setText("View Detail");
+        viewDetailBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewDetailBtnActionPerformed(evt);
+            }
+        });
 
         totalLabel.setText("Total: 0");
+
+        send.setText("jButton2");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(15, 15, 15)
-                            .addComponent(jLabel1))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(63, 63, 63)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(totalLabel)
-                                    .addGap(419, 419, 419)
-                                    .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 523, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(jButton1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(send)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(viewDetailBtn))
+                            .addComponent(jScrollPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(totalLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(63, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(totalLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(totalLabel)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
-                .addContainerGap(57, Short.MAX_VALUE))
+                        .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(viewDetailBtn)
+                            .addComponent(send)))
+                    .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -142,6 +157,26 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
         int i = registrationTypeCombo.getSelectedIndex();
         populateTable(i);
     }//GEN-LAST:event_registrationTypeComboActionPerformed
+
+    private void viewDetailBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewDetailBtnActionPerformed
+        // TODO add your handling code here:
+        int row = registrationTable.getSelectedRow();
+        if(row<0) {
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String id = (String)registrationTable.getValueAt(row, 0);
+        StudentService studentService = new StudentServiceImpl();
+        Student student = studentService.getStudentByID(id);
+        if(student == null){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+         ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
+        rightPanel.add("ViewPanel", vp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.next(rightPanel);
+    }//GEN-LAST:event_viewDetailBtnActionPerformed
 
     public void populateTable(int type){
 
@@ -160,31 +195,20 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
                 return;
             }
             list = all.stream().filter((x)->{
-                if(x.getRegisterTime().getYear() == LocalDate.now().getYear()){
-                    return true;
-                }
-                return false;
+                return x.getRegisterTime().getYear() == LocalDate.now().getYear();
             }).collect(Collectors.toList());
         }else{
             List<String> unregisteredStudentsId = reService.getUnregisteredStudentsId();
             if(unregisteredStudentsId==null || unregisteredStudentsId.isEmpty()){
                 return ;
             }
-            Function<String, Registration> f = new Function<String, Registration>() {
-            public Registration apply(String x) {
+
+            list = Lists.transform(unregisteredStudentsId,(x)->{
                 Registration re = new Registration();
                 re.setStudentId(x);
                 re.setTimeDisplay("");
-                return re; 
-            }
-        };
-            list = Lists.transform(unregisteredStudentsId,f);
-//            list = Lists.transform(unregisteredStudentsId,(x)->{
-//                Registration re = new Registration();
-//                re.setStudentId(x);
-//                re.setTimeDisplay("");
-//                return re; 
-//            });
+                return re;
+            });
         }
         if(list == null || list.isEmpty()){
             return;
@@ -200,11 +224,12 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JTable registrationTable;
     private javax.swing.JComboBox<String> registrationTypeCombo;
+    private javax.swing.JButton send;
     private javax.swing.JLabel totalLabel;
+    private javax.swing.JButton viewDetailBtn;
     // End of variables declaration//GEN-END:variables
 }
