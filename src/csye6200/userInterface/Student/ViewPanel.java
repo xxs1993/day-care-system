@@ -6,28 +6,26 @@
 package csye6200.userInterface.Student;
 
 import com.google.common.base.Strings;
-import csye6200.entity.ClassRoom;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
-import csye6200.entity.Teacher;
 import csye6200.service.StudentService;
-import csye6200.service.TeacherService;
 import csye6200.service.RegisterService;
 import csye6200.service.impl.RegisterServiceImpl;
-import csye6200.userInterface.Teacher.ManageTeacherPanel;
+import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
+
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
-import static javax.swing.text.html.HTML.Tag.MAP;
 
 /**
  *
  * @author jinyimu
  */
-public class ViewPanel extends javax.swing.JPanel {
+public class ViewPanel extends DetailPanel {
      JPanel RightPanel;
     StudentService studentService;
     Student student;
@@ -292,17 +290,9 @@ public class ViewPanel extends javax.swing.JPanel {
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDActionPerformed
-     private void backAction() {
-        RightPanel.remove(this);
-        Component[] componentArray = RightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageStudentPanel manageStudentPanel = (ManageStudentPanel) component;
-        manageStudentPanel.populateTable();
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.previous(RightPanel);
-    }
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        backAction();
+        backAction(RightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed

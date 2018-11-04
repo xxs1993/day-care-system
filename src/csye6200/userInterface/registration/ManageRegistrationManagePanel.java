@@ -5,7 +5,6 @@
  */
 package csye6200.userInterface.registration;
 
-import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
@@ -13,6 +12,7 @@ import csye6200.service.RegisterService;
 import csye6200.service.StudentService;
 import csye6200.service.impl.RegisterServiceImpl;
 import csye6200.service.impl.StudentServiceImpl;
+import csye6200.userInterface.AbstractManagePanel;
 import csye6200.userInterface.Student.ViewPanel;
 import java.awt.CardLayout;
 
@@ -27,15 +27,20 @@ import java.util.stream.Collectors;
  *
  * @author Administrator
  */
-public class ManageRegistrationPanel extends javax.swing.JPanel {
+public class ManageRegistrationManagePanel extends AbstractManagePanel {
 
     private JPanel rightPanel;
     /**
-     * Creates new form ManageRegistrationPanel
+     * Creates new form ManageRegistrationManagePanel
      */
-    public ManageRegistrationPanel(JPanel rightPanel) {
+    public ManageRegistrationManagePanel(JPanel rightPanel) {
         initComponents();
         this.rightPanel = rightPanel;
+        populateTable(0);
+    }
+
+    @Override
+    public void populateTable(){
         populateTable(0);
     }
 
@@ -173,6 +178,7 @@ public class ManageRegistrationPanel extends javax.swing.JPanel {
             return;
         }
          ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
+//        rightPanel.remove(this);
         rightPanel.add("ViewPanel", vp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);

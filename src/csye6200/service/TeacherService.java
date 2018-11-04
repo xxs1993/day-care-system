@@ -17,11 +17,17 @@ public interface TeacherService {
     
     // add a student to teacher;
     String addStudent(Student student,String id);
+
+    String addStudent(Student student,Teacher teacher);
     //delete a student from teacher;
     String deleteStudent(String studentId, String id);
     //get the student list;
-    List<Student> getStudent(String id);
+    List<Student> getStudentByTeacherId(String id);
 
     boolean updateTeacher(Teacher teacher);
+
+    List<Teacher> getTeachersByAgeRange(int ageRange);
+
+
     
 }

@@ -5,16 +5,14 @@
  */
 package csye6200.userInterface.Student;
 
-import csye6200.entity.Registration;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.StudentService;
 
 import csye6200.entity.Student;
 import csye6200.service.RegisterService;
-import csye6200.service.impl.StudentServiceImpl;
 //import csye6200.entity.Teacher;
-import csye6200.userInterface.Student.ViewPanel;
+import csye6200.userInterface.AbstractManagePanel;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +24,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Alvin
  */
-public class ManageStudentPanel extends javax.swing.JPanel {
+public class ManageStudentManagePanel extends AbstractManagePanel {
     JPanel RightPanel;
     StudentService studentService;
     Student student;
@@ -37,7 +35,7 @@ public class ManageStudentPanel extends javax.swing.JPanel {
 
 
 
-    public ManageStudentPanel(JPanel rp, StudentService ss, RegisterService re) {
+    public ManageStudentManagePanel(JPanel rp, StudentService ss, RegisterService re) {
         initComponents();
         RightPanel = rp;
         studentService=ss;

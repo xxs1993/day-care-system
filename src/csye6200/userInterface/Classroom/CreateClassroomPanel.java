@@ -8,6 +8,7 @@ package csye6200.userInterface.Classroom;
 import com.google.common.base.Strings;
 import csye6200.service.ClassroomService;
 import csye6200.entity.ClassRoom;
+import csye6200.userInterface.DetailPanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -19,7 +20,7 @@ import javax.swing.JPanel;
 /**
  * @author Alvin
  */
-public class CreateClassroomPanel extends javax.swing.JPanel {
+public class CreateClassroomPanel extends DetailPanel {
     JPanel RightPanel;
     ClassroomService classroomService;
     ClassRoom classroom;
@@ -143,21 +144,13 @@ public class CreateClassroomPanel extends javax.swing.JPanel {
                 .addContainerGap(306, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-private void backAction() {
-        RightPanel.remove(this);
-        Component[] componentArray = RightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageClassroomPanel manageClassroomPanel = (ManageClassroomPanel) component;
-        manageClassroomPanel.populateTable();
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.previous(RightPanel);
-    }
+
     private void comboAgeRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAgeRangeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_comboAgeRangeActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        backAction();
+        backAction(RightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed

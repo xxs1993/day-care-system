@@ -9,6 +9,8 @@ import csye6200.entity.ClassRoom;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.ClassroomService;
+import csye6200.userInterface.DetailPanel;
+
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alvin
  */
-public class ViewClassroomPanel extends javax.swing.JPanel {
+public class ViewClassroomPanel extends DetailPanel {
 
     JPanel RightPanel;
     ClassroomService classroomService;
@@ -301,17 +303,9 @@ public class ViewClassroomPanel extends javax.swing.JPanel {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void backAction() {
-        RightPanel.remove(this);
-        Component[] componentArray = RightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageClassroomPanel manageClassroomPanel = (ManageClassroomPanel) component;
-        manageClassroomPanel.populateTable();
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.previous(RightPanel);
-    }
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        backAction();
+        backAction(RightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

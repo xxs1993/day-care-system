@@ -7,6 +7,8 @@ package csye6200.userInterface.Classroom;
 
 import csye6200.entity.ClassRoom;
 import csye6200.service.ClassroomService;
+import csye6200.userInterface.AbstractManagePanel;
+
 import java.awt.CardLayout;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Alvin
  */
-public class ManageClassroomPanel extends javax.swing.JPanel {
+public class ManageClassroomPanel extends AbstractManagePanel {
 
     JPanel RightPanel;
     ClassroomService classroomService;

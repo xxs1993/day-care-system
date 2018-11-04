@@ -12,6 +12,9 @@ import java.awt.Component;
 import javax.swing.JPanel;
 import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
+import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
+
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -19,7 +22,7 @@ import javax.swing.JOptionPane;
 /**
  * @author Alvin
  */
-public class CreateTeacherPanel extends javax.swing.JPanel {
+public class CreateTeacherPanel extends DetailPanel {
     JPanel RightPanel;
     TeacherService teacherService;
     Teacher teacher;
@@ -179,18 +182,10 @@ public class CreateTeacherPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backAction() {
-        RightPanel.remove(this);
-        Component[] componentArray = RightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageTeacherPanel manageTeacherPanel = (ManageTeacherPanel) component;
-        manageTeacherPanel.populateTable();
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.previous(RightPanel);
-    }
+
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        backAction();
+        backAction(RightPanel);
 
     }//GEN-LAST:event_btnBackActionPerformed
 

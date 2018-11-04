@@ -8,21 +8,20 @@ package csye6200.userInterface.Student;
 import com.google.common.base.Strings;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
-import csye6200.entity.Teacher;
 import csye6200.service.StudentService;
 import csye6200.service.RegisterService;
+import csye6200.userInterface.DetailPanel;
 import csye6200.util.DateUtil;
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import static javax.swing.text.html.HTML.Tag.MAP;
 
 /**
  * @author Alvin
  */
-public class CreateStudentPanel extends javax.swing.JPanel {
+public class CreateStudentPanel extends DetailPanel {
     JPanel RightPanel;
     StudentService studentService;
     Student student;
@@ -181,18 +180,10 @@ public class CreateStudentPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void backAction() {
-        RightPanel.remove(this);
-        Component[] componentArray = RightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageStudentPanel manageStudentPanel = (ManageStudentPanel) component;
-        manageStudentPanel.populateTable();
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.previous(RightPanel);
-    }
+
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        backAction();
+        backAction(RightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed

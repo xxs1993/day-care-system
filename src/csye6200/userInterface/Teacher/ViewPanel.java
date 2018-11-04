@@ -9,6 +9,8 @@ import com.google.common.base.Strings;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
+import csye6200.userInterface.DetailPanel;
+
 import java.awt.CardLayout;
 import java.awt.Component;
 import java.util.Arrays;
@@ -23,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Alvin
  */
-public class ViewPanel extends javax.swing.JPanel {
+public class ViewPanel extends DetailPanel {
     JPanel RightPanel;
     TeacherService teacherService;
     Teacher teacher;
@@ -288,17 +290,9 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
                 .addContainerGap(106, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-    private void backAction() {
-        RightPanel.remove(this);
-        Component[] componentArray = RightPanel.getComponents();
-        Component component = componentArray[componentArray.length - 1];
-        ManageTeacherPanel manageTeacherPanel = (ManageTeacherPanel) component;
-        manageTeacherPanel.populateTable();
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.previous(RightPanel);
-    }
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        backAction();
+        backAction(RightPanel);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed

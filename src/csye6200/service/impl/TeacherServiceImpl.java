@@ -11,6 +11,7 @@ import csye6200.dao.impl.TeacherDaoImpl;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
+import csye6200.util.RegulationUtil;
 
 public class TeacherServiceImpl implements TeacherService{
 
@@ -98,13 +99,19 @@ public class TeacherServiceImpl implements TeacherService{
 	}
 	@Override
 	public String addStudent(Student student,String id){
-		if(student == null || Strings.isNullOrEmpty(id)){
-			return "Invalid params";
+		if(Strings.isNullOrEmpty(id) || student == null){
+			return "No Student or Teacher found";
 		}
-		Teacher teacher = this.getTeacherById(id);
-		if(teacher == null){
-			return String.format("No teacher record found by id:%s",id);
+		Teacher t = this.getTeacherById(id);
+		return addStudent(student,t);
+	}
+
+    @Override
+	public String addStudent(Student student,Teacher teacher){
+		if(student == null || teacher == null || Strings.isNullOrEmpty(teacher.getId())){
+			return "No Student or Teacher found";
 		}
+
 		List<Student> studentList = teacher.getStudents();
 		if(studentList == null){
 			studentList = Lists.newArrayList();
@@ -112,18 +119,18 @@ public class TeacherServiceImpl implements TeacherService{
 		for (Student t : studentList) {
 			if (t.getId() == student.getId()) {
 				return "Student " + student.getlName()+student.getfName() + "with Id " + student.getId()
-						+ " has been assigned to Teacher " + id;
+						+ " has been assigned to Teacher " + teacher.getId();
 			}
 		}
 		studentList.add(student);
 		teacher.setStudents(studentList);
 		this.updateTeacher(teacher);
-		return "Student" + student.getlName()+student.getfName() + " has been assigned to Teacher " + id;
+		return "Student" + student.getlName()+student.getfName() + " has been assigned to Teacher " + teacher.getId();
 	}
-	
-	
+
+
 	@Override
-	public List<Student> getStudent(String id){
+	public List<Student> getStudentByTeacherId(String id){
 		return this.getTeacherById(id).getStudents();
 	}
 	//List<Student> getStudent(String id);
@@ -161,7 +168,7 @@ public class TeacherServiceImpl implements TeacherService{
 		if (teachers == null)
 			return "Please enter a correct teacher Id!";
 		else {
-			List<Student> students = this.getStudent(id);
+			List<Student> students = this.getStudentByTeacherId(id);
 			if(students == null || students.isEmpty()){
 			    return "No students found";
             }
@@ -200,6 +207,18 @@ public class TeacherServiceImpl implements TeacherService{
 		TeacherDaoImpl tdi = new TeacherDaoImpl();
 		return tdi.writeTeacher(list);
 	}
-	
+
+
+	@Override
+	public List<Teacher> getTeachersByAgeRange(int ageRange){
+		List<Teacher> teachers = this.getTeacher();
+		if(teachers ==null || teachers.isEmpty()){
+			return null;
+		}
+		final int ageRangeType = RegulationUtil.getAgeRangeType(ageRange);
+
+		List<Teacher> result = teachers.stream().filter((x)-> RegulationUtil.getAgeRangeType(x.getAgeRange()) == ageRangeType).collect(Collectors.toList());
+		return result;
+	}
 	
 }

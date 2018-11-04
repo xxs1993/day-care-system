@@ -10,6 +10,8 @@ import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.TeacherService;
+import csye6200.userInterface.AbstractManagePanel;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +22,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * @author Alvin
  */
-public class ManageTeacherPanel extends javax.swing.JPanel {
+public class ManageTeacherPanel extends AbstractManagePanel {
     JPanel RightPanel;
     TeacherService teacherService;
     Teacher teacher;
@@ -179,7 +181,7 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
             return;
         }
         String ts = (String)tblTeacher.getValueAt(row, 0);
-        List<Student> getS=teacherService.getStudent(ts);
+        List<Student> getS=teacherService.getStudentByTeacherId(ts);
         if(getS==null || getS.isEmpty()){
         teacherService.deleteTeacher(ts);
         }else{

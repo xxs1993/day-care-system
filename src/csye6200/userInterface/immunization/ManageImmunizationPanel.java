@@ -9,6 +9,7 @@ import com.google.common.collect.Lists;
 import csye6200.entity.Vaccine;
 import csye6200.service.VaccineService;
 import csye6200.service.impl.VaccineServiceImpl;
+import csye6200.userInterface.AbstractManagePanel;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,16 +21,16 @@ import java.util.stream.Collectors;
  *
  * @author Administrator
  */
-public class ManageImmunizationPanel extends javax.swing.JPanel {
+public class ManageImmunizationPanel extends AbstractManagePanel {
 
     private JPanel rightPanel;
     /**
-     * Creates new form ManageRegistrationPanel
+     * Creates new form ManageRegistrationManagePanel
      */
     public ManageImmunizationPanel(JPanel rightPanel) {
         initComponents();
         this.rightPanel = rightPanel;
-        populateTable(0);
+        populateTable();
     }
 
     /**
@@ -134,6 +135,10 @@ public class ManageImmunizationPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+
+    public void populateTable(){
+        populateTable(0);
+    }
 
     /**
      * combo select
