@@ -40,17 +40,17 @@ public class VaccineServiceImpl implements VaccineService {
         return map;
     }
     @Override
-    public List<List<Vaccine>>getVaccineRecordByStudentId(String studentId){
-        List<List<Vaccine>> res = new ArrayList<>();
+    public List<Vaccine>getVaccineRecordByStudentId(String studentId){
+        List<Vaccine> res = new ArrayList<>();
         List<Vaccine> list = this.getAllVaccination();
         if (list == null || list.isEmpty()) {
             return res;
         }
         for (Vaccine vaccine : list) {
-            List<Vaccine> temp = Lists.newArrayList();
+            //List<Vaccine> temp = Lists.newArrayList();
             if (vaccine.getStudentId()==studentId) {
-                temp.add(vaccine);
-                res.add(temp);
+                //temp.add(vaccine);
+                res.add(vaccine);
             }
 
         }

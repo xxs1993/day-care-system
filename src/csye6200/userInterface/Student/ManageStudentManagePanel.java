@@ -81,6 +81,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         jButton1 = new javax.swing.JButton();
         btnView = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Student ");
@@ -105,7 +106,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             }
         });
 
-        btnView.setText("View Detail");
+        btnView.setText("General Detail");
         btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnViewActionPerformed(evt);
@@ -116,6 +117,13 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Immu Detail");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -132,6 +140,8 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnView, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
@@ -150,7 +160,8 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton4)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnView)
                 .addContainerGap(29, Short.MAX_VALUE))
@@ -184,7 +195,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         int row = jTable1.getSelectedRow();
         if(row<0) {
-             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+             JOptionPane.showMessageDialog(null, "Please select a student first", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
         String ts = (String)jTable1.getValueAt(row, 0);
@@ -194,10 +205,25 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         populateTable();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        int row = jTable1.getSelectedRow();
+        if(row<0) {
+             JOptionPane.showMessageDialog(null, "Please select a student first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String ts = (String)jTable1.getValueAt(row, 0);
+        Student t = studentService.getStudentByID(ts);
+        ImmuPanel ip = new ImmuPanel(RightPanel, studentService, t);
+        RightPanel.add("ImmuPanel", ip);
+        CardLayout layout = (CardLayout) RightPanel.getLayout();
+        layout.next(RightPanel);// TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnView;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
