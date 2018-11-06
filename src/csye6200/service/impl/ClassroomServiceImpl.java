@@ -23,14 +23,28 @@ import csye6200.entity.ClassRoom;
  * @author karen classroom data: id,ageRange,capacity,[teacherId1;teacherId2]
  */
 public class ClassroomServiceImpl implements ClassroomService {
-
+    
     @Override
     public List<ClassRoom> getClassrooms() {
         // instantiate an ClassroomDaoImpl object to call read method in ClassroomDao
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
-        return cdi.readClassrooms();
+        List<ClassRoom> classrooms = cdi.readClassrooms();
+        for (ClassRoom cr : classrooms) {
+            List<Teacher> crTeachers = cr.getTeachers();
+            TeacherServiceImpl teacherServiceImpl = new TeacherServiceImpl();
+            List<Teacher> allTeachers = teacherServiceImpl.getTeacher();
+            Map<String, Teacher> teacherMap = allTeachers.stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
+            for (Teacher t : crTeachers) {
+                if (teacherMap.get(t.getId()) != null) {
+                    t = teacherMap.get(t.getId());
+                }
+            }
+            cr.setTeachers(crTeachers);
+        }
+        
+        return classrooms;
     }
-
+    
     public ClassRoom getClassroomById(String id) {
         if (Strings.isNullOrEmpty(id)) {
             return null;
@@ -38,15 +52,17 @@ public class ClassroomServiceImpl implements ClassroomService {
         // put all classrooms into a Map with structure of <classroom id, classroom object>
         Map<String, ClassRoom> map = getClassrooms().stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
         return map.get(id);
-
+        
     }
-
-    ;
 
 	public String addTeacher(Teacher teacher, String id) {
         // TODO: use the APIs in TeacherDao
+        if (Strings.isNullOrEmpty(id) || teacher == null) {
+            return null;
+        }
         List<Teacher> teacherList = this.getClassroomById(id).getTeachers();
-        for (Teacher t : teacherList) {
+        if (teacherList != null) {
+            for (Teacher t : teacherList) {
             if (t.getId() == teacher.getId()) {
                 return "Teacher " + teacher.getlName() + teacher.getfName() + "with Id " + teacher.getId()
                         + " has been assigned to classroom " + id;
@@ -55,23 +71,35 @@ public class ClassroomServiceImpl implements ClassroomService {
         teacherList.add(teacher);
         this.getClassroomById(id).setTeachers(teacherList);
         return "Teacher " + teacher.getfName() + " has been assigned to classroom " + id;
+        }
+        else return null;
     }
-
+    
     public List<Student> getStudentsInClassroom(String id) {
-		// TODO: use the APIs in TeacherDao
-        // Question: can I call getStudents() here????
+        // TODO: use the APIs in TeacherDao
+        if (Strings.isNullOrEmpty(id)) {
+            return null;
+        }
         ClassRoom classroom = getClassroomById(id);
         List<Student> students = new ArrayList<>();
         List<Teacher> teacherList = classroom.getTeachers();
+        if(teacherList != null) {
         for (Teacher t : teacherList) {
-            for (Student s : t.getStudents()) {
+            if(t.getStudents() != null) {
+                for (Student s : t.getStudents()) {
                 students.add(s);
             }
+            }
+            
+        }
         }
         return students;
     }
-
+    
     public int getCurrentStudentNumber(String id) {
+        if (Strings.isNullOrEmpty(id)) {
+            return -1;
+        }
         return this.getStudentsInClassroom(id).size();
     }
 
@@ -82,16 +110,19 @@ public class ClassroomServiceImpl implements ClassroomService {
     // remove teacher by id, return teacher's name
     public String removeTeacher(String teacherId, String id) {
         // TODO: use the APIs in TeacherDao
+        if (Strings.isNullOrEmpty(id)) {
+            return null;
+        }
         List<ClassRoom> classrooms = this.getClassrooms();
         ClassRoom classroom = this.getClassroomById(id);
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
-
+        
         if (classroom == null) {
             return "Please enter a correct classroom Id!";
         } else {
             List<Teacher> teachers = this.getTeachersInClassroom(id);
             for (Teacher t : teachers) {
-                if (t.getId() == teacherId) {
+                if (teacherId == t.getId()) {
                     teachers.remove(t);
                     break;
                 }
@@ -105,13 +136,13 @@ public class ClassroomServiceImpl implements ClassroomService {
             cdi.writeClassroom(classrooms);
             return "Teacher " + teacherId + " has been removde from classroom " + id;
         }
-
+        
     }
-
+    
     public List<Teacher> getTeachersInClassroom(String id) {
         return this.getClassroomById(id).getTeachers();
     }
-
+    
     @Override
     public int getCurrentTeacherNumber() {
         int count = 0;
@@ -121,13 +152,12 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
         return count;
     }
-
+    
     @Override
     public String addClassroom(ClassRoom classroom) {
         if (classroom == null || Strings.isNullOrEmpty(classroom.getId())) {
-            return "";
+            return null;
         }
-
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
         // read from classroom cvs file
         List<ClassRoom> classrooms = cdi.readClassrooms();
@@ -141,9 +171,8 @@ public class ClassroomServiceImpl implements ClassroomService {
         // write into classroom cvs file
         cdi.writeClassroom(classrooms);
         return classroom.getId();
-
     }
-
+    
     @Override
     public String removeClassroom(String id) {
         List<ClassRoom> list = this.getClassrooms();
@@ -153,10 +182,10 @@ public class ClassroomServiceImpl implements ClassroomService {
         cdi.writeClassroom(list);
         return id;
     }
-
+    
     @Override
     public boolean IsFull(String id) {
-		// TODO: use the APIs in TeacherDao
+        // TODO: use the APIs in TeacherDao
 
         /*		int cnt = 0;
          List<Teacher> teachers = this.getClassroomById(id).getTeachers();
@@ -167,7 +196,7 @@ public class ClassroomServiceImpl implements ClassroomService {
          return (cnt == this.getClassroomById(id).getCapacity());*/
         return false;
     }
-
+    
     ;
         
         // TODO
@@ -175,5 +204,5 @@ public class ClassroomServiceImpl implements ClassroomService {
     public String updateClassroom(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
+    
 }

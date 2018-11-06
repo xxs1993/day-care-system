@@ -88,7 +88,7 @@ public class ViewClassroomPanel extends DetailPanel {
             model.addRow(row);
         }
     }
-    
+
     private void populateStudentTable() {
         int rowCount = tblStudent.getRowCount();
         DefaultTableModel model = (DefaultTableModel) tblStudent.getModel();
@@ -96,22 +96,33 @@ public class ViewClassroomPanel extends DetailPanel {
             model.removeRow(i);
         }
         Object row[] = new Object[model.getColumnCount()];
-        List<Student> students=new ArrayList();
+        List<Student> students = new ArrayList();
         List<Teacher> teachers = classroom.getTeachers();
         if (teachers == null || teachers.isEmpty()) {
             return;
         }
         for (Teacher t : teachers) {
             List<Student> temp = t.getStudents();
-            for(Student s: temp)
-                students.add(s);
-        }
-        for(Student s: students){
-            row[0] =s.getId();
-            row[1] =s.getfName();
-            row[2] =s.getlName();
-            model.addRow(row);
+            if (temp == null || temp.isEmpty()) {
+                return;
+            } else {
+                for (Student s : temp) {
+                    students.add(s);
+                }
             }
+
+        }
+        if (students == null || students.isEmpty()) {
+            return;
+        } else {
+            for (Student s : students) {
+                row[0] = s.getId();
+                row[1] = s.getfName();
+                row[2] = s.getlName();
+                model.addRow(row);
+            }
+        }
+
     }
 
     /**
