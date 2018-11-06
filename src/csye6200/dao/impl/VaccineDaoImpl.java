@@ -57,8 +57,8 @@ public class VaccineDaoImpl implements VaccineDao {
         for (Vaccine vaccine : list) {
             StringBuilder sb = new StringBuilder();
             sb.append(vaccine.getType()).append(Constants.STRING_DIVIDER);
-            sb.append(vaccine.getTimeDisplay());
-            sb.append(vaccine.getStudentId()).append(Constants.STRING_DIVIDER);
+            sb.append(vaccine.getTimeDisplay()).append(Constants.STRING_DIVIDER);
+            sb.append(vaccine.getStudentId());
             contents.add(sb.toString());
         }
         try {

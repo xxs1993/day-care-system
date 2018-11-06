@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 
 public class VaccineServiceImpl implements VaccineService {
@@ -41,19 +42,16 @@ public class VaccineServiceImpl implements VaccineService {
     }
     @Override
     public List<Vaccine>getVaccineRecordByStudentId(String studentId){
+        if(Strings.isNullOrEmpty(studentId)){
+            return null;
+        }
         List<Vaccine> res = new ArrayList<>();
         List<Vaccine> list = this.getAllVaccination();
         if (list == null || list.isEmpty()) {
             return res;
         }
-        for (Vaccine vaccine : list) {
-            //List<Vaccine> temp = Lists.newArrayList();
-            if (vaccine.getStudentId()==studentId) {
-                //temp.add(vaccine);
-                res.add(vaccine);
-            }
+        res = list.stream().filter((x)->{return studentId.equals(x.getStudentId());}).collect(Collectors.toList());
 
-        }
         return res;
     }
 
@@ -62,7 +60,7 @@ public class VaccineServiceImpl implements VaccineService {
         if (vaccine == null || Strings.isNullOrEmpty(vaccine.getType()) || Strings.isNullOrEmpty(vaccine.getStudentId()) || Strings.isNullOrEmpty(vaccine.getTimeDisplay())) {
             return;
         }
-        List<Vaccine> list = Lists.newArrayList();
+        List<Vaccine> list = this.getAllVaccination();
         if (list == null) {
             list = Lists.newArrayList();
         }

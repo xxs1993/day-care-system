@@ -52,7 +52,7 @@ public class TeacherDaoImpl implements TeacherDao {
 		            	//get students list string;
 		            	String studentsID = teacherString.get(6).replace(Constants.ARRAY_DIVIDER_LEFT,"").replace(Constants.ARRAY_DIVIDER_RIGHT,"").trim();
 		            	if(!studentsID.isEmpty()){
-							List<String> idList = Splitter.on(",").trimResults().splitToList(studentsID);
+							List<String> idList = Splitter.on(Constants.ARRAY_STRING_DIVIDER).trimResults().splitToList(studentsID);
 
 							//get students objects by id;
 							List<Student> studentsWithTC = Lists.newArrayList();
@@ -108,7 +108,7 @@ public class TeacherDaoImpl implements TeacherDao {
 	            List<Student> students = t.getStudents();
 	            if(students!=null && !students.isEmpty()){
 	                for(Student student:students){
-	                    sb.append(student.getId()).append(Constants.STRING_DIVIDER);
+	                    sb.append(student.getId()).append(Constants.ARRAY_STRING_DIVIDER);
 	                }
 	                sb.deleteCharAt(sb.length()-1);
 	            }

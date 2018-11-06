@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import csye6200.service.StudentService;
 
 import csye6200.entity.Student;
+import csye6200.facade.StudentFacadeService;
+import csye6200.facade.impl.StudentFacadeServiceImpl;
 import csye6200.service.RegisterService;
 //import csye6200.entity.Teacher;
 import csye6200.userInterface.AbstractManagePanel;
@@ -29,6 +31,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
     StudentService studentService;
     Student student;
     RegisterService registerService;
+    StudentFacadeService studentFacadeSerice;
     /**
      * Creates new form StudentWorkPanel
      */
@@ -40,7 +43,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         RightPanel = rp;
         studentService=ss;
         registerService=re;
-        populateTable();    }
+        populateTable();   
+        studentFacadeSerice = new StudentFacadeServiceImpl();
+    }
 
  
 
@@ -170,8 +175,17 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
 
     //enroll button
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        int row = jTable1.getSelectedRow();
+        if(row >= 0){
+            String ts = (String)jTable1.getValueAt(row, 0);
+            Student student = new Student();
+            student.setId(ts);
+            studentFacadeSerice.register(student);
+            return;
+        }
         CreateStudentPanel csp = new CreateStudentPanel(RightPanel, studentService, registerService);
         RightPanel.add("CreateNewStudentPanel", csp);
+      
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
