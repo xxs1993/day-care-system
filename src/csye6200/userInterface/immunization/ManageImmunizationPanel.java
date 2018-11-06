@@ -7,14 +7,20 @@ package csye6200.userInterface.immunization;
 
 import com.google.common.collect.Lists;
 import csye6200.entity.Vaccine;
+import csye6200.entity.Student;
 import csye6200.service.VaccineService;
+import csye6200.service.StudentService;
 import csye6200.service.impl.VaccineServiceImpl;
+import csye6200.service.impl.StudentServiceImpl;
 import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.Student.ViewPanel;
+import java.awt.CardLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.util.List;
+//import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -151,7 +157,24 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
     }//GEN-LAST:event_immunizationTypeComboActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+             // TODO add your handling code here:
+        int row = immunizationTable.getSelectedRow();
+        if(row<0) {
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        String id = (String)immunizationTable.getValueAt(row, 0);
+        StudentService studentService = new StudentServiceImpl();
+        Student student = studentService.getStudentByID(id);
+        if(student == null){
+            JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+         ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
+//        rightPanel.remove(this);
+        rightPanel.add("ViewPanel", vp);
+        CardLayout layout = (CardLayout) rightPanel.getLayout();
+        layout.next(rightPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void populateTable(int type){
