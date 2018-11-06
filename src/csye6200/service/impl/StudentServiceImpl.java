@@ -2,6 +2,7 @@ package csye6200.service.impl;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import csye6200.dao.StudentDao;
 import csye6200.dao.impl.StudentDaoImpl;
 import csye6200.entity.Student;
 import csye6200.service.StudentService;
-
+import csye6200.util.RegulationUtil;
 
 
 public class StudentServiceImpl implements StudentService{
@@ -117,18 +118,39 @@ public class StudentServiceImpl implements StudentService{
         String newId = Constants.PREFFIX_STUDENT_ID + String.valueOf(Integer.parseInt(lastId.substring(1))+1);
         return newId;
     }
-    
-    
 
     @Override
-    public String showCourses(Student stu){
-        int stuAge = stu.getAge();
-        return getCourseInfoByAgeRange(stuAge);
+    public List<Student> getStudentsByFirstName(String fName){
+        if(Strings.isNullOrEmpty(fName)){
+            return null;
+        }
+        List<Student> students = this.getStudent();
+        List<Student> result = Lists.newArrayList();
+
+        if(students == null || students.isEmpty()){
+            return result;
+        }
+        final Pattern pattern = Pattern.compile(String.format("[a-z]*%s[a-z]*",fName.toLowerCase()));
+        result = students.stream().filter((x)->{
+            return !Strings.isNullOrEmpty(x.getfName()) && pattern.matcher(x.getfName().toLowerCase()).matches();
+        }).collect(Collectors.toList());
+
+        return result;
     }
 
+
     @Override
-    public String getCourseInfoByAgeRange(int age){
-        return "";
+    public List<Student> getStudentsByAgeRange(int ageRange){
+        final int type = RegulationUtil.getAgeRangeType(ageRange);
+        List<Student> students = this.getStudent();
+        if(students == null || students.isEmpty()){
+            return null;
+        }
+        List<Student> result = students.stream().filter((x)->{return type == RegulationUtil.getAgeRangeType(x.getAge());}).collect(Collectors.toList());
+        return result;
     }
-    
+
+
+
+
 }

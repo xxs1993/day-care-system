@@ -2,10 +2,12 @@ package test.csye6200.util;
 
 
 import com.google.common.collect.Lists;
+import csye6200.constants.Constants;
 import csye6200.util.FileUtil;
 import junit.framework.TestCase;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -53,7 +55,7 @@ public void testWriteToFile() throws Exception {
         list.add("qq,[1.2.3],[4.5.6],ddd,1");
         list.add("sds,[],[],ccc,2");
     }
-    FileUtil.writeToFile("course.csv",list);
+    FileUtil.writeToFile("teacher.csv",list);
 
 } 
 
@@ -64,6 +66,8 @@ public void testWriteToFile() throws Exception {
 */ 
 public void testReadContents() throws Exception { 
 //TODO: Test goes here...
+    List<String> list = FileUtil.readContents(Constants.TEACHER_FILE_NAME);
+    System.out.println(Arrays.toString(list.toArray()));
 
 } 
 

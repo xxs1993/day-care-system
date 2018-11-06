@@ -42,8 +42,9 @@ public interface StudentService {
     
     boolean updateStudent(Student student);
 
-    String showCourses(Student stu);
 
-    String getCourseInfoByAgeRange(int age);
+    List<Student> getStudentsByFirstName(String fName);
+
+    List<Student> getStudentsByAgeRange(int ageRange);
 
 }

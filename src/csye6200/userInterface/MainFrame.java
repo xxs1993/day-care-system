@@ -14,7 +14,7 @@ import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentManagePanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
 import csye6200.service.impl.TeacherServiceImpl;
-import csye6200.userInterface.registration.ManageRegistrationManagePanel;
+import csye6200.userInterface.registration.ManageRegistrationPanel;
 import java.awt.CardLayout;
 import java.util.concurrent.*;
 import javax.swing.JOptionPane;
@@ -155,7 +155,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnRegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistActionPerformed
         // TODO add your handling code here:
-        ManageRegistrationManagePanel mcp = new ManageRegistrationManagePanel(RightPanel);
+        ManageRegistrationPanel mcp = new ManageRegistrationPanel(RightPanel);
         RightPanel.add("RegisterPanel", mcp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);

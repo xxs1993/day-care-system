@@ -27,13 +27,13 @@ import java.util.stream.Collectors;
  *
  * @author Administrator
  */
-public class ManageRegistrationManagePanel extends AbstractManagePanel {
+public class ManageRegistrationPanel extends AbstractManagePanel {
 
     private JPanel rightPanel;
     /**
      * Creates new form ManageRegistrationManagePanel
      */
-    public ManageRegistrationManagePanel(JPanel rightPanel) {
+    public ManageRegistrationPanel(JPanel rightPanel) {
         initComponents();
         this.rightPanel = rightPanel;
         populateTable(0);
