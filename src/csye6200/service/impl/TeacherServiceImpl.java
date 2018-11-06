@@ -1,6 +1,7 @@
 package csye6200.service.impl;
 
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
@@ -218,6 +219,26 @@ public class TeacherServiceImpl implements TeacherService{
 		final int ageRangeType = RegulationUtil.getAgeRangeType(ageRange);
 
 		List<Teacher> result = teachers.stream().filter((x)-> RegulationUtil.getAgeRangeType(x.getAgeRange()) == ageRangeType).collect(Collectors.toList());
+		return result;
+	}
+
+
+	@Override
+	public List<Teacher> getTeachersByFirstName(String fName){
+		if(Strings.isNullOrEmpty(fName)){
+			return null;
+		}
+		List<Teacher> teachers = this.getTeacher();
+		List<Teacher> result = Lists.newArrayList();
+
+		if(teachers == null || teachers.isEmpty()){
+			return result;
+		}
+		final Pattern pattern = Pattern.compile(String.format("[a-z]*%s[a-z]*",fName.toLowerCase()));
+		result = teachers.stream().filter((x)->{
+			return !Strings.isNullOrEmpty(x.getfName()) && pattern.matcher(x.getfName().toLowerCase()).matches();
+		}).collect(Collectors.toList());
+
 		return result;
 	}
 	

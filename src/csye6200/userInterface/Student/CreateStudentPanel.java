@@ -8,6 +8,8 @@ package csye6200.userInterface.Student;
 import com.google.common.base.Strings;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
+import csye6200.facade.StudentFacadeService;
+import csye6200.facade.impl.StudentFacadeServiceImpl;
 import csye6200.service.StudentService;
 import csye6200.service.RegisterService;
 import csye6200.userInterface.DetailPanel;
@@ -26,6 +28,7 @@ public class CreateStudentPanel extends DetailPanel {
     StudentService studentService;
     Student student;
     RegisterService registerService;
+    StudentFacadeService studentFacadeService;
 
     /**
      * Creates new form CreateStudentPanel
@@ -36,6 +39,7 @@ public class CreateStudentPanel extends DetailPanel {
         RightPanel = rp;
         studentService=ss;
         registerService=re;
+        studentFacadeService =  new StudentFacadeServiceImpl();
 
     }
 
@@ -189,7 +193,6 @@ public class CreateStudentPanel extends DetailPanel {
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
             // TODO add your handling code here:
          Student student =new Student();
-         Registration re= new Registration();
         if(Strings.isNullOrEmpty(txtFirstName.getText())){
             JOptionPane.showMessageDialog(null,"First Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
@@ -215,14 +218,9 @@ public class CreateStudentPanel extends DetailPanel {
         student.setAge(Integer.parseInt(txtAge.getText()));
         student.setFatherName(txtDad.getText());
         student.setMotherName(txtMom.getText());
-        String id = studentService.addStudent(student);
-        student.setId(id);
-        LocalDate date= LocalDate.now();
-        re.setStudentId(student.getId());
-        re.setTimeDisplay(DateUtil.dateToString(date));
-        re.setRegisterTime(date);
+        studentFacadeService.register(student);
         
-        registerService.addRegistrationRecord(re);
+
 
         JOptionPane.showMessageDialog(null,"Student Enrolled!!");
                 

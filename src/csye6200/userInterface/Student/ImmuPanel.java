@@ -13,6 +13,8 @@ import csye6200.service.StudentService;
 import csye6200.service.VaccineService;
 import csye6200.service.impl.RegisterServiceImpl;
 import csye6200.service.impl.VaccineServiceImpl;
+import csye6200.util.DateUtil;
+
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
@@ -46,6 +48,7 @@ public class ImmuPanel extends DetailPanel {
         lName.setText(stu.getlName());
         registerService = new RegisterServiceImpl();
         vaccineService = new VaccineServiceImpl();
+        populateTable();
     }
 
     
@@ -63,7 +66,7 @@ public class ImmuPanel extends DetailPanel {
         sort.sort((x1, x2) -> {
             int cmp = x1.getType().compareTo(x2.getType());
             if(cmp != 0) return cmp;
-            return x1.getVaccinationTime().isAfter(x2.getVaccinationTime())? 1:-1;
+            return x1.getVaccinationTime().isAfter(x2.getVaccinationTime())? -1:1;
         });
         for(Vaccine v : sort) {
             Object row[] = new Object[model.getColumnCount()];
@@ -182,7 +185,10 @@ public class ImmuPanel extends DetailPanel {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String selectedItem = (String)jComboBox1.getSelectedItem();
         vaccine.setType(selectedItem);
-        vaccine.setVaccinationTime(LocalDate.now());
+        LocalDate now = LocalDate.now();
+        vaccine.setVaccinationTime(now);
+        vaccine.setTimeDisplay(DateUtil.dateToString(now));
+        vaccine.setStudentId(student.getId());
         vaccineService.addVaccineRecord(vaccine);
         populateTable();
         JOptionPane.showMessageDialog(null,"Record Added");

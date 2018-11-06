@@ -28,6 +28,9 @@ public interface TeacherService {
 
     List<Teacher> getTeachersByAgeRange(int ageRange);
 
+    List<Teacher> getTeachersByFirstName(String fName);
 
-    
-}
+
+
+
+    }
