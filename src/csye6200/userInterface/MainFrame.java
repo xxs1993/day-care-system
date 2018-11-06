@@ -14,6 +14,7 @@ import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentManagePanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
 import csye6200.service.impl.TeacherServiceImpl;
+import csye6200.userInterface.immunization.ManageImmunizationPanel;
 import csye6200.userInterface.registration.ManageRegistrationPanel;
 import java.awt.CardLayout;
 import java.util.concurrent.*;
@@ -150,7 +151,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnClassroomActionPerformed
 
     private void btnImmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImmuActionPerformed
-        JOptionPane.showMessageDialog(null, "123");
+        // TODO add your handling code here:
+         ManageImmunizationPanel mip = new ManageImmunizationPanel(RightPanel);
+        RightPanel.add("ImmunizationPanel", mip);
+        CardLayout layout = (CardLayout) RightPanel.getLayout();
+        layout.next(RightPanel);
     }//GEN-LAST:event_btnImmuActionPerformed
 
     private void btnRegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistActionPerformed
