@@ -15,9 +15,18 @@ public class Student extends Person {
 	public Student() {
 	}
 
+        public static int compareById(Student s1, Student s2){
+            return s1.getId().compareTo(s2.getId());
+        }
 
-
-
+        public static int compareByAge(Student s1, Student s2){
+            return s1.getAge() - s2.getAge();
+        }
+        
+        public static int compareByGender(Student s1, Student s2){
+            return s1.getGender().compareTo(s2.getGender());
+        }
+        
 	public String getFatherName() {
 		return fatherName;
 	}
