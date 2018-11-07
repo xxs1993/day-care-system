@@ -9,6 +9,7 @@ import com.google.common.base.Strings;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
 import csye6200.facade.StudentFacadeService;
+import csye6200.facade.dto.Result;
 import csye6200.facade.impl.StudentFacadeServiceImpl;
 import csye6200.service.StudentService;
 import csye6200.service.RegisterService;
@@ -40,7 +41,6 @@ public class CreateStudentPanel extends DetailPanel {
         studentService=ss;
         registerService=re;
         studentFacadeService =  new StudentFacadeServiceImpl();
-
     }
 
     /**
@@ -218,11 +218,21 @@ public class CreateStudentPanel extends DetailPanel {
         student.setAge(Integer.parseInt(txtAge.getText()));
         student.setFatherName(txtDad.getText());
         student.setMotherName(txtMom.getText());
-        studentFacadeService.register(student);
         
+        
+        studentFacadeService.register(student);
+        Result<String> result = studentFacadeService.register(student);
+        JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+        /*if(!result.isSuccess()){
+            JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
 
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Enrolled Success", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+*/
 
-        JOptionPane.showMessageDialog(null,"Student Enrolled!!");
+        
                 
     }//GEN-LAST:event_btnEnrollActionPerformed
 

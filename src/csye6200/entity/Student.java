@@ -16,7 +16,14 @@ public class Student extends Person {
 	}
 
         public static int compareById(Student s1, Student s2){
-            return s1.getId().compareTo(s2.getId());
+            StringBuilder sb1 = new StringBuilder();
+            int i = Integer.parseInt(sb1.append(s1.getId().substring(1)).toString());
+            StringBuilder sb2 = new StringBuilder();
+            int i2 = Integer.parseInt(sb2.append(s2.getId().substring(1)).toString());
+            
+            
+            
+            return i - i2;
         }
 
         public static int compareByAge(Student s1, Student s2){

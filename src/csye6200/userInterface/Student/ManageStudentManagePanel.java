@@ -245,6 +245,13 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             Student student = new Student();
             student.setId(ts);
             Result<String> result = studentFacadeSerice.register(student);
+            if(!result.isSuccess()){
+                JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+                
+            }
+            else{
+                JOptionPane.showMessageDialog(null, "Enrolled Success", "Warning", JOptionPane.WARNING_MESSAGE);
+            }
             return;
         }
         CreateStudentPanel csp = new CreateStudentPanel(RightPanel, studentService, registerService);
