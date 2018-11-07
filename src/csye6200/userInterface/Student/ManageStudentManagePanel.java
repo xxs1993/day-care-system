@@ -307,6 +307,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String id = searchId.getText();
+        student = studentService.getStudentByID(id);
         
                // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
