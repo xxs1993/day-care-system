@@ -27,7 +27,7 @@ public class StudentServiceImpl implements StudentService{
 
 
 
-    @Override
+	@Override
     public Student getStudentByID(String id) {
         if(Strings.isNullOrEmpty(id)){
             return null;
@@ -85,25 +85,25 @@ public class StudentServiceImpl implements StudentService{
     @Override
     public boolean updateStudent(Student student){
        if(student == null || Strings.isNullOrEmpty(student.getId())){
-            return false;
-            }
-            List<Student> list = this.getStudent();
-            if(list == null ||list.isEmpty()){
-                return false;
-            }
-            boolean result = false;
-            for(Student t : list){
-                if(student.getId().equals(t.getId())){
-                    Collections.replaceAll(list,t,student);
-                    result = true;
-                    break;
-                }
-            }
-            if(!result){
-                return false;
-            }
-            StudentDaoImpl tdi = new StudentDaoImpl();
-            return tdi.writeStudent(list);
+			return false;
+		}
+		List<Student> list = this.getStudent();
+		if(list == null ||list.isEmpty()){
+			return false;
+		}
+		boolean result = false;
+		for(Student t : list){
+			if(student.getId().equals(t.getId())){
+				Collections.replaceAll(list,t,student);
+				result = true;
+				break;
+			}
+		}
+		if(!result){
+			return false;
+		}
+		StudentDaoImpl tdi = new StudentDaoImpl();
+		return tdi.writeStudent(list);
         
     }
     
