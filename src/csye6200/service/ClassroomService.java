@@ -39,7 +39,7 @@ public interface ClassroomService {
      // Remove a classroom from the sytem
      String removeClassroom(String id);
      
-     String updateClassroom(String id);
+     boolean updateClassroom(ClassRoom classroom);
 
      String addTeacher(Teacher teacher,String id);
 

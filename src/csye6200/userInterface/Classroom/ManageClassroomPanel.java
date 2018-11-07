@@ -55,10 +55,11 @@ public class ManageClassroomPanel extends AbstractManagePanel {
         }
         for (ClassRoom c : classroomService.getClassrooms()) {
             Object row[] = new Object[model.getColumnCount()];
-            row[0] = c.getCapacity();
-            row[1] = MAP.get(c.getAgeRange());
-            row[2] = c.getTeachers().size();
-            row[3] = classroomService.getCurrentStudentNumber(c.getId());
+            row[0] = c.getId();
+            row[1] = c.getCapacity();
+            row[2] = MAP.get(c.getAgeRange());
+            row[3] = c.getTeachers().size();
+            row[4] = classroomService.getCurrentStudentNumber(c.getId());
             model.addRow(row);
         }
     }
@@ -83,15 +84,23 @@ public class ManageClassroomPanel extends AbstractManagePanel {
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Classroom ID", "Age Range", "Teachers", "Students"
+                "Classroom ID", "Capacity", "Age Range", "Teachers", "Students"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class, java.lang.Object.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         btnCreate.setText("Create Classroom");
