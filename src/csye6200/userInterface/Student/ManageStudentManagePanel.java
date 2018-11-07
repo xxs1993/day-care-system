@@ -7,6 +7,8 @@ package csye6200.userInterface.Student;
 
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+
+import csye6200.facade.dto.Result;
 import csye6200.service.StudentService;
 
 import csye6200.entity.Student;
@@ -242,7 +244,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             String ts = (String)jTable1.getValueAt(row, 0);
             Student student = new Student();
             student.setId(ts);
-            studentFacadeSerice.register(student);
+            Result<String> result = studentFacadeSerice.register(student);
             return;
         }
         CreateStudentPanel csp = new CreateStudentPanel(RightPanel, studentService, registerService);
