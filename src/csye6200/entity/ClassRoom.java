@@ -6,7 +6,7 @@ public class ClassRoom extends CourseItem{
 
     private int capacity;//capacity for students
 
-    public ClassRoom(String id,int ageRange, int capacity) {
+    public ClassRoom(String id,int capacity,int ageRange) {
         super(id,ageRange);
         this.capacity = capacity;
     }
@@ -21,6 +21,11 @@ public class ClassRoom extends CourseItem{
     public void setCapacity(int capacity){
         this.capacity = capacity;
     }
+
+	@Override
+	public String toString() {
+		return "ClassRoom [ID=" + this.getId() + "capacity=" + capacity + "ageRange=" + this.getAgeRange() + "teacherList=" + this.getTeachers() + "]";
+	}
 
     
     

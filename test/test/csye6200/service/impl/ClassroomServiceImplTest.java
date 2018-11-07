@@ -49,12 +49,20 @@ public class ClassroomServiceImplTest {
 @Test
 public void testaddClassroom() throws Exception { 
 //TODO: Test goes here...
+//    ClassroomServiceImpl classroomService = new ClassroomServiceImpl();
+//    List<ClassRoom> classrooms = Lists.newArrayList();
+//    ClassRoom room1 = new ClassRoom("R1",45,13);
+//    ClassRoom room2 = new ClassRoom("R6",20,6);
+//    classroomService.addClassroom(room2);
+//    classroomService.addClassroom(room1);
+//    classrooms.forEach(System.out::print);
+}
+
+@Test
+public void testgetClassrooms() throws Exception { 
+//TODO: Test goes here...
     ClassroomServiceImpl classroomService = new ClassroomServiceImpl();
-    List<ClassRoom> classrooms = Lists.newArrayList();
-    ClassRoom room1 = new ClassRoom("R1",45,13);
-    ClassRoom room2 = new ClassRoom("R6",20,6);
-    classroomService.addClassroom(room2);
-    classroomService.addClassroom(room1);
+    List<ClassRoom> classrooms = classroomService.getClassrooms();
     classrooms.forEach(System.out::print);
 }
 }

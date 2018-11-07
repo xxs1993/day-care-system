@@ -6,6 +6,7 @@
 package csye6200.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,6 +17,7 @@ import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.ClassroomService;
 import csye6200.dao.impl.ClassroomDaoImpl;
+import csye6200.dao.impl.TeacherDaoImpl;
 import csye6200.entity.ClassRoom;
 
 /**
@@ -34,9 +36,11 @@ public class ClassroomServiceImpl implements ClassroomService {
             TeacherServiceImpl teacherServiceImpl = new TeacherServiceImpl();
             List<Teacher> allTeachers = teacherServiceImpl.getTeacher();
             Map<String, Teacher> teacherMap = allTeachers.stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
-            for (Teacher t : crTeachers) {
-                if (teacherMap.get(t.getId()) != null) {
-                    t = teacherMap.get(t.getId());
+            if (!crTeachers.isEmpty() || crTeachers != null) {
+                for (Teacher t : crTeachers) {
+                    if (teacherMap.get(t.getId()) != null) {
+                        t = teacherMap.get(t.getId());
+                    }
                 }
             }
             cr.setTeachers(crTeachers);
@@ -56,7 +60,6 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
 	public String addTeacher(Teacher teacher, String id) {
-        // TODO: use the APIs in TeacherDao
         if (Strings.isNullOrEmpty(id) || teacher == null) {
             return null;
         }
@@ -76,7 +79,6 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
     
     public List<Student> getStudentsInClassroom(String id) {
-        // TODO: use the APIs in TeacherDao
         if (Strings.isNullOrEmpty(id)) {
             return null;
         }
@@ -109,8 +111,7 @@ public class ClassroomServiceImpl implements ClassroomService {
      */
     // remove teacher by id, return teacher's name
     public String removeTeacher(String teacherId, String id) {
-        // TODO: use the APIs in TeacherDao
-        if (Strings.isNullOrEmpty(id)) {
+        if ( Strings.isNullOrEmpty(teacherId)||Strings.isNullOrEmpty(id)) {
             return null;
         }
         List<ClassRoom> classrooms = this.getClassrooms();
@@ -118,7 +119,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
         
         if (classroom == null) {
-            return "Please enter a correct classroom Id!";
+            return null;
         } else {
             List<Teacher> teachers = this.getTeachersInClassroom(id);
             for (Teacher t : teachers) {
@@ -155,7 +156,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     
     @Override
     public String addClassroom(ClassRoom classroom) {
-        if (classroom == null || Strings.isNullOrEmpty(classroom.getId())) {
+        if (classroom == null) {
             return null;
         }
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
@@ -185,7 +186,6 @@ public class ClassroomServiceImpl implements ClassroomService {
     
     @Override
     public boolean IsFull(String id) {
-        // TODO: use the APIs in TeacherDao
 
         /*		int cnt = 0;
          List<Teacher> teachers = this.getClassroomById(id).getTeachers();
@@ -197,12 +197,29 @@ public class ClassroomServiceImpl implements ClassroomService {
         return false;
     }
     
-    ;
         
-        // TODO
     @Override
-    public String updateClassroom(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean updateClassroom(ClassRoom classroom) {
+    	if(classroom == null || Strings.isNullOrEmpty(classroom.getId())){
+			return false;
+		}
+		List<ClassRoom> list = this.getClassrooms();
+		if(list == null ||list.isEmpty()){
+			return false;
+		}
+		boolean result = false;
+		for(ClassRoom cr : list){
+			if(classroom.getId().equals(cr.getId())){
+				Collections.replaceAll(list,cr,classroom);
+				result = true;
+				break;
+			}
+		}
+		if(!result){
+			return false;
+		}
+		ClassroomDaoImpl cdi = new ClassroomDaoImpl();
+		return cdi.writeClassroom(list);
     }
     
 }
