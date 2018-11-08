@@ -8,6 +8,7 @@ package csye6200.userInterface.Student;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
+import com.google.common.base.Strings;
 import csye6200.facade.dto.Result;
 import csye6200.service.StudentService;
 
@@ -92,9 +93,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         for(Student s : studentList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =s.getId();
-            row[1] =s.getfName();
-            row[2] =s.getlName();
-            row[3] =s.getGender();
+            row[1] = Strings.nullToEmpty(s.getfName());
+            row[2] =Strings.nullToEmpty(s.getlName());
+            row[3] =Strings.nullToEmpty(s.getGender());
             row[4] = s.getAge();
             model.addRow(row);
             }

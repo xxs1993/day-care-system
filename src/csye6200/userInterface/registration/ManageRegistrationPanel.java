@@ -59,7 +59,6 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
         registrationTypeCombo = new javax.swing.JComboBox<>();
         viewDetailBtn = new javax.swing.JButton();
         totalLabel = new javax.swing.JLabel();
-        send = new javax.swing.JButton();
 
         setEnabled(false);
 
@@ -107,8 +106,6 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
 
         totalLabel.setText("Total: 0");
 
-        send.setText("jButton2");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -121,10 +118,7 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(63, 63, 63)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(send)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(viewDetailBtn))
+                            .addComponent(viewDetailBtn, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 578, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(totalLabel)
@@ -144,9 +138,7 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 326, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(viewDetailBtn)
-                            .addComponent(send)))
+                        .addComponent(viewDetailBtn))
                     .addComponent(registrationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
@@ -228,7 +220,6 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
     private javax.swing.JScrollPane jScrollPanel;
     private javax.swing.JTable registrationTable;
     private javax.swing.JComboBox<String> registrationTypeCombo;
-    private javax.swing.JButton send;
     private javax.swing.JLabel totalLabel;
     private javax.swing.JButton viewDetailBtn;
     // End of variables declaration//GEN-END:variables

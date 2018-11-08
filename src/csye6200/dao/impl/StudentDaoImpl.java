@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import csye6200.constants.Constants;
@@ -75,12 +76,12 @@ public class StudentDaoImpl implements StudentDao {
         for(Student student : students){
             StringBuilder sb = new StringBuilder();
             sb.append(student.getId()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getlName()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getfName()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getGender()).append(Constants.STRING_DIVIDER);
+            sb.append(Strings.nullToEmpty(student.getlName())).append(Constants.STRING_DIVIDER);
+            sb.append(Strings.nullToEmpty(student.getfName())).append(Constants.STRING_DIVIDER);
+            sb.append(Strings.nullToEmpty(student.getGender())).append(Constants.STRING_DIVIDER);
             sb.append(student.getAge()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getFatherName()).append(Constants.STRING_DIVIDER);
-            sb.append(student.getMotherName());
+            sb.append(Strings.nullToEmpty(student.getFatherName())).append(Constants.STRING_DIVIDER);
+            sb.append(Strings.nullToEmpty(student.getMotherName()));
             contents.add(sb.toString());
         }
         return contents;

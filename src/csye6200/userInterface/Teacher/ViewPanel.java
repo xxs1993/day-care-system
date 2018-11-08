@@ -50,9 +50,9 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
         teacherService=ts;
         
         txtID.setText(t.getId());
-        txtFirstName.setText(t.getfName());
-        txtLastName.setText(t.getlName());
-        txtGender.setText(t.getGender());
+        txtFirstName.setText(Strings.nullToEmpty(t.getfName()));
+        txtLastName.setText(Strings.nullToEmpty(t.getlName()));
+        genderCombo.setSelectedItem(Strings.nullToEmpty(t.getGender()));
         txtAge.setText(t.getAge()+"");
 //        txtAgeRange.setText(t.getAgeRange()+"");
         jLabel7.setText(jLabel7.getText()+t.getfName()+"'s Student List");
@@ -109,7 +109,6 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
         jLabel3 = new javax.swing.JLabel();
         txtLastName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtGender = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txtAge = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
@@ -122,6 +121,7 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         comboAgeRange = new javax.swing.JComboBox<>();
+        genderCombo = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Teacher Information");
@@ -135,8 +135,6 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
         txtLastName.setEditable(false);
 
         jLabel4.setText("Gender:");
-
-        txtGender.setEditable(false);
 
         jLabel5.setText("Age:");
 
@@ -206,6 +204,9 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
             }
         });
 
+        genderCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "female", "male" }));
+        genderCombo.setEnabled(false);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -221,12 +222,12 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
                             .addComponent(jLabel5)
                             .addComponent(jLabel8))
                         .addGap(64, 64, 64)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboAgeRange, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(comboAgeRange, 0, 200, Short.MAX_VALUE)
+                            .addComponent(genderCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(76, 76, 76)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,7 +270,7 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(genderCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -304,7 +305,7 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
             JOptionPane.showMessageDialog(null,"Last Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(txtGender.getText().isEmpty()){
+        if(genderCombo.getSelectedIndex()<0){
             JOptionPane.showMessageDialog(null,"Gender can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -316,7 +317,7 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
             }
         teacher.setfName(txtFirstName.getText());
         teacher.setlName(txtLastName.getText());
-        teacher.setGender(txtGender.getText());
+        teacher.setGender(genderCombo.getSelectedItem().toString());
         teacher.setAge(Integer.parseInt(txtAge.getText()));
         List<Student> getS=teacher.getStudents();
         if(getS==null || getS.isEmpty()){
@@ -335,7 +336,7 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
     private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
         txtFirstName.setEditable(true);
         txtLastName.setEditable(true);
-        txtGender.setEditable(true);
+        genderCombo.setEnabled(true);
         txtAge.setEditable(true);
         List<Student> getS=teacher.getStudents();
         if(getS==null || getS.isEmpty()){
@@ -357,6 +358,7 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;
     private javax.swing.JComboBox<String> comboAgeRange;
+    private javax.swing.JComboBox<String> genderCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -369,7 +371,6 @@ private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
     private javax.swing.JTable tblStudent;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFirstName;
-    private javax.swing.JTextField txtGender;
     private javax.swing.JTextField txtID;
     private javax.swing.JTextField txtLastName;
     // End of variables declaration//GEN-END:variables

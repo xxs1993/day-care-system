@@ -61,13 +61,12 @@ public class CreateStudentPanel extends DetailPanel {
         jLabel7 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
-        txtGender = new javax.swing.JTextField();
         txtAge = new javax.swing.JTextField();
         txtDad = new javax.swing.JTextField();
         txtMom = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
         btnEnroll = new javax.swing.JButton();
-        btnUpdate = new javax.swing.JButton();
+        genderCombo = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Student Information");
@@ -90,6 +89,12 @@ public class CreateStudentPanel extends DetailPanel {
             }
         });
 
+        txtAge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAgeActionPerformed(evt);
+            }
+        });
+
         btnBack.setText("<<Back  ");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -104,12 +109,7 @@ public class CreateStudentPanel extends DetailPanel {
             }
         });
 
-        btnUpdate.setText("Update");
-        btnUpdate.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateActionPerformed(evt);
-            }
-        });
+        genderCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "female", "male" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -127,22 +127,20 @@ public class CreateStudentPanel extends DetailPanel {
                             .addComponent(jLabel6)
                             .addComponent(jLabel7))
                         .addGap(46, 46, 46)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtFirstName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtLastName, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtGender, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtAge, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtMom, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtDad, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtMom, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(genderCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(126, 126, 126)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addComponent(btnBack)
-                        .addGap(100, 100, 100)
-                        .addComponent(btnUpdate)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(179, 179, 179)
                         .addComponent(btnEnroll)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
@@ -162,7 +160,7 @@ public class CreateStudentPanel extends DetailPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(genderCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -178,7 +176,6 @@ public class CreateStudentPanel extends DetailPanel {
                 .addGap(49, 49, 49)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEnroll, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(187, Short.MAX_VALUE))
         );
@@ -201,7 +198,7 @@ public class CreateStudentPanel extends DetailPanel {
             JOptionPane.showMessageDialog(null,"Last Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(txtGender.getText().isEmpty()){
+        if(genderCombo.getSelectedIndex() < 0){
             JOptionPane.showMessageDialog(null,"Gender can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -214,40 +211,44 @@ public class CreateStudentPanel extends DetailPanel {
 
         student.setfName(txtFirstName.getText());
         student.setlName(txtLastName.getText());
-        student.setGender(txtGender.getText());
+        student.setGender(genderCombo.getSelectedItem().toString());
         student.setAge(Integer.parseInt(txtAge.getText()));
         student.setFatherName(txtDad.getText());
         student.setMotherName(txtMom.getText());
 
 
         Result<String> result = studentFacadeService.register(student);
-        JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
-        /*if(!result.isSuccess()){
+//        JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
+        if(!result.isSuccess()){
             JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
-
         }
         else{
             JOptionPane.showMessageDialog(null, "Enrolled Success", "Warning", JOptionPane.WARNING_MESSAGE);
+            RightPanel.remove(this);
+            student.setId(result.getData());
+            DetailPanel studentViewPanel = new ViewPanel(RightPanel,studentService,student);
+            RightPanel.add(studentViewPanel);
+            CardLayout layout = (CardLayout) RightPanel.getLayout();
+            layout.next(RightPanel);
         }
-*/
 
         
                 
     }//GEN-LAST:event_btnEnrollActionPerformed
 
-    private void btnUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnUpdateActionPerformed
-
     private void txtFirstNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFirstNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFirstNameActionPerformed
+
+    private void txtAgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAgeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEnroll;
-    private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> genderCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -258,7 +259,6 @@ public class CreateStudentPanel extends DetailPanel {
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtDad;
     private javax.swing.JTextField txtFirstName;
-    private javax.swing.JTextField txtGender;
     private javax.swing.JTextField txtLastName;
     private javax.swing.JTextField txtMom;
     // End of variables declaration//GEN-END:variables
