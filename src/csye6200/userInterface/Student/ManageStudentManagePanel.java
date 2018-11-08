@@ -65,6 +65,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         }
         
         List<Student> studentList = studentService.getStudent();
+        
         if(studentList == null || studentList.isEmpty()) return;
         if(selectedItem == null || selectedItem.equals("ID")){
             sortById(studentList);
@@ -75,6 +76,18 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         if(selectedItem.equals("Gender")){
             sortByGender(studentList);
         }
+        if(selectedItem.equals("Search By ID")){
+            String id = keyword.getText();
+            student = studentService.getStudentByID(id);
+            studentList.clear();
+            studentList.add(student);
+        } 
+        if(selectedItem.equals("Search By Name")){
+            String name = keyword.getText();
+            studentList.clear();
+            studentList = studentService.getStudentsByFirstName(name);
+        } 
+        
         
         for(Student s : studentList) {
             Object row[] = new Object[model.getColumnCount()];
@@ -115,9 +128,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         jButton4 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        searchId = new javax.swing.JTextField();
+        keyword = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
+        jComboBox2 = new javax.swing.JComboBox<>();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Student ");
@@ -170,11 +183,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             }
         });
 
-        jLabel3.setText("Search by ID:");
-
-        searchId.addActionListener(new java.awt.event.ActionListener() {
+        keyword.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchIdActionPerformed(evt);
+                keywordActionPerformed(evt);
             }
         });
 
@@ -182,6 +193,13 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
+            }
+        });
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Search By ID", "Search By Name"}));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
             }
         });
 
@@ -196,10 +214,10 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(172, 172, 172)
-                            .addComponent(jLabel3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(searchId, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(84, 84, 84)
+                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(keyword, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,9 +239,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3)
-                    .addComponent(searchId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5))
+                    .addComponent(keyword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton5)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
@@ -310,15 +328,19 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
-    private void searchIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchIdActionPerformed
+    private void keywordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordActionPerformed
        // TODO add your handling code here:
-    }//GEN-LAST:event_searchIdActionPerformed
+    }//GEN-LAST:event_keywordActionPerformed
 
+    //Search 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        String id = searchId.getText();
-        
-               // TODO add your handling code here:
+        String selectedItem = (String)jComboBox2.getSelectedItem();
+        populateTable(selectedItem);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+             
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -328,11 +350,11 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextField searchId;
+    private javax.swing.JTextField keyword;
     // End of variables declaration//GEN-END:variables
 
 }
