@@ -196,13 +196,7 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
         RegisterService reService = new RegisterServiceImpl();
         List<Registration> list;
         if(type == 0){
-            List<Registration> all = reService.getAllRegistration();
-            if(all==null || all.isEmpty()){
-                return;
-            }
-            list = all.stream().filter((x)->{
-                return x.getRegisterTime().getYear() == LocalDate.now().getYear();
-            }).collect(Collectors.toList());
+            list = reService.getRegisteredStudentsByYear(LocalDate.now().getYear());
         }else{
             List<String> unregisteredStudentsId = reService.getUnregisteredStudentsId();
             if(unregisteredStudentsId==null || unregisteredStudentsId.isEmpty()){

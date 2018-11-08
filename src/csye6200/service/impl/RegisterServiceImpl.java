@@ -11,6 +11,7 @@ import csye6200.dao.impl.RegistrationDaoImpl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class RegisterServiceImpl implements RegisterService {
 
@@ -83,4 +84,16 @@ public class RegisterServiceImpl implements RegisterService {
         list.add(reg);
         registrationDao.updateRegistration(list);
     }
+
+    @Override
+    public  List<Registration> getRegisteredStudentsByYear(int year){
+        if(year <= 0){
+            return null;
+        }
+        List<Registration> list = this.getAllRegistration();
+        return list.stream().filter((x)->{
+           return x.getRegisterTime().getYear() == year;
+        }).collect(Collectors.toList());
+    }
+
 }
