@@ -218,9 +218,8 @@ public class CreateStudentPanel extends DetailPanel {
         student.setAge(Integer.parseInt(txtAge.getText()));
         student.setFatherName(txtDad.getText());
         student.setMotherName(txtMom.getText());
-        
-        
-        studentFacadeService.register(student);
+
+
         Result<String> result = studentFacadeService.register(student);
         JOptionPane.showMessageDialog(null, result.getMessage(), "Warning", JOptionPane.WARNING_MESSAGE);
         /*if(!result.isSuccess()){
