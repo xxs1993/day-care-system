@@ -81,6 +81,12 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         btnView = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Teacher ");
 
@@ -204,6 +210,11 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         layout.next(RightPanel);
         
     }//GEN-LAST:event_btnViewActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        tblTeacher.clearSelection();
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

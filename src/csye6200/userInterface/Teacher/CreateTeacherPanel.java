@@ -71,11 +71,11 @@ public class CreateTeacherPanel extends DetailPanel {
         jLabel1 = new javax.swing.JLabel();
         txtFirstName = new javax.swing.JTextField();
         txtLastName = new javax.swing.JTextField();
-        txtGender = new javax.swing.JTextField();
         txtAge = new javax.swing.JTextField();
         btnBack = new javax.swing.JButton();
         btnEnroll = new javax.swing.JButton();
         comboAgeRange = new javax.swing.JComboBox<>();
+        genderCombo = new javax.swing.JComboBox<>();
 
         jLabel2.setText("First Name:");
 
@@ -117,6 +117,13 @@ public class CreateTeacherPanel extends DetailPanel {
             }
         });
 
+        genderCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "female", "male" }));
+        genderCombo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                genderComboActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -137,13 +144,12 @@ public class CreateTeacherPanel extends DetailPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(51, 51, 51)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtFirstName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtLastName, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtAge, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(comboAgeRange, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtFirstName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtLastName, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(txtAge, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                            .addComponent(comboAgeRange, 0, 200, Short.MAX_VALUE)
+                            .addComponent(genderCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
                         .addComponent(btnEnroll)
@@ -165,7 +171,7 @@ public class CreateTeacherPanel extends DetailPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txtGender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(genderCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -199,7 +205,7 @@ public class CreateTeacherPanel extends DetailPanel {
             JOptionPane.showMessageDialog(null,"Last Name can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
         }
-        if(txtGender.getText().isEmpty()){
+        if(genderCombo.getSelectedIndex() <0){
             JOptionPane.showMessageDialog(null,"Gender can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -215,12 +221,17 @@ public class CreateTeacherPanel extends DetailPanel {
         }
         teacher.setfName(txtFirstName.getText());
         teacher.setlName(txtLastName.getText());
-        teacher.setGender(txtGender.getText());
+        teacher.setGender(genderCombo.getSelectedItem().toString());
         teacher.setAge(Integer.parseInt(txtAge.getText()));
         teacher.setAgeRange(MAP.get(comboAgeRange.getSelectedItem()));
-        teacherService.addTeacher(teacher);
+        teacher  = teacherService.addTeacher(teacher);
         JOptionPane.showMessageDialog(null,"Teacher Enrolled!!");
-                
+        RightPanel.remove(this);
+        DetailPanel teacherDetailPanel = new ViewPanel(RightPanel,teacherService,teacher);
+        RightPanel.add(teacherDetailPanel);
+        CardLayout layout = (CardLayout) RightPanel.getLayout();
+        layout.next(RightPanel);
+
     }//GEN-LAST:event_btnEnrollActionPerformed
 
     private void comboAgeRangeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAgeRangeActionPerformed
@@ -231,11 +242,16 @@ public class CreateTeacherPanel extends DetailPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFirstNameActionPerformed
 
+    private void genderComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_genderComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_genderComboActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnEnroll;
     private javax.swing.JComboBox<String> comboAgeRange;
+    private javax.swing.JComboBox<String> genderCombo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -244,7 +260,6 @@ public class CreateTeacherPanel extends DetailPanel {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFirstName;
-    private javax.swing.JTextField txtGender;
     private javax.swing.JTextField txtLastName;
     // End of variables declaration//GEN-END:variables
 }

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 
 import csye6200.constants.Constants;
@@ -99,9 +100,9 @@ public class TeacherDaoImpl implements TeacherDao {
 	        for(Teacher t : teachers){
 	            StringBuilder sb = new StringBuilder();
 	            sb.append(t.getId()).append(Constants.STRING_DIVIDER);
-                    sb.append(t.getlName()).append(Constants.STRING_DIVIDER);
-                    sb.append(t.getfName()).append(Constants.STRING_DIVIDER);
-                    sb.append(t.getGender()).append(Constants.STRING_DIVIDER);
+                    sb.append(Strings.nullToEmpty(t.getlName())).append(Constants.STRING_DIVIDER);
+                    sb.append(Strings.nullToEmpty(t.getfName())).append(Constants.STRING_DIVIDER);
+                    sb.append(Strings.nullToEmpty(t.getGender())).append(Constants.STRING_DIVIDER);
                     sb.append(t.getAge()).append(Constants.STRING_DIVIDER);
 	            sb.append(t.getAgeRange()).append(Constants.STRING_DIVIDER);
 	            sb.append(Constants.ARRAY_DIVIDER_LEFT);

@@ -8,6 +8,7 @@ package csye6200.userInterface.Student;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 
+import com.google.common.base.Strings;
 import csye6200.facade.dto.Result;
 import csye6200.service.StudentService;
 
@@ -92,9 +93,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         for(Student s : studentList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =s.getId();
-            row[1] =s.getfName();
-            row[2] =s.getlName();
-            row[3] =s.getGender();
+            row[1] = Strings.nullToEmpty(s.getfName());
+            row[2] =Strings.nullToEmpty(s.getlName());
+            row[3] =Strings.nullToEmpty(s.getGender());
             row[4] = s.getAge();
             model.addRow(row);
             }
@@ -132,6 +133,12 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         jButton5 = new javax.swing.JButton();
         jComboBox2 = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
+
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Manage Student ");
@@ -346,6 +353,11 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
              
     }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        // TODO add your handling code here:
+        jTable1.clearSelection();
+    }//GEN-LAST:event_formMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

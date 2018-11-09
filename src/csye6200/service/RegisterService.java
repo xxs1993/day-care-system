@@ -16,4 +16,6 @@ public interface RegisterService {
     List<Registration> getRegistrationRecordsByStudentId(String studentId);
 
     void addRegistrationRecord(Registration registration);
+
+    List<Registration> getRegisteredStudentsByYear(int year);
 }
