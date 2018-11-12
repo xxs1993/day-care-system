@@ -25,7 +25,7 @@ import csye6200.entity.ClassRoom;
  * @author karen classroom data: id,ageRange,capacity,[teacherId1;teacherId2]
  */
 public class ClassroomServiceImpl implements ClassroomService {
-    
+
     @Override
     public List<ClassRoom> getClassrooms() {
         // instantiate an ClassroomDaoImpl object to call read method in ClassroomDao
@@ -45,10 +45,10 @@ public class ClassroomServiceImpl implements ClassroomService {
             }
             cr.setTeachers(crTeachers);
         }
-        
+
         return classrooms;
     }
-    
+
     public ClassRoom getClassroomById(String id) {
         if (Strings.isNullOrEmpty(id)) {
             return null;
@@ -56,28 +56,33 @@ public class ClassroomServiceImpl implements ClassroomService {
         // put all classrooms into a Map with structure of <classroom id, classroom object>
         Map<String, ClassRoom> map = getClassrooms().stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
         return map.get(id);
-        
+
     }
 
-	public String addTeacher(Teacher teacher, String id) {
+    public String addTeacher(Teacher teacher, String id) {
+        if(isTeacherInAClassroom(teacher.getId())) return "Duplicate";
         if (Strings.isNullOrEmpty(id) || teacher == null) {
             return null;
+        } else if (this.getClassroomById(id) != null) {
+            ClassroomDaoImpl cdi = new ClassroomDaoImpl();
+            List<ClassRoom> classrooms = cdi.readClassrooms();
+            ClassRoom classroom = this.getClassroomById(id);
+            List<Teacher> teacherList = classroom.getTeachers();
+                teacherList.add(teacher);
+                String classId = classroom.getId();
+                for(ClassRoom c: classrooms) {
+                    if(c.getId().equals(classId)){
+                        c.setTeachers(teacherList);
+                        break;
+                    }
+                }
+                cdi.writeClassroom(classrooms);
+                return teacher.getId();
+        } else {
+            return null;
         }
-        List<Teacher> teacherList = this.getClassroomById(id).getTeachers();
-        if (teacherList != null) {
-            for (Teacher t : teacherList) {
-            if (t.getId() == teacher.getId()) {
-                return "Teacher " + teacher.getlName() + teacher.getfName() + "with Id " + teacher.getId()
-                        + " has been assigned to classroom " + id;
-            }
-        }
-        teacherList.add(teacher);
-        this.getClassroomById(id).setTeachers(teacherList);
-        return "Teacher " + teacher.getfName() + " has been assigned to classroom " + id;
-        }
-        else return null;
     }
-    
+
     public List<Student> getStudentsInClassroom(String id) {
         if (Strings.isNullOrEmpty(id)) {
             return null;
@@ -85,19 +90,19 @@ public class ClassroomServiceImpl implements ClassroomService {
         ClassRoom classroom = getClassroomById(id);
         List<Student> students = new ArrayList<>();
         List<Teacher> teacherList = classroom.getTeachers();
-        if(teacherList != null) {
-        for (Teacher t : teacherList) {
-            if(t.getStudents() != null) {
-                for (Student s : t.getStudents()) {
-                students.add(s);
+        if (teacherList != null) {
+            for (Teacher t : teacherList) {
+                if (t.getStudents() != null) {
+                    for (Student s : t.getStudents()) {
+                        students.add(s);
+                    }
+                }
+
             }
-            }
-            
-        }
         }
         return students;
     }
-    
+
     public int getCurrentStudentNumber(String id) {
         if (Strings.isNullOrEmpty(id)) {
             return -1;
@@ -111,40 +116,39 @@ public class ClassroomServiceImpl implements ClassroomService {
      */
     // remove teacher by id, return teacher's name
     public String removeTeacher(String teacherId, String id) {
-        if ( Strings.isNullOrEmpty(teacherId)||Strings.isNullOrEmpty(id)) {
+        if (Strings.isNullOrEmpty(teacherId) || Strings.isNullOrEmpty(id)) {
             return null;
         }
         List<ClassRoom> classrooms = this.getClassrooms();
         ClassRoom classroom = this.getClassroomById(id);
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
-        
+
         if (classroom == null) {
             return null;
         } else {
             List<Teacher> teachers = this.getTeachersInClassroom(id);
             for (Teacher t : teachers) {
-                if (teacherId.equals(t.getId())) {
+                if (teacherId == t.getId()) {
                     teachers.remove(t);
                     break;
                 }
             }
             classroom.setTeachers(teachers);
             for (int i = 0; i < classrooms.size(); i++) {
-                if (classrooms.get(i).getId().equals( classroom.getId())) {
+                if (classrooms.get(i).getId() == classroom.getId()) {
                     classrooms.set(i, classroom);
-                    break;
                 }
             }
             cdi.writeClassroom(classrooms);
             return "Teacher " + teacherId + " has been removde from classroom " + id;
         }
-        
+
     }
-    
+
     public List<Teacher> getTeachersInClassroom(String id) {
         return this.getClassroomById(id).getTeachers();
     }
-    
+
     @Override
     public int getCurrentTeacherNumber() {
         int count = 0;
@@ -154,7 +158,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         }
         return count;
     }
-    
+
     @Override
     public String addClassroom(ClassRoom classroom) {
         if (classroom == null) {
@@ -174,7 +178,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         cdi.writeClassroom(classrooms);
         return classroom.getId();
     }
-    
+
     @Override
     public String removeClassroom(String id) {
         List<ClassRoom> list = this.getClassrooms();
@@ -184,7 +188,7 @@ public class ClassroomServiceImpl implements ClassroomService {
         cdi.writeClassroom(list);
         return id;
     }
-    
+
     @Override
     public boolean IsFull(String id) {
 
@@ -197,30 +201,42 @@ public class ClassroomServiceImpl implements ClassroomService {
          return (cnt == this.getClassroomById(id).getCapacity());*/
         return false;
     }
-    
-        
+
     @Override
     public boolean updateClassroom(ClassRoom classroom) {
-    	if(classroom == null || Strings.isNullOrEmpty(classroom.getId())){
-			return false;
-		}
-		List<ClassRoom> list = this.getClassrooms();
-		if(list == null ||list.isEmpty()){
-			return false;
-		}
-		boolean result = false;
-		for(ClassRoom cr : list){
-			if(classroom.getId().equals(cr.getId())){
-				Collections.replaceAll(list,cr,classroom);
-				result = true;
-				break;
-			}
-		}
-		if(!result){
-			return false;
-		}
-		ClassroomDaoImpl cdi = new ClassroomDaoImpl();
-		return cdi.writeClassroom(list);
+        if (classroom == null || Strings.isNullOrEmpty(classroom.getId())) {
+            return false;
+        }
+        List<ClassRoom> list = this.getClassrooms();
+        if (list == null || list.isEmpty()) {
+            return false;
+        }
+        boolean result = false;
+        for (ClassRoom cr : list) {
+            if (classroom.getId().equals(cr.getId())) {
+                Collections.replaceAll(list, cr, classroom);
+                result = true;
+                break;
+            }
+        }
+        if (!result) {
+            return false;
+        }
+        ClassroomDaoImpl cdi = new ClassroomDaoImpl();
+        return cdi.writeClassroom(list);
     }
-    
+
+    @Override
+    public boolean isTeacherInAClassroom(String tid) {
+        ClassroomDaoImpl cdi = new ClassroomDaoImpl();
+        List<ClassRoom> classrooms = cdi.readClassrooms();
+        for(ClassRoom c : classrooms) {
+            List<Teacher> teachers = this.getTeachersInClassroom(c.getId());
+            for (Teacher t: teachers) {
+            if(t.getId().equals(tid)) return true;
+        }
+        }
+        return false;
+    }
+
 }

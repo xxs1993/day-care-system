@@ -5,11 +5,14 @@
  */
 package csye6200.userInterface.Classroom;
 
+import csye6200.constants.Constants;
 import csye6200.entity.ClassRoom;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import csye6200.service.ClassroomService;
+import csye6200.userInterface.AbstractViewPanel;
 import csye6200.userInterface.DetailPanel;
+import csye6200.util.RegulationUtil;
 
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -25,7 +28,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author Karen
  */
-public class ViewClassroomPanel extends DetailPanel {
+public class ViewClassroomPanel extends DetailPanel implements AbstractViewPanel{
 
     JPanel RightPanel;
     ClassroomService classroomService;
@@ -80,14 +83,15 @@ public class ViewClassroomPanel extends DetailPanel {
         populateStudentTable();
     }
 
-    private void populateTeacherTable() {
+    public void populateTeacherTable() {
         int rowCount = tblTeacher.getRowCount();
         DefaultTableModel model = (DefaultTableModel) tblTeacher.getModel();
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
         Object row[] = new Object[model.getColumnCount()];
-        List<Teacher> teachers = classroom.getTeachers();
+        String cid = classroom.getId();
+        List<Teacher> teachers = classroomService.getTeachersInClassroom(cid);
         if (teachers == null || teachers.isEmpty()) {
             return;
         }
@@ -95,10 +99,7 @@ public class ViewClassroomPanel extends DetailPanel {
             row[0] = t.getId();
             row[1] = t.getfName();
             row[2] = t.getlName();
-            row[3] = 0;
-            if(t.getStudents() != null){
-                row[3] = t.getStudents().size();
-            }
+            row[3] = t.getStudents()==null? 0 : t.getStudents().size();
             model.addRow(row);
         }
     }
@@ -164,6 +165,7 @@ public class ViewClassroomPanel extends DetailPanel {
         jScrollPane2 = new javax.swing.JScrollPane();
         tblStudent = new javax.swing.JTable();
         jRemove1 = new javax.swing.JButton();
+        AddTeacherButton = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         jLabel1.setText("Classroom Information");
@@ -266,6 +268,13 @@ public class ViewClassroomPanel extends DetailPanel {
             }
         });
 
+        AddTeacherButton.setText("Add Teacher");
+        AddTeacherButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddTeacherButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -305,9 +314,11 @@ public class ViewClassroomPanel extends DetailPanel {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(251, 251, 251)
+                                .addGap(128, 128, 128)
+                                .addComponent(AddTeacherButton)
+                                .addGap(18, 18, 18)
                                 .addComponent(jRemove1)))))
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -338,7 +349,9 @@ public class ViewClassroomPanel extends DetailPanel {
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jRemove1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jRemove1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(AddTeacherButton, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(23, 23, 23))
@@ -395,15 +408,29 @@ public class ViewClassroomPanel extends DetailPanel {
         if (studentNum == 0) {
             String tid = (String)tblTeacher.getValueAt(row, 0);
             classroomService.removeTeacher(tid, classroom.getId());
-            classroom = classroomService.getClassroomById(classroom.getId());
             populateTeacherTable();
         } else {
             JOptionPane.showMessageDialog(null, "Teacher who has been assigned students cannot be removed!", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_jRemove1ActionPerformed
 
+    private void AddTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTeacherButtonActionPerformed
+        int age = RegulationUtil.getAgeRangeType(this.classroom.getAgeRange());
+        int maxTNum = RegulationUtil.getRegulationMap(age).get(Constants.MAX_GROUP_AMOUNT);
+        if (this.classroom.getTeachers() != null && !this.classroom.getTeachers().isEmpty() && this.classroom.getTeachers().size() == maxTNum) {
+            JOptionPane.showMessageDialog(null, "Maxium teacher number reached. Cannot add teacher to this classroom.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            AddTeachersToClassroomPanel atcp = new AddTeachersToClassroomPanel(RightPanel,this.classroom);
+        RightPanel.add("AddTeachersToClassroomPanel", atcp);
+        CardLayout layout = (CardLayout) RightPanel.getLayout();
+        layout.next(RightPanel);
+        }
+        
+    }//GEN-LAST:event_AddTeacherButtonActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AddTeacherButton;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnUpdate;

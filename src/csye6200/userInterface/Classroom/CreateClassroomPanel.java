@@ -169,11 +169,6 @@ public class CreateClassroomPanel extends DetailPanel {
         classroom.setAgeRange(MAP.get(comboAgeRange.getSelectedItem()));
         classroomService.addClassroom(classroom);
         JOptionPane.showMessageDialog(null,"New classroom created!!");
-        RightPanel.remove(this);
-        DetailPanel classroomPanel = new ViewClassroomPanel(RightPanel,classroomService,classroom);
-        RightPanel.add("ViewClassRoomPanel",classroomPanel);
-        CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
 
     }//GEN-LAST:event_btnCreateActionPerformed
 

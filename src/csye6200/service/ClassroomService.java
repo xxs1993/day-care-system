@@ -46,4 +46,6 @@ public interface ClassroomService {
      String removeTeacher(String teacherId, String id);
 
      boolean IsFull(String id);
+     
+     boolean isTeacherInAClassroom(String tid);
 }

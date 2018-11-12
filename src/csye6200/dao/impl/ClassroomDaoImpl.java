@@ -89,7 +89,7 @@ public class ClassroomDaoImpl implements ClassroomDao {
 			List<Teacher> teachers = classroom.getTeachers();
 			if (teachers != null && !teachers.isEmpty()) {
 				for (Teacher teacher : teachers) {
-					sb.append(teacher.getId()).append(Constants.STRING_DIVIDER);
+					sb.append(teacher.getId()).append(Constants.ARRAY_STRING_DIVIDER);
 				}
 				sb.deleteCharAt(sb.length() - 1);
 			}
