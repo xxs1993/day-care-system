@@ -131,21 +131,21 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeacherActionPerformed
         ManageTeacherPanel mtp = new ManageTeacherPanel(RightPanel, tsi);
-        RightPanel.add("AgencyWorkAreaPanel", mtp);
+        RightPanel.add("TeacherManagePanel", mtp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnTeacherActionPerformed
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
         ManageStudentManagePanel msp = new ManageStudentManagePanel(RightPanel,new StudentServiceImpl(),new RegisterServiceImpl());
-        RightPanel.add("AgencyWorkAreaPanel", msp);
+        RightPanel.add("StudentManagePanel", msp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnStudentActionPerformed
 
     private void btnClassroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassroomActionPerformed
         ManageClassroomPanel mcp = new ManageClassroomPanel(RightPanel, crsi);
-        RightPanel.add("AgencyWorkAreaPanel", mcp);
+        RightPanel.add("ClassRoomManagePanel", mcp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnClassroomActionPerformed

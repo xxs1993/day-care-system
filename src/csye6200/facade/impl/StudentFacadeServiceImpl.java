@@ -54,7 +54,7 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
         }
         Result<String> re  = addStudentToTeacher(student);
         if(!re.isSuccess()){
-            result.setData("No available teacher");
+            result.setMessage("No available teacher");
             return result;
         }
         String id = re.getData();
