@@ -323,9 +323,17 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         Pattern p=Pattern.compile("[A-Z]+[0-9]");
         Matcher m=p.matcher(search);
         boolean b=m.find();
-        if(b == false||Strings.isNullOrEmpty(search)){
-            JOptionPane.showMessageDialog(null,"The Format Should be Capital Letter + Number 0-9");
+        if(comboSearch.getSelectedItem().equals("Search By ID")){
+            if(b == false||Strings.isNullOrEmpty(search)){
+            JOptionPane.showMessageDialog(null,"The Format Should be Capital Letter + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
             return ;
+            }
+        }
+        if(comboSearch.getSelectedItem().equals("Search By Name")){
+            if(Strings.isNullOrEmpty(search)){
+              JOptionPane.showMessageDialog(null,"Search TextField can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
+              return;
+            }
         }
         String selectedItem = (String)comboSearch.getSelectedItem();
         populateTable(selectedItem);
