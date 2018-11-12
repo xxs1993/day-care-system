@@ -50,6 +50,24 @@ public class Teacher extends Person {
 		this.ageRange = ageRange;
 
 	}
+        public static int compareById(Teacher t1, Teacher t2){
+            StringBuilder sb1 = new StringBuilder();
+            int i1 = Integer.parseInt(sb1.append(t1.getId().substring(1)).toString());
+            StringBuilder sb2 = new StringBuilder();
+            int i2 = Integer.parseInt(sb2.append(t2.getId().substring(1)).toString());
+            
+            
+            
+            return i1 - i2;
+        }
+
+        public static int compareByLastName(Teacher t1, Teacher t2){
+            return t1.getlName().compareTo(t2.getlName());
+        }
+        
+        public static int compareByAgeRange(Teacher t1, Teacher t2){
+            return t1.getAgeRange()-t2.getAgeRange();
+        }
 
 
 }
