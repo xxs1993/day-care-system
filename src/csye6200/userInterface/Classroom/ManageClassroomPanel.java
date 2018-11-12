@@ -160,7 +160,7 @@ public class ManageClassroomPanel extends AbstractManagePanel {
         String cs = (String) jTable1.getValueAt(row, 0);
         ClassRoom c = classroomService.getClassroomById(cs);
         ViewClassroomPanel vp = new ViewClassroomPanel(RightPanel, classroomService, c);
-        RightPanel.add("ViewPanel", vp);
+        RightPanel.add("ViewClassRoomPanel", vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnViewActionPerformed

@@ -95,7 +95,10 @@ public class ViewClassroomPanel extends DetailPanel {
             row[0] = t.getId();
             row[1] = t.getfName();
             row[2] = t.getlName();
-            row[3] = t.getStudents().size();
+            row[3] = 0;
+            if(t.getStudents() != null){
+                row[3] = t.getStudents().size();
+            }
             model.addRow(row);
         }
     }
@@ -392,6 +395,7 @@ public class ViewClassroomPanel extends DetailPanel {
         if (studentNum == 0) {
             String tid = (String)tblTeacher.getValueAt(row, 0);
             classroomService.removeTeacher(tid, classroom.getId());
+            classroom = classroomService.getClassroomById(classroom.getId());
             populateTeacherTable();
         } else {
             JOptionPane.showMessageDialog(null, "Teacher who has been assigned students cannot be removed!", "Warning", JOptionPane.WARNING_MESSAGE);

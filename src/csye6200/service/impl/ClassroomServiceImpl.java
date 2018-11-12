@@ -123,15 +123,16 @@ public class ClassroomServiceImpl implements ClassroomService {
         } else {
             List<Teacher> teachers = this.getTeachersInClassroom(id);
             for (Teacher t : teachers) {
-                if (teacherId == t.getId()) {
+                if (teacherId.equals(t.getId())) {
                     teachers.remove(t);
                     break;
                 }
             }
             classroom.setTeachers(teachers);
             for (int i = 0; i < classrooms.size(); i++) {
-                if (classrooms.get(i).getId() == classroom.getId()) {
+                if (classrooms.get(i).getId().equals( classroom.getId())) {
                     classrooms.set(i, classroom);
+                    break;
                 }
             }
             cdi.writeClassroom(classrooms);

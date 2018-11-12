@@ -169,9 +169,8 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-         ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
-//        rightPanel.remove(this);
-        rightPanel.add("ViewPanel", vp);
+        ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
+        rightPanel.add("ViewRegisterPanel", vp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);
     }//GEN-LAST:event_viewDetailBtnActionPerformed

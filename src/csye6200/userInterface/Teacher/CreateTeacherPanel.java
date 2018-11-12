@@ -228,7 +228,7 @@ public class CreateTeacherPanel extends DetailPanel {
         JOptionPane.showMessageDialog(null,"Teacher Enrolled!!");
         RightPanel.remove(this);
         DetailPanel teacherDetailPanel = new ViewPanel(RightPanel,teacherService,teacher);
-        RightPanel.add(teacherDetailPanel);
+        RightPanel.add("TeacherDetailPanel",teacherDetailPanel);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
 

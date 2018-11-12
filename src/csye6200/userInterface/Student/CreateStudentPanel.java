@@ -227,7 +227,7 @@ public class CreateStudentPanel extends DetailPanel {
             RightPanel.remove(this);
             student.setId(result.getData());
             DetailPanel studentViewPanel = new ViewPanel(RightPanel,studentService,student);
-            RightPanel.add(studentViewPanel);
+            RightPanel.add("ViewStudentPanel",studentViewPanel);
             CardLayout layout = (CardLayout) RightPanel.getLayout();
             layout.next(RightPanel);
         }

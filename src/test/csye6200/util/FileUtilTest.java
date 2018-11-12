@@ -55,7 +55,10 @@ public void testWriteToFile() throws Exception {
         list.add("qq,[1.2.3],[4.5.6],ddd,1");
         list.add("sds,[],[],ccc,2");
     }
-    FileUtil.writeToFile("teacher.csv",list);
+    for(int i = 0;i<10;i++){
+        FileUtil.writeToFile("test.csv",list);
+
+    }
 
 } 
 

@@ -47,15 +47,15 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         RightPanel = rp;
         teacherService=ts;
         populateTable();
-        
-        
+
+
     }
     public void populateTable(){
-        
+
             populateTable("");
-            
+
                 }
-    
+
     public void populateTable(String selectedItem){
         int rowCount = tblTeacher.getRowCount();
         DefaultTableModel model = (DefaultTableModel)tblTeacher.getModel();
@@ -63,7 +63,7 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
             model.removeRow(i);
         }
          List<Teacher> teacherList = teacherService.getTeacher();
-        
+
         if(teacherList == null || teacherList.isEmpty()) return;
         if(selectedItem == null || selectedItem.equals("ID")){
             sortById(teacherList);
@@ -79,12 +79,12 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
             teacher = teacherService.getTeacherById(id);
             teacherList.clear();
             teacherList.add(teacher);
-        } 
+        }
         if(selectedItem.equals("Search By Name")){
             String name = keyword.getText();
             teacherList.clear();
             teacherList = teacherService.getTeachersByFirstName(name);
-        } 
+        }
         for(Teacher t : teacherList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =t.getId();
@@ -291,14 +291,14 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
 
     private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         int row = tblTeacher.getSelectedRow();
-        if(row<0) {
+        if (row < 0) {
             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        String ts=(String)tblTeacher.getValueAt(row, 0);
-        Teacher t=teacherService.getTeacherById(ts);
-        ViewPanel vp = new ViewPanel(RightPanel,teacherService,t);
-        RightPanel.add("ViewPanel", vp);
+        String ts = (String) tblTeacher.getValueAt(row, 0);
+        Teacher t = teacherService.getTeacherById(ts);
+        ViewPanel vp = new ViewPanel(RightPanel, teacherService, t);
+        RightPanel.add("TeacherManagePanel", vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
         
@@ -337,7 +337,7 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         }
         String selectedItem = (String)comboSearch.getSelectedItem();
         populateTable(selectedItem);
-        
+
     }//GEN-LAST:event_btnGoActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

@@ -9,6 +9,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Properties;
 
@@ -20,6 +21,10 @@ public class EmailSendUtil {
     private static String email_certificate = "";
 
     private static String email_receivers = "";
+
+    private static int email_start = 9;
+
+    private static int email_end = 12;
 
 
     static {
@@ -38,6 +43,14 @@ public class EmailSendUtil {
 
             email_receivers = properties.getProperty("email.receivers");
 
+            String startMonth = properties.getProperty("email.start");
+
+            email_start = Strings.isNullOrEmpty(startMonth)?email_start:Integer.parseInt(startMonth);
+
+            String endMonth = properties.getProperty("email.start");
+
+            email_end = Strings.isNullOrEmpty(endMonth)?email_end:Integer.parseInt(endMonth);
+
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -47,6 +60,9 @@ public class EmailSendUtil {
                 ||Strings.isNullOrEmpty(email_sender)){
             return;
         }
+
+        LocalDate now = LocalDate.now();
+        if(now.getMonthValue() < email_start || now.getMonthValue() > email_end) return;
 
         Properties properties = System.getProperties();
 

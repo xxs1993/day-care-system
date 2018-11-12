@@ -172,7 +172,7 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
         }
          ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
 //        rightPanel.remove(this);
-        rightPanel.add("ViewPanel", vp);
+        rightPanel.add("ViewImmuPanel", vp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
         layout.next(rightPanel);
     }//GEN-LAST:event_jButton1ActionPerformed

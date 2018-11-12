@@ -11,15 +11,12 @@ import csye6200.entity.Student;
 import csye6200.service.StudentService;
 import csye6200.service.RegisterService;
 import csye6200.service.impl.RegisterServiceImpl;
-import csye6200.userInterface.AbstractManagePanel;
 import csye6200.userInterface.DetailPanel;
 
-import java.awt.CardLayout;
-import java.awt.Component;
-import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -47,30 +44,31 @@ public class ViewPanel extends DetailPanel {
         txtAge.setText(stu.getAge()+"");
         txtFatherName.setText(Strings.nullToEmpty(stu.getFatherName()));
         txtMotherName.setText(Strings.nullToEmpty(stu.getMotherName()));
+        populateRegisterTable();
 //        txtAgeRange.setText(t.getAgeRange()+"");
         //txtAge.setText(t.getAge());
         
     }
     
     
-    /*
-    public void populateTable() {
+
+    public void populateRegisterTable() {
         
-        int rowCount = jTable1.getRowCount();
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        int rowCount = registerTable.getRowCount();
+        DefaultTableModel model = (DefaultTableModel) registerTable.getModel();
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
         
-            List<Registration> reg = registerService.getRegistrationRecordsByStudentId(student.getId());
-            
+         List<Registration> reg = registerService.getRegistrationRecordsByStudentId(student.getId());
+        if(reg == null || reg.isEmpty()) return;
         for ( Registration r : reg) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] = r.getTimeDisplay();
             model.addRow(row);
         }
     }
-    */
+
     
     
     /**
@@ -103,6 +101,8 @@ public class ViewPanel extends DetailPanel {
         btnUpdate = new javax.swing.JButton();
         btnSave = new javax.swing.JButton();
         genderCombo = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        registerTable = new javax.swing.JTable();
 
         jLabel2.setText("First Name:");
 
@@ -180,6 +180,20 @@ public class ViewPanel extends DetailPanel {
         genderCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "female", "male" }));
         genderCombo.setEnabled(false);
 
+        registerTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Registration Time"
+            }
+        ));
+        registerTable.setEnabled(false);
+        jScrollPane2.setViewportView(registerTable);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -212,10 +226,12 @@ public class ViewPanel extends DetailPanel {
                                     .addComponent(jLabel8)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(txtFatherName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel9)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtMotherName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(txtMotherName, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
@@ -232,7 +248,7 @@ public class ViewPanel extends DetailPanel {
                                             .addGroup(layout.createSequentialGroup()
                                                 .addComponent(genderCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGap(1, 1, 1)))))))))
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addContainerGap(174, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +288,9 @@ public class ViewPanel extends DetailPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnUpdate, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(203, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -345,7 +363,9 @@ public class ViewPanel extends DetailPanel {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTable registerTable;
     private javax.swing.JTextField txtAge;
     private javax.swing.JTextField txtFatherName;
     private javax.swing.JTextField txtFirstName;

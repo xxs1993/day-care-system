@@ -61,7 +61,11 @@ public class FileUtil {
      * @throws DatabaseException
      */
     public static void writeToFile(String fileName,List<String> contents) throws DatabaseException{
+        System.out.println("1 ------");
+
         synchronized (fileName) {
+            System.out.println("2 ------");
+//            System
             try (BufferedWriter bf = new BufferedWriter(new FileWriter(fileName))) {
                 for (String content : contents) {
                     bf.write(content);
@@ -74,6 +78,8 @@ public class FileUtil {
             }
             cache.put(fileName, contents);
         }
+        System.out.println("3 ------");
+
     }
 
     public static List<String>  readContents(final String fileName) throws DatabaseException{
