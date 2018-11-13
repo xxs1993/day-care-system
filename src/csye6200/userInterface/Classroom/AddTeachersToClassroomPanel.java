@@ -21,8 +21,8 @@ import csye6200.userInterface.DetailPanel;
  * @author karen
  */
 public class AddTeachersToClassroomPanel extends DetailPanel {
-    JPanel RightPanel;
-    ClassRoom classroom;
+    private JPanel RightPanel;
+    private ClassRoom classroom;
 
     /**
      * Creates new form AddTeachersToClassroomPanel

@@ -30,11 +30,11 @@ import javax.swing.table.DefaultTableModel;
  * @author Alvin
  */
 public class ManageStudentManagePanel extends AbstractManagePanel {
-    JPanel RightPanel;
-    StudentService studentService;
-    Student student;
-    RegisterService registerService;
-    StudentFacadeService studentFacadeSerice;
+    private JPanel RightPanel;
+    private StudentService studentService;
+    private Student student;
+    private RegisterService registerService;
+    private StudentFacadeService studentFacadeSerice;
     /**
      * Creates new form StudentWorkPanel
      */

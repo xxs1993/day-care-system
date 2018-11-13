@@ -21,9 +21,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageClassroomPanel extends AbstractManagePanel {
 
-    JPanel RightPanel;
-    ClassroomService classroomService;
-    ClassRoom classRoom;
+    private JPanel RightPanel;
+    private ClassroomService classroomService;
+    private ClassRoom classRoom;
 
     private static final Map<Integer, String> MAP = new HashMap<Integer, String>() {
         {

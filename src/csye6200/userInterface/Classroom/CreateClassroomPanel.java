@@ -21,9 +21,9 @@ import javax.swing.JPanel;
  * @author Alvin
  */
 public class CreateClassroomPanel extends DetailPanel {
-    JPanel RightPanel;
-    ClassroomService classroomService;
-    ClassRoom classroom;
+    private JPanel RightPanel;
+    private ClassroomService classroomService;
+    private ClassRoom classroom;
     
     private static final Map<String,Integer> MAP= new HashMap<String,Integer>(){{
      put("6-12",6);

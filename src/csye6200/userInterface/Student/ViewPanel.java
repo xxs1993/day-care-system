@@ -23,10 +23,10 @@ import java.util.List;
  * @author jinyimu
  */
 public class ViewPanel extends DetailPanel {
-     JPanel RightPanel;
-    StudentService studentService;
-    Student student;
-    RegisterService registerService;
+    private JPanel RightPanel;
+    private StudentService studentService;
+    private Student student;
+    private RegisterService registerService;
     /**
      * Creates new form ViewPanel
      */
