@@ -68,26 +68,22 @@ public class VaccineServiceImpl implements VaccineService {
         vaccineDao.updateVaccination(list);
     }
 
+
     @Override
-    public List<String> getUnimmunizedStudentsId(){
-        List<String> studentIdList = Lists.newArrayList();
-        Map<String, List<Vaccine>> map = this.getStudentIdVaccinationMap();
-        if (map == null || map.isEmpty()) {
-            return studentIdList;
+    public List<Vaccine>getRegistedStudentVaccineListByType(String type){
+        if(Strings.isNullOrEmpty(type))
+            return null;
+        List<Vaccine> vaccines= this.getAllVaccination();
+        if(vaccines==null){
+            return null;
         }
-        for (Map.Entry<String, List<Vaccine>> entry : map.entrySet()) {
-            List<Vaccine> list = entry.getValue();
-            String studentId = entry.getKey();
-            if (list == null || list.isEmpty()) {
-                studentIdList.add(studentId);
-                continue;
-            }
-            //get the newest record and compare the year of the record with current year
-            if (list.get(list.size() - 1).getVaccinationTime().getYear() < LocalDate.now().getYear()) {
-                studentIdList.add(studentId);
-            }
-        }
-        return studentIdList;
+        LocalDate now = LocalDate.now();
+        return vaccines.stream().filter((x)->{
+            return x.getVaccinationTime().getYear()==now.getYear()&&type.equals(x.getType());
+        }).collect(Collectors.toList());
+
     }
+
+
 
 }

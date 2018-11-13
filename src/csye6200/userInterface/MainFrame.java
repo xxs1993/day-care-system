@@ -10,6 +10,7 @@ import csye6200.service.impl.ClassroomServiceImpl;
 import csye6200.service.impl.RegisterServiceImpl;
 import csye6200.service.impl.StudentServiceImpl;
 import csye6200.timer.RegistrationTimer;
+import csye6200.timer.ImmunityTimer;
 import csye6200.userInterface.Classroom.ManageClassroomPanel;
 import csye6200.userInterface.Student.ManageStudentManagePanel;
 import csye6200.userInterface.Teacher.ManageTeacherPanel;
@@ -39,6 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
         pool = Executors.newScheduledThreadPool(3);
         //TODO:delay changes to 0 when in presentation
         pool.scheduleAtFixedRate(new RegistrationTimer(), 1, 24, TimeUnit.HOURS);
+        pool.scheduleAtFixedRate(new ImmunityTimer(),1,24, TimeUnit.HOURS);
         tsi = new TeacherServiceImpl();
         crsi = new ClassroomServiceImpl();
     }

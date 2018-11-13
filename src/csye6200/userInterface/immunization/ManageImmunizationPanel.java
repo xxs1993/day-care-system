@@ -6,8 +6,12 @@
 package csye6200.userInterface.immunization;
 
 import com.google.common.collect.Lists;
+import csye6200.constants.Constants;
 import csye6200.entity.Vaccine;
 import csye6200.entity.Student;
+import csye6200.facade.StudentFacadeService;
+import csye6200.facade.dto.Result;
+import csye6200.facade.impl.StudentFacadeServiceImpl;
 import csye6200.service.VaccineService;
 import csye6200.service.StudentService;
 import csye6200.service.impl.VaccineServiceImpl;
@@ -49,21 +53,22 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        immunizationTypeCombo = new javax.swing.JComboBox<>();
+        isImmunized = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         totalLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         immunizationTable = new javax.swing.JTable();
+        VaccineType = new javax.swing.JComboBox<>();
 
         setEnabled(false);
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         jLabel1.setText("Manage Immunization");
 
-        immunizationTypeCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Immunized Students", "Unimmunized Students" }));
-        immunizationTypeCombo.addActionListener(new java.awt.event.ActionListener() {
+        isImmunized.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Immunized Students", "Unimmunized Students" }));
+        isImmunized.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                immunizationTypeComboActionPerformed(evt);
+                isImmunizedActionPerformed(evt);
             }
         });
 
@@ -97,6 +102,13 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
         });
         jScrollPane1.setViewportView(immunizationTable);
 
+        VaccineType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DTaP", "Polio", "Hib" }));
+        VaccineType.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VaccineTypeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -111,15 +123,15 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(totalLabel)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGap(232, 232, 232)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jButton1)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(500, 500, 500)
-                                        .addComponent(jButton1))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(430, 430, 430)
-                                        .addComponent(immunizationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(VaccineType, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(isImmunized, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,7 +141,9 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(7, 7, 7)
-                        .addComponent(immunizationTypeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(isImmunized, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(VaccineType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(totalLabel)))
@@ -143,18 +157,19 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
 
 
     public void populateTable(){
-        populateTable(0);
+        populateTable(0,0);
     }
 
     /**
      * combo select
      * @param evt
      */
-    private void immunizationTypeComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_immunizationTypeComboActionPerformed
+    private void isImmunizedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_isImmunizedActionPerformed
         // TODO add your handling code here:
-        int i = immunizationTypeCombo.getSelectedIndex();
-        populateTable(i);
-    }//GEN-LAST:event_immunizationTypeComboActionPerformed
+        int i = VaccineType.getSelectedIndex();
+        int j = isImmunized.getSelectedIndex();
+        populateTable(i,j);
+    }//GEN-LAST:event_isImmunizedActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
              // TODO add your handling code here:
@@ -163,7 +178,7 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        String id = (String)immunizationTable.getValueAt(row, 0);
+        String id = (String)immunizationTable.getValueAt(row, 1);
         StudentService studentService = new StudentServiceImpl();
         Student student = studentService.getStudentByID(id);
         if(student == null){
@@ -177,7 +192,14 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
         layout.next(rightPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public void populateTable(int type){
+    private void VaccineTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VaccineTypeActionPerformed
+        // TODO add your handling code here:
+        int i = VaccineType.getSelectedIndex();
+        int j = isImmunized.getSelectedIndex();
+        populateTable(i,j);
+    }//GEN-LAST:event_VaccineTypeActionPerformed
+
+    public void populateTable(int type, int isImmunized){
 
         int rowCount = immunizationTable.getRowCount();
 
@@ -186,49 +208,39 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
         for(int i=rowCount-1;i>=0;i--) {
             model.removeRow(i);
         }
-        VaccineService vcService = new VaccineServiceImpl();
-        List<Vaccine> list;
-        if(type == 0){
-            List<Vaccine> all = vcService.getAllVaccination();
-            if(all==null || all.isEmpty()){
-                return;
-            }
-            list = all.stream().filter((x)->{
-                if(x.getVaccinationTime().getYear() == LocalDate.now().getYear()){
-                    return true;
-                }
-                return false;
-            }).collect(Collectors.toList());
-        }else{
-            List<String> unvaccinatedStudentsId = vcService.getUnimmunizedStudentsId();
-            if(unvaccinatedStudentsId==null || unvaccinatedStudentsId.isEmpty()){
-                return ;
-            }
-            list = Lists.transform(unvaccinatedStudentsId,(x)->{
-                Vaccine vc = new Vaccine();
-                vc.setType("");//vaccine type needed to be implemented
-                vc.setStudentId(x);
-                vc.setTimeDisplay("");
-                return vc;
-            });
+        StudentFacadeService service = new StudentFacadeServiceImpl();
+        String stringType = "";
+
+        switch (type){
+            case 0: stringType = Constants.VACCINE_TYPE_1;break;
+            case 1: stringType = Constants.VACCINE_TYPE_2;break;
+            case 2: stringType = Constants.VACCINE_TYPE_3;break;
         }
-        if(list == null || list.isEmpty()){
+        boolean ifImmunized = (isImmunized==0? true:false);
+
+        Result<List<Vaccine>> result = service.getUnimmunizedStudentsId(stringType, ifImmunized);
+        if(!result.isSuccess())
             return;
+
+        if(result.getData()==null || result.getData().isEmpty()){
+                return ;
         }
-        for(Vaccine v : list) {
+
+        for(Vaccine v : result.getData()) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] = v.getType();
             row[1] = v.getStudentId();
             row[2] = v.getTimeDisplay();
             model.addRow(row);
         }
-        totalLabel.setText("Total: "+list.size());
+        totalLabel.setText("Total: "+result.getData().size());
     }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> VaccineType;
     private javax.swing.JTable immunizationTable;
-    private javax.swing.JComboBox<String> immunizationTypeCombo;
+    private javax.swing.JComboBox<String> isImmunized;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
