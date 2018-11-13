@@ -70,7 +70,6 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
             return result;
         }
         String id = re.getData();
-
         Registration registration = new Registration();
         registration.setStudentId(id);
         LocalDate now = LocalDate.now();

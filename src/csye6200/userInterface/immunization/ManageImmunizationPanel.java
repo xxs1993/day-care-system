@@ -5,27 +5,23 @@
  */
 package csye6200.userInterface.immunization;
 
-import com.google.common.collect.Lists;
+import csye6200.constants.PanelConstants;
 import csye6200.constants.Constants;
 import csye6200.entity.Vaccine;
 import csye6200.entity.Student;
 import csye6200.facade.StudentFacadeService;
 import csye6200.facade.dto.Result;
 import csye6200.facade.impl.StudentFacadeServiceImpl;
-import csye6200.service.VaccineService;
 import csye6200.service.StudentService;
-import csye6200.service.impl.VaccineServiceImpl;
 import csye6200.service.impl.StudentServiceImpl;
 import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
 import csye6200.userInterface.Student.ViewPanel;
 import java.awt.CardLayout;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import java.time.LocalDate;
 import java.util.List;
-//import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -185,11 +181,11 @@ public class ManageImmunizationPanel extends AbstractManagePanel {
             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-         ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
-//        rightPanel.remove(this);
-        rightPanel.add("ViewImmuPanel", vp);
+         DetailPanel vp = new ViewPanel(rightPanel, studentService, student);
+        removeExistPanel(vp.getClass().getName(),rightPanel);
+        rightPanel.add(PanelConstants.VIEW_IMMUNIZATION_PANEL, vp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.next(rightPanel);
+        layout.last(rightPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void VaccineTypeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VaccineTypeActionPerformed

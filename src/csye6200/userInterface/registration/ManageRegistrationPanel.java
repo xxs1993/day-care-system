@@ -6,6 +6,7 @@
 package csye6200.userInterface.registration;
 
 import com.google.common.collect.Lists;
+import csye6200.constants.PanelConstants;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
 import csye6200.service.RegisterService;
@@ -13,6 +14,7 @@ import csye6200.service.StudentService;
 import csye6200.service.impl.RegisterServiceImpl;
 import csye6200.service.impl.StudentServiceImpl;
 import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
 import csye6200.userInterface.Student.ViewPanel;
 import java.awt.CardLayout;
 
@@ -169,10 +171,11 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
             JOptionPane.showMessageDialog(null, "Please select a row from the table first", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
         }
-        ViewPanel vp = new ViewPanel(rightPanel, studentService, student);
-        rightPanel.add("ViewRegisterPanel", vp);
+        DetailPanel vp = new ViewPanel(rightPanel, studentService, student);
+        removeExistPanel(vp.getClass().getName(),rightPanel);
+        rightPanel.add(PanelConstants.VIEW_STUDENT_PANEL, vp);
         CardLayout layout = (CardLayout) rightPanel.getLayout();
-        layout.next(rightPanel);
+        layout.last(rightPanel);
     }//GEN-LAST:event_viewDetailBtnActionPerformed
 
     public void populateTable(int type){

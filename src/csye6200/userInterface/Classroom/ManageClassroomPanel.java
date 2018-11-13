@@ -5,6 +5,8 @@
  */
 package csye6200.userInterface.Classroom;
 
+import csye6200.constants.Constants;
+import csye6200.constants.PanelConstants;
 import csye6200.entity.ClassRoom;
 import csye6200.service.ClassroomService;
 import csye6200.userInterface.AbstractManagePanel;
@@ -160,14 +162,16 @@ public class ManageClassroomPanel extends AbstractManagePanel {
         String cs = (String) jTable1.getValueAt(row, 0);
         ClassRoom c = classroomService.getClassroomById(cs);
         ViewClassroomPanel vp = new ViewClassroomPanel(RightPanel, classroomService, c);
-        RightPanel.add("ViewPanel", vp);
+        removeExistPanel(vp.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.VIEW_CLASSROOM_PANEL, vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
         CreateClassroomPanel ctp = new CreateClassroomPanel(RightPanel, classroomService);
-        RightPanel.add("CreateClassroomPanel", ctp);
+        removeExistPanel(ctp.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.CREATE_CLASSROOM_PANEL, ctp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
     }//GEN-LAST:event_btnCreateActionPerformed

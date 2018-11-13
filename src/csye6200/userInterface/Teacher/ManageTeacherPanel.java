@@ -12,6 +12,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.TeacherService;
 import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -267,7 +268,8 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
-        CreateTeacherPanel ctp = new CreateTeacherPanel(RightPanel,teacherService);
+        DetailPanel ctp = new CreateTeacherPanel(RightPanel,teacherService);
+        RightPanel.remove(this);
         RightPanel.add("CreateTeacherPanel", ctp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.next(RightPanel);
@@ -297,10 +299,11 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         }
         String ts = (String) tblTeacher.getValueAt(row, 0);
         Teacher t = teacherService.getTeacherById(ts);
-        ViewPanel vp = new ViewPanel(RightPanel, teacherService, t);
+        DetailPanel vp = new ViewPanel(RightPanel, teacherService, t);
         RightPanel.add("TeacherManagePanel", vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
+//        layout.next(RightPanel);
         
     }//GEN-LAST:event_btnViewActionPerformed
 

@@ -6,6 +6,7 @@
 package csye6200.userInterface.Classroom;
 
 import com.google.common.base.Strings;
+import csye6200.constants.PanelConstants;
 import csye6200.service.ClassroomService;
 import csye6200.entity.ClassRoom;
 import csye6200.userInterface.DetailPanel;
@@ -169,6 +170,11 @@ public class CreateClassroomPanel extends DetailPanel {
         classroom.setAgeRange(MAP.get(comboAgeRange.getSelectedItem()));
         classroomService.addClassroom(classroom);
         JOptionPane.showMessageDialog(null,"New classroom created!!");
+        DetailPanel classroomPanel = new ViewClassroomPanel(RightPanel,classroomService,classroom);
+        removeExistPanel(classroomPanel.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.VIEW_STUDENT_PANEL,classroomPanel);
+        CardLayout layout = (CardLayout) RightPanel.getLayout();
+        layout.last(RightPanel);
 
     }//GEN-LAST:event_btnCreateActionPerformed
 

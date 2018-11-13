@@ -6,6 +6,7 @@
 package csye6200.userInterface.Student;
 
 import com.google.common.base.Strings;
+import csye6200.constants.PanelConstants;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
 import csye6200.facade.StudentFacadeService;
@@ -224,12 +225,12 @@ public class CreateStudentPanel extends DetailPanel {
         }
         else{
             JOptionPane.showMessageDialog(null, "Enrolled Success", "Warning", JOptionPane.WARNING_MESSAGE);
-            RightPanel.remove(this);
             student.setId(result.getData());
             DetailPanel studentViewPanel = new ViewPanel(RightPanel,studentService,student);
-            RightPanel.add("ViewStudentPanel",studentViewPanel);
+            removeExistPanel(studentViewPanel.getClass().getName(),RightPanel);
+            RightPanel.add(PanelConstants.VIEW_STUDENT_PANEL,studentViewPanel);
             CardLayout layout = (CardLayout) RightPanel.getLayout();
-            layout.next(RightPanel);
+            layout.last(RightPanel);
         }
 
         
