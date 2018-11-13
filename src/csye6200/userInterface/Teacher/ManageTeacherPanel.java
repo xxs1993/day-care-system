@@ -323,12 +323,12 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
         //Format Validation
         String search=keyword.getText();
-        Pattern p=Pattern.compile("[A-Z]+[0-9]");
+        Pattern p=Pattern.compile("[T]+[0-9]");
         Matcher m=p.matcher(search);
         boolean b=m.find();
         if(comboSearch.getSelectedItem().equals("Search By ID")){
             if(b == false||Strings.isNullOrEmpty(search)){
-            JOptionPane.showMessageDialog(null,"The Format Should be Capital Letter + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"The Format Should be T + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
             return ;
             }
         }
