@@ -23,6 +23,7 @@ public interface ClassroomService {
      // Get certain classroom object by Id
      ClassRoom getClassroomById(String id);
      
+     List<ClassRoom> getClassroomsByCapacity(int cap);
      // Get the list of students assigned to certain classroom
      List<Student> getStudentsInClassroom(String id);
      

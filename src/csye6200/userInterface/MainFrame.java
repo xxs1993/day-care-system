@@ -5,6 +5,8 @@ package csye6200.userInterface;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+import csye6200.constants.PanelConstants;
 import csye6200.entity.*;
 import csye6200.service.impl.ClassroomServiceImpl;
 import csye6200.service.impl.RegisterServiceImpl;
@@ -17,7 +19,8 @@ import csye6200.userInterface.Teacher.ManageTeacherPanel;
 import csye6200.service.impl.TeacherServiceImpl;
 import csye6200.userInterface.immunization.ManageImmunizationPanel;
 import csye6200.userInterface.registration.ManageRegistrationPanel;
-import java.awt.CardLayout;
+
+import java.awt.*;
 import java.util.concurrent.*;
 import javax.swing.JOptionPane;
 
@@ -120,52 +123,69 @@ public class MainFrame extends javax.swing.JFrame {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SplitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(SplitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(SplitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(SplitPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void removeExistPanel(String name){
+        Component[] componentList = RightPanel.getComponents();
+        if(componentList !=null && componentList.length>0) {
+            for (Component component : componentList) {
+                if (component.getClass().getName().equals(name)) {
+                    RightPanel.remove(component);
+                    return;
+                }
+            }
+        }
+    }
+
     private void btnTeacherActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeacherActionPerformed
-        ManageTeacherPanel mtp = new ManageTeacherPanel(RightPanel, tsi);
-        RightPanel.add("TeacherManagePanel", mtp);
+        AbstractManagePanel mtp = new ManageTeacherPanel(RightPanel, tsi);
+        removeExistPanel(mtp.getClass().getName());
+        RightPanel.add(PanelConstants.MANAGE_TEACHER_PANEL, mtp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnTeacherActionPerformed
 
     private void btnStudentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStudentActionPerformed
-        ManageStudentManagePanel msp = new ManageStudentManagePanel(RightPanel,new StudentServiceImpl(),new RegisterServiceImpl());
-        RightPanel.add("StudentManagePanel", msp);
+        AbstractManagePanel msp = new ManageStudentManagePanel(RightPanel, new StudentServiceImpl(), new RegisterServiceImpl());
+        removeExistPanel(msp.getClass().getName());
+        RightPanel.add(PanelConstants.MANAGE_STUDENT_PANEL, msp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnStudentActionPerformed
 
     private void btnClassroomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClassroomActionPerformed
-        ManageClassroomPanel mcp = new ManageClassroomPanel(RightPanel, crsi);
-        RightPanel.add("ClassRoomManagePanel", mcp);
+        AbstractManagePanel mcp = new ManageClassroomPanel(RightPanel, crsi);
+        removeExistPanel(mcp.getClass().getName());
+        RightPanel.add(PanelConstants.MANAGE_CLASSROOM_PANEL, mcp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnClassroomActionPerformed
 
     private void btnImmuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImmuActionPerformed
         // TODO add your handling code here:
-         ManageImmunizationPanel mip = new ManageImmunizationPanel(RightPanel);
-        RightPanel.add("ImmunizationPanel", mip);
+        AbstractManagePanel mip = new ManageImmunizationPanel(RightPanel);
+        removeExistPanel(mip.getClass().getName());
+        RightPanel.add(PanelConstants.MANAGE_IMMUNIZATION_PANEL, mip);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnImmuActionPerformed
 
     private void btnRegistActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistActionPerformed
         // TODO add your handling code here:
-        ManageRegistrationPanel mcp = new ManageRegistrationPanel(RightPanel);
-        RightPanel.add("RegisterPanel", mcp);
+        AbstractManagePanel mrp = new ManageRegistrationPanel(RightPanel);
+        removeExistPanel(mrp.getClass().getName());
+        RightPanel.add(PanelConstants.MANAGE_REGISTRATION_PANEL, mrp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnRegistActionPerformed
 
     /**

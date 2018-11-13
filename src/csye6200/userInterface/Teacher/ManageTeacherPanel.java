@@ -6,12 +6,15 @@
 package csye6200.userInterface.Teacher;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
+import csye6200.constants.PanelConstants;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
 import csye6200.service.TeacherService;
 import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,6 +32,7 @@ public class ManageTeacherPanel extends AbstractManagePanel {
     JPanel RightPanel;
     TeacherService teacherService;
     Teacher teacher;
+    private List<Teacher> teacherList;
 
     /**
      * Creates new form StudentWorkPanel
@@ -52,38 +56,26 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
     }
     public void populateTable(){
 
-            populateTable("");
+            populateTable("","");
 
                 }
 
-    public void populateTable(String selectedItem){
+    private void sortBy(String sortBy){
+        if(Strings.isNullOrEmpty(sortBy) || "ID".equals(sortBy)){
+            sortById(teacherList);
+        } else if(sortBy.equals("Last Name")){
+            sortByLastName(teacherList);
+        } else if(sortBy.equals("Age Range")){
+            sortByAgeRange(teacherList);
+        }
+        flushTable();
+    }
+
+    private void flushTable(){
         int rowCount = tblTeacher.getRowCount();
         DefaultTableModel model = (DefaultTableModel)tblTeacher.getModel();
         for(int i=rowCount-1;i>=0;i--) {
             model.removeRow(i);
-        }
-         List<Teacher> teacherList = teacherService.getTeacher();
-
-        if(teacherList == null || teacherList.isEmpty()) return;
-        if(selectedItem == null || selectedItem.equals("ID")){
-            sortById(teacherList);
-        }
-        if(selectedItem.equals("Last Name")){
-            sortByLastName(teacherList);
-        }
-        if(selectedItem.equals("Age Range")){
-            sortByAgeRange(teacherList);
-        }
-        if(selectedItem.equals("Search By ID")){
-            String id = keyword.getText();
-            teacher = teacherService.getTeacherById(id);
-            teacherList.clear();
-            teacherList.add(teacher);
-        }
-        if(selectedItem.equals("Search By Name")){
-            String name = keyword.getText();
-            teacherList.clear();
-            teacherList = teacherService.getTeachersByFirstName(name);
         }
         for(Teacher t : teacherList) {
             Object row[] = new Object[model.getColumnCount()];
@@ -92,8 +84,27 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
             row[2] =Strings.nullToEmpty(t.getlName());
             row[3] =MAP.get(t.getAgeRange());
             model.addRow(row);
-            }
-                System.out.println(Arrays.toString(teacherService.getTeacher().toArray()));
+        }
+    }
+
+    public void populateTable(String selectedItem,String sortBy){
+
+
+        if(Strings.isNullOrEmpty(selectedItem)){
+            teacherList  = teacherService.getTeacher();
+        }else if(selectedItem.equals("Search By ID")){
+            String id = keyword.getText();
+            teacher = teacherService.getTeacherById(id);
+            teacherList.add(teacher);
+        } else if(selectedItem.equals("Search By Name")){
+            String name = keyword.getText();
+            teacherList = teacherService.getTeachersByFirstName(name);
+        }
+
+        if(teacherList == null || teacherList.isEmpty()) return;
+        sortBy(sortBy);
+
+        System.out.println(Arrays.toString(teacherService.getTeacher().toArray()));
 
         }
         private void sortById(List<Teacher> teacherList){
@@ -267,10 +278,11 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEnrollActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnrollActionPerformed
-        CreateTeacherPanel ctp = new CreateTeacherPanel(RightPanel,teacherService);
-        RightPanel.add("CreateTeacherPanel", ctp);
+        DetailPanel ctp = new CreateTeacherPanel(RightPanel,teacherService);
+        removeExistPanel(ctp.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.CREATE_TEACHER_PANEL, ctp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnEnrollActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
@@ -297,10 +309,12 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         }
         String ts = (String) tblTeacher.getValueAt(row, 0);
         Teacher t = teacherService.getTeacherById(ts);
-        ViewPanel vp = new ViewPanel(RightPanel, teacherService, t);
-        RightPanel.add("TeacherManagePanel", vp);
+        DetailPanel vp = new ViewPanel(RightPanel, teacherService, t);
+        removeExistPanel(vp.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.VIEW_TEACHER_PANEL, vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
+//        layout.next(RightPanel);
         
     }//GEN-LAST:event_btnViewActionPerformed
 
@@ -320,12 +334,12 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
         //Format Validation
         String search=keyword.getText();
-        Pattern p=Pattern.compile("[A-Z]+[0-9]");
+        Pattern p=Pattern.compile("[T]+[0-9]");
         Matcher m=p.matcher(search);
         boolean b=m.find();
         if(comboSearch.getSelectedItem().equals("Search By ID")){
             if(b == false||Strings.isNullOrEmpty(search)){
-            JOptionPane.showMessageDialog(null,"The Format Should be Capital Letter + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"The Format Should be T + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
             return ;
             }
         }
@@ -335,14 +349,16 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
               return;
             }
         }
+        String sortby = (String)jComboBox1.getSelectedItem();
+
         String selectedItem = (String)comboSearch.getSelectedItem();
-        populateTable(selectedItem);
+        populateTable(selectedItem,sortby);
 
     }//GEN-LAST:event_btnGoActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        String selectedItem = (String)jComboBox1.getSelectedItem();
-        populateTable(selectedItem);
+        String sortBy = (String)jComboBox1.getSelectedItem();
+        sortBy(sortBy);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
 

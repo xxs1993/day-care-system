@@ -60,4 +60,6 @@ public class Constants {
     public static final String VACCINE_TYPE_4 = "MMR";
 
     public static final String VACCINE_TYPE_5 = "Varicella";
+
+    public static final int SEMESTER_START_MONTH = 9;
 }

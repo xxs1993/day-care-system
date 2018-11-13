@@ -10,6 +10,8 @@ import com.google.common.base.Strings;
 import java.awt.CardLayout;
 import java.awt.Component;
 import javax.swing.JPanel;
+
+import csye6200.constants.PanelConstants;
 import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
 import csye6200.userInterface.AbstractManagePanel;
@@ -226,11 +228,12 @@ public class CreateTeacherPanel extends DetailPanel {
         teacher.setAgeRange(MAP.get(comboAgeRange.getSelectedItem()));
         teacher  = teacherService.addTeacher(teacher);
         JOptionPane.showMessageDialog(null,"Teacher Enrolled!!");
-        RightPanel.remove(this);
         DetailPanel teacherDetailPanel = new ViewPanel(RightPanel,teacherService,teacher);
-        RightPanel.add("TeacherDetailPanel",teacherDetailPanel);
+        removeExistPanel(teacherDetailPanel.getClass().getName(),RightPanel);
+        RightPanel.remove(this);
+        RightPanel.add(PanelConstants.VIEW_TEACHER_PANEL,teacherDetailPanel);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
 
     }//GEN-LAST:event_btnEnrollActionPerformed
 

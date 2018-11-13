@@ -2,6 +2,7 @@ package csye6200.service;
 
 import csye6200.entity.Registration;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -17,5 +18,5 @@ public interface RegisterService {
 
     void addRegistrationRecord(Registration registration);
 
-    List<Registration> getRegisteredStudentsByYear(int year);
+    List<Registration> getRegisteredStudentsByTime(LocalDate time);
 }

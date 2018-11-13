@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
@@ -19,6 +20,7 @@ import csye6200.service.ClassroomService;
 import csye6200.dao.impl.ClassroomDaoImpl;
 import csye6200.dao.impl.TeacherDaoImpl;
 import csye6200.entity.ClassRoom;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -58,6 +60,24 @@ public class ClassroomServiceImpl implements ClassroomService {
         return map.get(id);
 
     }
+    
+    @Override
+	public List<ClassRoom> getClassroomsByCapacity(int cap){
+		if(cap <= 0){
+			return null;
+		}
+		List<ClassRoom> classrooms = this.getClassrooms();
+		List<ClassRoom> result = Lists.newArrayList();
+
+		if(classrooms == null || classrooms.isEmpty()){
+			return result;
+		}
+		result = classrooms.stream().filter((x)->{
+			return x.getCapacity() > 0 && cap == x.getCapacity();
+		}).collect(Collectors.toList());
+
+		return result;
+	}
 
     public String addTeacher(Teacher teacher, String id) {
         if(isTeacherInAClassroom(teacher.getId())) return "Duplicate";
@@ -128,19 +148,19 @@ public class ClassroomServiceImpl implements ClassroomService {
         } else {
             List<Teacher> teachers = this.getTeachersInClassroom(id);
             for (Teacher t : teachers) {
-                if (teacherId == t.getId()) {
+                if (teacherId.equals(t.getId())) {
                     teachers.remove(t);
                     break;
                 }
             }
             classroom.setTeachers(teachers);
             for (int i = 0; i < classrooms.size(); i++) {
-                if (classrooms.get(i).getId() == classroom.getId()) {
+                if (classrooms.get(i).getId().equals(classroom.getId())) {
                     classrooms.set(i, classroom);
                 }
             }
             cdi.writeClassroom(classrooms);
-            return "Teacher " + teacherId + " has been removde from classroom " + id;
+            return teacherId;
         }
 
     }

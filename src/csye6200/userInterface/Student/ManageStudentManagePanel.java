@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import com.google.common.base.Strings;
+import csye6200.constants.PanelConstants;
 import csye6200.facade.dto.Result;
 import csye6200.service.StudentService;
 
@@ -18,6 +19,7 @@ import csye6200.facade.impl.StudentFacadeServiceImpl;
 import csye6200.service.RegisterService;
 //import csye6200.entity.Teacher;
 import csye6200.userInterface.AbstractManagePanel;
+import csye6200.userInterface.DetailPanel;
 
 import java.util.Collections;
 import java.util.List;
@@ -89,7 +91,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             studentList = studentService.getStudentsByFirstName(name);
         } 
         
-        
+        if(studentList == null ||studentList.isEmpty()){
+            return;
+        }
         for(Student s : studentList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =s.getId();
@@ -286,10 +290,11 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             return;
         }
         CreateStudentPanel csp = new CreateStudentPanel(RightPanel, studentService, registerService);
-        RightPanel.add("CreateNewStudentPanel", csp);
+        removeExistPanel(csp.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.CREATE_STUDENT_PANEL, csp);
       
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     //view detail
@@ -301,10 +306,11 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         }
         String ts = (String)jTable1.getValueAt(row, 0);
         Student t = studentService.getStudentByID(ts);
-        ViewPanel vp = new ViewPanel(RightPanel, studentService, t);
-        RightPanel.add("ViewPanel", vp);
+        DetailPanel vp = new ViewPanel(RightPanel, studentService, t);
+        removeExistPanel(vp.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.VIEW_STUDENT_PANEL, vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnViewActionPerformed
 
     //delete botton
@@ -329,10 +335,11 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
         }
         String ts = (String)jTable1.getValueAt(row, 0);
         Student t = studentService.getStudentByID(ts);
-        ImmuPanel ip = new ImmuPanel(RightPanel, studentService, t);
-        RightPanel.add("ImmuPanel", ip);
+        DetailPanel ip = new ImmuPanel(RightPanel, studentService, t);
+        removeExistPanel(ip.getClass().getName(),RightPanel);
+        RightPanel.add(PanelConstants.VIEW_IMMUNIZATION_PANEL, ip);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);// TODO add your handling code here:
+        layout.last(RightPanel);// TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

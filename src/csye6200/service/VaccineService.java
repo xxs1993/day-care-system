@@ -9,6 +9,7 @@ public interface VaccineService {
     List<Vaccine> getAllVaccination();
 
     List<Vaccine>getVaccineRecordByStudentId(String studentId);
+
     Map<String, List<Vaccine>> getStudentIdVaccinationMap();
 
     List<Vaccine>getRegistedStudentVaccineListByType(String type);
