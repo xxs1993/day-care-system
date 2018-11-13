@@ -168,7 +168,7 @@ public class AddTeachersToClassroomPanel extends DetailPanel {
         Teacher teacher = tsi.getTeacherById(tid);
         ClassroomServiceImpl csi = new ClassroomServiceImpl();
         String result = csi.addTeacher(teacher,this.classroom.getId());
-        if (result == "Duplicate") JOptionPane.showMessageDialog(null, "Add fail!! This teacher has already been added to a classroom!!");
+        if (result.equals("Duplicate")) JOptionPane.showMessageDialog(null, "Add fail!! This teacher has already been added to a classroom!!");
         else JOptionPane.showMessageDialog(null, "Teacher successfully added to classroom!!");
     }//GEN-LAST:event_jButton1ActionPerformed
 
