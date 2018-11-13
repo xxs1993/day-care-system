@@ -3,10 +3,12 @@ package csye6200.service.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import csye6200.constants.Constants;
 import csye6200.entity.Registration;
 import csye6200.service.RegisterService;
 import csye6200.dao.RegistrationDao;
 import csye6200.dao.impl.RegistrationDaoImpl;
+import csye6200.util.DateUtil;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -86,13 +88,13 @@ public class RegisterServiceImpl implements RegisterService {
     }
 
     @Override
-    public  List<Registration> getRegisteredStudentsByYear(int year){
-        if(year <= 0){
+    public  List<Registration> getRegisteredStudentsByTime(LocalDate time){
+        if(time ==  null){
             return null;
         }
         List<Registration> list = this.getAllRegistration();
         return list.stream().filter((x)->{
-           return x.getRegisterTime().getYear() == year;
+            return DateUtil.isTheSameSemester(x.getRegisterTime(),time);
         }).collect(Collectors.toList());
     }
 

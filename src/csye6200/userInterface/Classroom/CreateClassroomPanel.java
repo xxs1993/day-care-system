@@ -172,6 +172,7 @@ public class CreateClassroomPanel extends DetailPanel {
         JOptionPane.showMessageDialog(null,"New classroom created!!");
         DetailPanel classroomPanel = new ViewClassroomPanel(RightPanel,classroomService,classroom);
         removeExistPanel(classroomPanel.getClass().getName(),RightPanel);
+        RightPanel.remove(this);
         RightPanel.add(PanelConstants.VIEW_STUDENT_PANEL,classroomPanel);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.last(RightPanel);

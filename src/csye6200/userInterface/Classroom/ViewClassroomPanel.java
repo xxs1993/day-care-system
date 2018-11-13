@@ -421,9 +421,10 @@ public class ViewClassroomPanel extends DetailPanel implements AbstractViewPanel
             JOptionPane.showMessageDialog(null, "Maxium teacher number reached. Cannot add teacher to this classroom.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             AddTeachersToClassroomPanel atcp = new AddTeachersToClassroomPanel(RightPanel,this.classroom);
+        removeExistPanel(atcp.getClass().getName(),RightPanel);
         RightPanel.add("AddTeachersToClassroomPanel", atcp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
         }
         
     }//GEN-LAST:event_AddTeacherButtonActionPerformed

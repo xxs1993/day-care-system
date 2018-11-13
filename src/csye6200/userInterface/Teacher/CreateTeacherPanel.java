@@ -230,6 +230,7 @@ public class CreateTeacherPanel extends DetailPanel {
         JOptionPane.showMessageDialog(null,"Teacher Enrolled!!");
         DetailPanel teacherDetailPanel = new ViewPanel(RightPanel,teacherService,teacher);
         removeExistPanel(teacherDetailPanel.getClass().getName(),RightPanel);
+        RightPanel.remove(this);
         RightPanel.add(PanelConstants.VIEW_TEACHER_PANEL,teacherDetailPanel);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.last(RightPanel);

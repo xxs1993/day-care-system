@@ -91,7 +91,9 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             studentList = studentService.getStudentsByFirstName(name);
         } 
         
-        
+        if(studentList == null ||studentList.isEmpty()){
+            return;
+        }
         for(Student s : studentList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =s.getId();

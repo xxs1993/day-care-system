@@ -3,10 +3,6 @@ package csye6200.facade.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import csye6200.constants.Constants;
-import csye6200.dao.RegistrationDao;
-import csye6200.dao.VaccineDao;
-import csye6200.dao.impl.RegistrationDaoImpl;
-import csye6200.dao.impl.VaccineDaoImpl;
 import csye6200.entity.Registration;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
@@ -25,10 +21,8 @@ import csye6200.util.DateUtil;
 import csye6200.util.RegulationUtil;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class StudentFacadeServiceImpl implements StudentFacadeService {
@@ -145,12 +139,11 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
         //if true 获取注册人的idlist, 循环idlist， 同时疫苗构建成学生id和疫苗对象的map 通过id get对应对象 如果拿到 表示拿过，没拿到 表示没打过
         //3.筛选出
         Result<List<Vaccine>> result= new Result<>();
-        List<Registration>registrations = registerService.getRegisteredStudentsByYear(LocalDate.now().getYear());
+        List<Registration>registrations = registerService.getRegisteredStudentsByTime(LocalDate.now());
         List<Vaccine>vaccines = vaccineService.getRegistedStudentVaccineListByType(type);
         if(registrations==null||registrations.isEmpty())
             return result;
         List<Vaccine>vaccineList = Lists.newArrayList();
-
 
             if(vaccines==null||vaccines.isEmpty()){
                 if(!isImmunized) {
@@ -167,16 +160,18 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
                 return result;
         }
 
-
-       Map<String,Vaccine>vaccineMap = vaccines.stream().collect(Collectors.toMap(x->x.getStudentId(),x->x));
+        LocalDate now = LocalDate.now();
+       Map<String,Vaccine>vaccineMap = vaccines.stream().filter((x)->{
+        return  DateUtil.isTheSameSemester(x.getVaccinationTime(),now);
+       }).collect(Collectors.toMap(x->x.getStudentId(),x->x));
             for(Registration registration:registrations){
                 Vaccine vaccine = vaccineMap.get(registration.getStudentId());
-                if(isImmunized){
-                    if(vaccine!=null)
-                        vaccineList.add(vaccine);
-                }else{
+                if(isImmunized &&vaccine!=null){
+                    vaccineList.add(vaccine);
+                }else if(!isImmunized && vaccine == null){
                     vaccine = new Vaccine();
                     vaccine.setStudentId(registration.getStudentId());
+                    vaccine.setType(type);
                     vaccineList.add(vaccine);
                 }
             }

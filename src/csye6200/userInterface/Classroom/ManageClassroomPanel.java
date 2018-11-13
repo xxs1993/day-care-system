@@ -87,7 +87,8 @@ public class ManageClassroomPanel extends AbstractManagePanel {
             
             classroomList = classroomService.getClassroomsByCapacity(Integer.parseInt(capacity));
         }
-        
+        if(classroomList == null || classroomList.isEmpty())
+            return;
         for (ClassRoom c : classroomList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] = c.getId();
@@ -254,7 +255,7 @@ public class ManageClassroomPanel extends AbstractManagePanel {
         removeExistPanel(vp.getClass().getName(),RightPanel);
         RightPanel.add(PanelConstants.VIEW_CLASSROOM_PANEL, vp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnViewActionPerformed
 
     private void btnCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCreateActionPerformed
@@ -262,7 +263,7 @@ public class ManageClassroomPanel extends AbstractManagePanel {
         removeExistPanel(ctp.getClass().getName(),RightPanel);
         RightPanel.add(PanelConstants.CREATE_CLASSROOM_PANEL, ctp);
         CardLayout layout = (CardLayout) RightPanel.getLayout();
-        layout.next(RightPanel);
+        layout.last(RightPanel);
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void sortByBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByBoxActionPerformed

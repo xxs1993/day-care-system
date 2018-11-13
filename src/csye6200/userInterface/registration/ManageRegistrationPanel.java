@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.util.List;
 //import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 /**
  *
@@ -190,7 +190,7 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
         RegisterService reService = new RegisterServiceImpl();
         List<Registration> list;
         if(type == 0){
-            list = reService.getRegisteredStudentsByYear(LocalDate.now().getYear());
+            list = reService.getRegisteredStudentsByTime(LocalDate.now());
         }else{
             List<String> unregisteredStudentsId = reService.getUnregisteredStudentsId();
             if(unregisteredStudentsId==null || unregisteredStudentsId.isEmpty()){

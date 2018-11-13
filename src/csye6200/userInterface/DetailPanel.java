@@ -10,8 +10,11 @@ public class DetailPanel extends javax.swing.JPanel  {
         RightPanel.remove(this);
         Component[] componentArray = RightPanel.getComponents();
         Component component = componentArray[componentArray.length - 1];
-        AbstractManagePanel manageStudentPanel = (AbstractManagePanel) component;
-        manageStudentPanel.populateTable();
+        JPanel manageStudentPanel = (JPanel) component;
+        if(manageStudentPanel instanceof AbstractManagePanel){
+            ( (AbstractManagePanel) manageStudentPanel).populateTable();
+
+        }
         CardLayout layout = (CardLayout) RightPanel.getLayout();
         layout.last(RightPanel);
     }

@@ -5,6 +5,7 @@
  */
 package csye6200.userInterface.Student;
 
+import csye6200.constants.Constants;
 import csye6200.entity.Student;
 import csye6200.entity.Vaccine;
 import csye6200.userInterface.DetailPanel;
@@ -21,6 +22,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -71,7 +73,7 @@ public class ImmuPanel extends DetailPanel {
         for(Vaccine v : sort) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =v.getType();
-            row[1] =v.getVaccinationTime();
+            row[1] =v.getTimeDisplay();
             model.addRow(row);
             }
     }
@@ -184,6 +186,30 @@ public class ImmuPanel extends DetailPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         String selectedItem = (String)jComboBox1.getSelectedItem();
+        TableModel model = jTable1.getModel();
+        int row = jTable1.getRowCount();
+        for(int i = 0;i<row;i++){
+            String type = model.getValueAt(i,0).toString();
+            String timeDisplay = model.getValueAt(i,1).toString();
+            LocalDate time = DateUtil.stringToDate(timeDisplay);
+            LocalDate now = LocalDate.now();
+            if(time == null ||!type.equals(selectedItem)){
+                if(time.getYear() < now.getYear() ){
+                    break;
+                }
+                continue;
+            }
+            //match type
+            //compare time
+            if(time.getYear() == now.getYear() && (time.getMonthValue()/ Constants.SEMESTER_START_MONTH == now.getMonthValue()/Constants.SEMESTER_START_MONTH)){
+                JOptionPane.showMessageDialog(null,String.format("%s has taken %s this semester !",student.getId(),type));
+                return;
+            }else
+                //the newest record is not in this year
+                break;
+
+        }
+
         vaccine.setType(selectedItem);
         LocalDate now = LocalDate.now();
         vaccine.setVaccinationTime(now);
