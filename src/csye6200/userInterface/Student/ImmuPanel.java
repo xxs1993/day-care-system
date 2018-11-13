@@ -29,13 +29,13 @@ import javax.swing.table.TableModel;
  * @author zehuama
  */
 public class ImmuPanel extends DetailPanel {
-    
-    JPanel RightPanel;
-    StudentService studentService;
-    Student student;
-    Vaccine vaccine;
-    RegisterService registerService;
-    VaccineService vaccineService;
+
+    private JPanel RightPanel;
+    private StudentService studentService;
+    private Student student;
+    private Vaccine vaccine;
+    private RegisterService registerService;
+    private VaccineService vaccineService;
     
     /**
      * Creates new form ImmuPanel

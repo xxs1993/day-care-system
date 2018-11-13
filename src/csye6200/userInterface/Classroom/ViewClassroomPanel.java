@@ -30,9 +30,9 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ViewClassroomPanel extends DetailPanel implements AbstractViewPanel{
 
-    JPanel RightPanel;
-    ClassroomService classroomService;
-    ClassRoom classroom;
+    private JPanel RightPanel;
+    private ClassroomService classroomService;
+    private ClassRoom classroom;
     /**
      * Creates new form ViewPanel
      */

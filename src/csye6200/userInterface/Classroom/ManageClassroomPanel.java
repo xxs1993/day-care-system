@@ -6,6 +6,7 @@
 package csye6200.userInterface.Classroom;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import csye6200.constants.Constants;
 import csye6200.constants.PanelConstants;
 import csye6200.entity.ClassRoom;
@@ -27,9 +28,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ManageClassroomPanel extends AbstractManagePanel {
 
-    JPanel RightPanel;
-    ClassroomService classroomService;
-    ClassRoom classRoom;
+    private JPanel RightPanel;
+    private ClassroomService classroomService;
+    private ClassRoom classRoom;
+    private List<ClassRoom> classroomList;
 
     private static final Map<Integer, String> MAP = new HashMap<Integer, String>() {
         {
@@ -54,7 +56,7 @@ public class ManageClassroomPanel extends AbstractManagePanel {
     }
     
     public void populateTable() {
-        populateTable("");
+        populateTable("","");
     }
 
     public void populateTable(String selectedItem) {
@@ -63,30 +65,21 @@ public class ManageClassroomPanel extends AbstractManagePanel {
         for (int i = rowCount - 1; i >= 0; i--) {
             model.removeRow(i);
         }
-        
-        List<ClassRoom> classroomList = classroomService.getClassrooms();
-        if(classroomList == null || classroomList.isEmpty()) return;
-        if(selectedItem == null || selectedItem.equals("ID")){
+        if(classroomList == null || classroomList.isEmpty())
+            return;
+        if(Strings.isNullOrEmpty(sortBy) || sortBy.equals("ID")){
             sortById(classroomList);
         }
-        if(selectedItem.equals("Capacity")){
+        if(sortBy.equals("Capacity")){
             sortByLastName(classroomList);
         }
-        if(selectedItem.equals("Age Range")){
+        if(sortBy.equals("Age Range")){
             sortByAgeRange(classroomList);
         }
-        if(selectedItem.equals("Search By ID")){
-            String id = keyword.getText();
-            classRoom = classroomService.getClassroomById(id);
-            classroomList.clear();
-            classroomList.add(classRoom);
-        }
-        if(selectedItem.equals("Search By Capacity")){
-            String capacity = keyword.getText();
-            classroomList.clear();
-            
-            classroomList = classroomService.getClassroomsByCapacity(Integer.parseInt(capacity));
-        }
+        flushTable(model);
+    }
+
+    private void flushTable(DefaultTableModel model){
         if(classroomList == null || classroomList.isEmpty())
             return;
         for (ClassRoom c : classroomList) {
@@ -98,6 +91,22 @@ public class ManageClassroomPanel extends AbstractManagePanel {
             row[4] = classroomService.getCurrentStudentNumber(c.getId());
             model.addRow(row);
         }
+    }
+
+    public void populateTable(String selectedItem,String sortBy) {
+        classroomList = Lists.newArrayList();
+        if(Strings.isNullOrEmpty(selectedItem)){
+            classroomList = classroomService.getClassrooms();
+        } else if(selectedItem.equals("Search By ID")){
+            String id = keyword.getText();
+            classRoom = classroomService.getClassroomById(id);
+            if(classRoom !=null)
+            classroomList.add(classRoom);
+        } else if(selectedItem.equals("Search By Capacity")){
+            String capacity = keyword.getText();
+            classroomList = classroomService.getClassroomsByCapacity(Integer.parseInt(capacity));
+        }
+        sortBy(sortBy);
     }
     
     private void sortById(List<ClassRoom> classroomList){
@@ -275,8 +284,8 @@ public class ManageClassroomPanel extends AbstractManagePanel {
     }//GEN-LAST:event_btnCreateActionPerformed
 
     private void sortByBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortByBoxActionPerformed
-        String selectedItem = (String)sortByBox.getSelectedItem();
-        populateTable(selectedItem);
+        String sortBy = (String)sortByBox.getSelectedItem();
+        sortBy(sortBy);
     }//GEN-LAST:event_sortByBoxActionPerformed
 
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
@@ -297,7 +306,8 @@ public class ManageClassroomPanel extends AbstractManagePanel {
             }
         }
         String selectedItem = (String)comboSearch.getSelectedItem();
-        populateTable(selectedItem);
+        String sortBy = (String)sortByBox.getSelectedItem();
+        populateTable(selectedItem,sortBy);
     }//GEN-LAST:event_btnGoActionPerformed
 
     private void comboSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboSearchActionPerformed

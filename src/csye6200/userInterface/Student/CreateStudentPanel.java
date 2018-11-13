@@ -26,11 +26,11 @@ import javax.swing.JPanel;
  * @author Alvin
  */
 public class CreateStudentPanel extends DetailPanel {
-    JPanel RightPanel;
-    StudentService studentService;
-    Student student;
-    RegisterService registerService;
-    StudentFacadeService studentFacadeService;
+    private JPanel RightPanel;
+    private StudentService studentService;
+    private Student student;
+    private RegisterService registerService;
+    private StudentFacadeService studentFacadeService;
 
     /**
      * Creates new form CreateStudentPanel

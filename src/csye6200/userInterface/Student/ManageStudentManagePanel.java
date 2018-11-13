@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 
 import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import csye6200.constants.PanelConstants;
 import csye6200.facade.dto.Result;
 import csye6200.service.StudentService;
@@ -32,11 +33,12 @@ import javax.swing.table.DefaultTableModel;
  * @author Alvin
  */
 public class ManageStudentManagePanel extends AbstractManagePanel {
-    JPanel RightPanel;
-    StudentService studentService;
-    Student student;
-    RegisterService registerService;
-    StudentFacadeService studentFacadeSerice;
+    private JPanel RightPanel;
+    private StudentService studentService;
+    private Student student;
+    private RegisterService registerService;
+    private StudentFacadeService studentFacadeSerice;
+    private List<Student> studentList;
     /**
      * Creates new form StudentWorkPanel
      */
@@ -53,47 +55,12 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
     }
 
     public void populateTable() {
-        populateTable("");
-        
+        populateTable("","");
     }
-    
 
-    public void populateTable(String selectedItem) {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        
-        int rowCount = jTable1.getRowCount();
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-        for(int i=rowCount-1;i>=0;i--) {
-            model.removeRow(i);
-        }
-        
-        List<Student> studentList = studentService.getStudent();
-        
-        if(studentList == null || studentList.isEmpty()) return;
-        if(selectedItem == null || selectedItem.equals("ID")){
-            sortById(studentList);
-        }
-        if(selectedItem.equals("Age")){
-            sortByAge(studentList);
-        }
-        if(selectedItem.equals("Gender")){
-            sortByGender(studentList);
-        }
-        if(selectedItem.equals("Search By ID")){
-            String id = keyword.getText();
-            student = studentService.getStudentByID(id);
-            studentList.clear();
-            studentList.add(student);
-        } 
-        if(selectedItem.equals("Search By Name")){
-            String name = keyword.getText();
-            studentList.clear();
-            studentList = studentService.getStudentsByFirstName(name);
-        } 
-        
-        if(studentList == null ||studentList.isEmpty()){
-            return;
-        }
+    private void flushTable(DefaultTableModel model){
+       if(studentList == null || studentList.isEmpty())
+           return;
         for(Student s : studentList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =s.getId();
@@ -102,7 +69,50 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
             row[3] =Strings.nullToEmpty(s.getGender());
             row[4] = s.getAge();
             model.addRow(row);
+        }
+    }
+    private void sortBy(String sortBy){
+        int rowCount = jTable1.getRowCount();
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        for(int i=rowCount-1;i>=0;i--) {
+            model.removeRow(i);
+        }
+        if(studentList!=null && !studentList.isEmpty()) {
+            if (Strings.isNullOrEmpty(sortBy) || sortBy.equals("ID")) {
+                sortById(studentList);
             }
+            if (sortBy.equals("Age")) {
+                sortByAge(studentList);
+            }
+            if (sortBy.equals("Gender")) {
+                sortByGender(studentList);
+            }
+        }
+        flushTable(model);
+    }
+    
+
+    public void populateTable(String selectedItem,String sortBy) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
+
+        
+        studentList = Lists.newArrayList();
+        
+
+        if(Strings.isNullOrEmpty(selectedItem)){
+            studentList = studentService.getStudent();
+        } else if(selectedItem.equals("Search By ID")){
+            String id = keyword.getText();
+            student = studentService.getStudentByID(id);
+            if(student!=null)
+               studentList.add(student);
+        } else if(selectedItem.equals("Search By Name")){
+            String name = keyword.getText();
+            studentList = studentService.getStudentsByFirstName(name);
+        }
+
+        sortBy(sortBy);
     }
     
     private void sortById(List<Student> studentList){
@@ -355,7 +365,7 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         String selectedItem = (String)jComboBox1.getSelectedItem();   
-        populateTable(selectedItem);
+        sortBy(selectedItem);
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void keywordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keywordActionPerformed
@@ -365,7 +375,8 @@ public class ManageStudentManagePanel extends AbstractManagePanel {
     //Search Function
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         String selectedItem = (String)jComboBox2.getSelectedItem();
-        populateTable(selectedItem);
+        String sortBy = (String)jComboBox1.getSelectedItem();
+        populateTable(selectedItem,sortBy);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed

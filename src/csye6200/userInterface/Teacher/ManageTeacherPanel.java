@@ -16,10 +16,7 @@ import csye6200.service.TeacherService;
 import csye6200.userInterface.AbstractManagePanel;
 import csye6200.userInterface.DetailPanel;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
@@ -61,22 +58,26 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
                 }
 
     private void sortBy(String sortBy){
-        if(Strings.isNullOrEmpty(sortBy) || "ID".equals(sortBy)){
-            sortById(teacherList);
-        } else if(sortBy.equals("Last Name")){
-            sortByLastName(teacherList);
-        } else if(sortBy.equals("Age Range")){
-            sortByAgeRange(teacherList);
-        }
-        flushTable();
-    }
-
-    private void flushTable(){
         int rowCount = tblTeacher.getRowCount();
         DefaultTableModel model = (DefaultTableModel)tblTeacher.getModel();
         for(int i=rowCount-1;i>=0;i--) {
             model.removeRow(i);
         }
+        if(teacherList !=null && !teacherList.isEmpty()) {
+            if (Strings.isNullOrEmpty(sortBy) || "ID".equals(sortBy)) {
+                sortById(teacherList);
+            } else if (sortBy.equals("Last Name")) {
+                sortByLastName(teacherList);
+            } else if (sortBy.equals("Age Range")) {
+                sortByAgeRange(teacherList);
+            }
+        }
+        flushTable(model);
+    }
+
+    private void flushTable(DefaultTableModel model){
+        if(teacherList == null || teacherList.isEmpty())
+            return;
         for(Teacher t : teacherList) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] =t.getId();
@@ -88,20 +89,19 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
     }
 
     public void populateTable(String selectedItem,String sortBy){
-
-
+        teacherList = Lists.newArrayList();
         if(Strings.isNullOrEmpty(selectedItem)){
             teacherList  = teacherService.getTeacher();
         }else if(selectedItem.equals("Search By ID")){
             String id = keyword.getText();
             teacher = teacherService.getTeacherById(id);
-            teacherList.add(teacher);
+            if(teacher!=null)
+               teacherList.add(teacher);
         } else if(selectedItem.equals("Search By Name")){
             String name = keyword.getText();
             teacherList = teacherService.getTeachersByFirstName(name);
         }
 
-        if(teacherList == null || teacherList.isEmpty()) return;
         sortBy(sortBy);
 
         System.out.println(Arrays.toString(teacherService.getTeacher().toArray()));
