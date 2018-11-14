@@ -3,20 +3,11 @@ package csye6200.facade.impl;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import csye6200.constants.Constants;
-import csye6200.entity.Registration;
-import csye6200.entity.Student;
-import csye6200.entity.Teacher;
-import csye6200.entity.Vaccine;
+import csye6200.entity.*;
 import csye6200.facade.StudentFacadeService;
 import csye6200.facade.dto.Result;
-import csye6200.service.RegisterService;
-import csye6200.service.StudentService;
-import csye6200.service.TeacherService;
-import csye6200.service.VaccineService;
-import csye6200.service.impl.RegisterServiceImpl;
-import csye6200.service.impl.StudentServiceImpl;
-import csye6200.service.impl.TeacherServiceImpl;
-import csye6200.service.impl.VaccineServiceImpl;
+import csye6200.service.*;
+import csye6200.service.impl.*;
 import csye6200.util.DateUtil;
 import csye6200.util.RegulationUtil;
 
@@ -30,6 +21,7 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
     private final RegisterService registerService = new RegisterServiceImpl();
     private final TeacherService teacherService = new TeacherServiceImpl();
     private final VaccineService vaccineService = new VaccineServiceImpl();
+    private final ClassroomService classroomService = new ClassroomServiceImpl();
 
     @Override
     public Result<String> register(Student student){
@@ -116,7 +108,11 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
         }
         int maxStudentAmount = regulationMap.get(Constants.MAX_STUDENT_AMOUNT);
         for(Teacher t : teachers){
+            //if teacher is not assigned to a classroom
             if(t.getStudents() == null || t.getStudents().size() < maxStudentAmount){
+                ClassRoom classRoom = classroomService.getClassRoomByTeacherId(t.getId());
+                if(classRoom == null  ||
+                        classroomService.getCurrentStudentNumber(classRoom.getId()) >= classRoom.getCapacity()) continue;
                 String id = student.getId();
                 if (Strings.isNullOrEmpty(id)) {
                     id = studentService.addStudent(student);
@@ -130,6 +126,7 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
         }
         return result;
     }
+
 
     @Override
     public Result<List<Vaccine>> getUnimmunizedStudentsId(String type, boolean isImmunized){
@@ -179,6 +176,7 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
             result.setData(vaccineList);
             return result;
     }
+
 
 //    @Override
 //    public Result<String> getImmunizedStudentsId(){

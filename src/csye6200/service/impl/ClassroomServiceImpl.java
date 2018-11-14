@@ -33,19 +33,13 @@ public class ClassroomServiceImpl implements ClassroomService {
         // instantiate an ClassroomDaoImpl object to call read method in ClassroomDao
         ClassroomDaoImpl cdi = new ClassroomDaoImpl();
         List<ClassRoom> classrooms = cdi.readClassrooms();
+        TeacherServiceImpl teacherServiceImpl = new TeacherServiceImpl();
+        List<Teacher> allTeachers = teacherServiceImpl.getTeacher();
+        Map<String, Teacher> teacherMap = allTeachers.stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
         for (ClassRoom cr : classrooms) {
             List<Teacher> crTeachers = cr.getTeachers();
-            TeacherServiceImpl teacherServiceImpl = new TeacherServiceImpl();
-            List<Teacher> allTeachers = teacherServiceImpl.getTeacher();
-            Map<String, Teacher> teacherMap = allTeachers.stream().collect(Collectors.toMap(x -> x.getId(), x -> x));
-            if (!crTeachers.isEmpty() || crTeachers != null) {
-                for (Teacher t : crTeachers) {
-                    if (teacherMap.get(t.getId()) != null) {
-                        t = teacherMap.get(t.getId());
-                    }
-                }
-            }
-            cr.setTeachers(crTeachers);
+            if(crTeachers == null  || crTeachers.isEmpty()) continue;
+            cr.setTeachers(crTeachers.stream().map((x)->teacherMap.get(x.getId())).collect(Collectors.toList()));
         }
 
         return classrooms;
@@ -125,9 +119,11 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     public int getCurrentStudentNumber(String id) {
         if (Strings.isNullOrEmpty(id)) {
-            return -1;
+            return 0;
         }
-        return this.getStudentsInClassroom(id).size();
+        List<Student> students = this.getStudentsInClassroom(id);
+
+        return students == null?0:students.size();
     }
 
     /*
@@ -166,7 +162,11 @@ public class ClassroomServiceImpl implements ClassroomService {
     }
 
     public List<Teacher> getTeachersInClassroom(String id) {
-        return this.getClassroomById(id).getTeachers();
+        if (Strings.isNullOrEmpty(id)) return new ArrayList<> ();
+        ClassRoom classroom = this.getClassroomById(id);
+        if (classroom != null) {
+            return classroom.getTeachers();
+        } else return new ArrayList<> ();
     }
 
     @Override
@@ -211,15 +211,11 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     public boolean IsFull(String id) {
-
-        /*		int cnt = 0;
-         List<Teacher> teachers = this.getClassroomById(id).getTeachers();
-         cnt += teachers.size();
-         for (Teacher teacher : teachers) {
-         cnt += new TeacherServiceImpl().getStudentByTeacherId(teacher.getId()).size();
-         }
-         return (cnt == this.getClassroomById(id).getCapacity());*/
-        return false;
+        if(Strings.isNullOrEmpty(id)) return false;
+        ClassRoom classRoom = this.getClassroomById(id);
+        if(classRoom == null) return false;
+        int num = this.getCurrentStudentNumber(id);
+        return num >= classRoom.getCapacity();
     }
 
     @Override
@@ -248,15 +244,25 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     public boolean isTeacherInAClassroom(String tid) {
-        ClassroomDaoImpl cdi = new ClassroomDaoImpl();
-        List<ClassRoom> classrooms = cdi.readClassrooms();
-        for(ClassRoom c : classrooms) {
-            List<Teacher> teachers = this.getTeachersInClassroom(c.getId());
-            for (Teacher t: teachers) {
-            if(t.getId().equals(tid)) return true;
-        }
-        }
-        return false;
+        return this.getClassRoomByTeacherId(tid) != null;
     }
+
+    @Override
+    public  ClassRoom getClassRoomByTeacherId(String teacherId){
+        if(Strings.isNullOrEmpty(teacherId))
+            return null;
+        List<ClassRoom> classrooms = this.getClassrooms();
+        if(classrooms == null || classrooms.isEmpty()) return null;
+        for(ClassRoom c : classrooms) {
+            List<Teacher> teachers = c.getTeachers();
+            if(teachers == null || teachers.isEmpty()) continue;
+            for (Teacher t: teachers) {
+                if(t.getId().equals(teacherId))
+                    return c;
+            }
+        }
+        return null;
+    }
+
 
 }

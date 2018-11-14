@@ -18,4 +18,6 @@ public interface StudentFacadeService {
 
     Result<List<Vaccine>> getUnimmunizedStudentsId(String type, boolean isImmunized);
 
+
+
 }

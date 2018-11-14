@@ -49,4 +49,6 @@ public interface ClassroomService {
      boolean IsFull(String id);
      
      boolean isTeacherInAClassroom(String tid);
+
+     ClassRoom getClassRoomByTeacherId(String teacherId);
 }
