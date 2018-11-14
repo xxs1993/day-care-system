@@ -77,7 +77,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnTeacherActionPerformed(evt);
             }
         });
-        LeftPanel.add(btnTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 150, 40));
+        LeftPanel.add(btnTeacher, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 170, 40));
 
         btnStudent.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         btnStudent.setText("Student Service");
@@ -86,7 +86,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnStudentActionPerformed(evt);
             }
         });
-        LeftPanel.add(btnStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 150, 40));
+        LeftPanel.add(btnStudent, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 170, 40));
 
         btnClassroom.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         btnClassroom.setText("Classroom Service");
@@ -95,7 +95,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnClassroomActionPerformed(evt);
             }
         });
-        LeftPanel.add(btnClassroom, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 150, 40));
+        LeftPanel.add(btnClassroom, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 170, 40));
 
         btnImmu.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         btnImmu.setText("Immunization");
@@ -104,7 +104,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnImmuActionPerformed(evt);
             }
         });
-        LeftPanel.add(btnImmu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 150, 40));
+        LeftPanel.add(btnImmu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 170, 40));
 
         btnRegist.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         btnRegist.setText("Registration");
@@ -113,7 +113,7 @@ public class MainFrame extends javax.swing.JFrame {
                 btnRegistActionPerformed(evt);
             }
         });
-        LeftPanel.add(btnRegist, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 150, 40));
+        LeftPanel.add(btnRegist, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 170, 40));
 
         SplitPanel.setLeftComponent(LeftPanel);
 

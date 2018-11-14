@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="296b631a-d080-4413-9e79-040a0742b115" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/csye6200/userInterface/Classroom/ManageClassroomPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/csye6200/userInterface/Classroom/ManageClassroomPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/csye6200/userInterface/Teacher/ManageTeacherPanel.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/csye6200/userInterface/Teacher/ManageTeacherPanel.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/csye6200/userInterface/Teacher/ManageTeacherPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/csye6200/userInterface/Teacher/ManageTeacherPanel.java" afterDir="false" />
-    </list>
+    <list default="true" id="296b631a-d080-4413-9e79-040a0742b115" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -428,7 +423,7 @@
       <workItem from="1540691174250" duration="1329000" />
       <workItem from="1540838918877" duration="7716000" />
       <workItem from="1540910630725" duration="7972000" />
-      <workItem from="1542229852764" duration="359000" />
+      <workItem from="1542229852764" duration="635000" />
     </task>
     <task id="LOCAL-00001" summary="fix bugs">
       <created>1540598887404</created>
@@ -536,7 +531,7 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36105000" />
+    <option name="totallyTimeSpent" value="36381000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
