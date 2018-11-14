@@ -21,6 +21,7 @@ import java.awt.CardLayout;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 //import java.util.function.Function;
 
@@ -203,6 +204,11 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
         if(list == null || list.isEmpty()){
             return;
         }
+        list.sort((x1,x2)->{
+            int id1 = Integer.parseInt(x1.getStudentId().substring(1));
+            int id2 = Integer.parseInt(x2.getStudentId().substring(1));
+            return id1 - id2;
+        });
         for(Registration f : list) {
             Object row[] = new Object[model.getColumnCount()];
             row[0] = f.getStudentId();

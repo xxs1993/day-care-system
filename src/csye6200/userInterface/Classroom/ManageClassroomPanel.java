@@ -7,6 +7,7 @@ package csye6200.userInterface.Classroom;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
+import com.sun.tools.javac.util.StringUtils;
 import csye6200.constants.Constants;
 import csye6200.constants.PanelConstants;
 import csye6200.entity.ClassRoom;
@@ -307,12 +308,12 @@ public class ManageClassroomPanel extends AbstractManagePanel {
 
     private void btnGoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoActionPerformed
         String search=keyword.getText();
-        Pattern p=Pattern.compile("[A-Z]+[0-9]");
+        Pattern p=Pattern.compile("[R]+[0-9]");
         Matcher m=p.matcher(search);
         boolean b=m.find();
         if(comboSearch.getSelectedItem().equals("Search By ID")){
             if(b == false||Strings.isNullOrEmpty(search)){
-            JOptionPane.showMessageDialog(null,"The Format Should be Capital Letter + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null,"The Format Should be R + Number 0-9","Warining",JOptionPane.WARNING_MESSAGE);
             return ;
             }
         }
@@ -321,6 +322,14 @@ public class ManageClassroomPanel extends AbstractManagePanel {
               JOptionPane.showMessageDialog(null,"Search TextField can't be blank!!","Warining",JOptionPane.WARNING_MESSAGE);
               return;
             }
+           for(int i =0;i<search.length();i++){
+               if(!Character.isDigit(search.charAt(i))){
+                   JOptionPane.showMessageDialog(null,"Wrong format!!","Warining",JOptionPane.WARNING_MESSAGE);
+                   return;
+
+               }
+
+           }
         }
         String selectedItem = (String)comboSearch.getSelectedItem();
         String sortBy = (String)sortByBox.getSelectedItem();
