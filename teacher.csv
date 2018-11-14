@@ -1,2 +1,6 @@
-T1,null,cccc,null,23,6,[]
-T2,232,23,3,44,23,[S1;S2;S1]
+T1,Trump,Donald,male,73,6,[]
+T2,Craig,Daniel,male,60,13,[S1;S2;S3]
+T3,Cruise,Tom,male,40,25,[]
+T4,Powter,Daniel,male,38,36,[]
+T5,Winfrey,Oprah,female,50,48,[]
+T6,Peters,Daniel,male,17,60,[]
