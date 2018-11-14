@@ -51,15 +51,12 @@ public class Constants {
 
     public static final int REGISTRATION_DIVIDED_MONTH = 12;
 
-    public static final String VACCINE_TYPE_1 = "DTaP";
+    public static final String VACCINE_TYPE_1 = "MMR";
 
     public static final String VACCINE_TYPE_2 = "Polio";
 
-    public static final String VACCINE_TYPE_3 = "Hib";
+    public static final String VACCINE_TYPE_3 = "Flu";
 
-    public static final String VACCINE_TYPE_4 = "MMR";
-
-    public static final String VACCINE_TYPE_5 = "Varicella";
 
     public static final int SEMESTER_START_MONTH = 9;
 }
