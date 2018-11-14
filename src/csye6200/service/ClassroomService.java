@@ -6,7 +6,6 @@
 package csye6200.service;
 
 import csye6200.entity.ClassRoom;
-import csye6200.entity.Course;
 import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import java.util.List;
