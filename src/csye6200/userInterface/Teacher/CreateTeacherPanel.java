@@ -16,6 +16,7 @@ import csye6200.entity.Teacher;
 import csye6200.service.TeacherService;
 import csye6200.userInterface.AbstractManagePanel;
 import csye6200.userInterface.DetailPanel;
+import csye6200.userInterface.Teacher.ViewPanel;
 
 import java.util.HashMap;
 import java.util.Map;
