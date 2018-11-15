@@ -23,7 +23,6 @@ import javax.swing.table.DefaultTableModel;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 //import java.util.function.Function;
 
 
@@ -195,12 +194,12 @@ public class ManageRegistrationPanel extends AbstractManagePanel {
                 return ;
             }
 
-            list = unregisteredStudentsId.stream().map((x)->{
+            list = Lists.transform(unregisteredStudentsId,(x)->{
                 Registration re = new Registration();
                 re.setStudentId(x);
                 re.setTimeDisplay("");
                 return re;
-            }).collect(Collectors.toList());
+            });
         }
         if(list == null || list.isEmpty()){
             return;
