@@ -41,7 +41,7 @@ public class StudentFacadeServiceImpl implements StudentFacadeService {
             LocalDate lastRegisterTime = records.get(records.size()-1).getRegisterTime();
             LocalDate now = LocalDate.now();
             int monthDiff = (now.getYear() - lastRegisterTime.getYear())*12 + (now.getMonthValue() - lastRegisterTime.getMonthValue());
-            if(monthDiff < Constants.REGISTRATION_DIVIDED_MONTH){
+            if(DateUtil.isTheSameSemester(now,lastRegisterTime)){
                 result.setMessage(String.format("Student %s already registered this year!",student.getId()));
                 return result;
             }
