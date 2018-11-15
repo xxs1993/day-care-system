@@ -26,6 +26,7 @@ public class EmailSendUtil {
 
     private static int email_end = 12;
 
+    final static String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
 
     static {
         try {
@@ -47,7 +48,7 @@ public class EmailSendUtil {
 
             email_start = Strings.isNullOrEmpty(startMonth)?email_start:Integer.parseInt(startMonth);
 
-            String endMonth = properties.getProperty("email.start");
+            String endMonth = properties.getProperty("email.end");
 
             email_end = Strings.isNullOrEmpty(endMonth)?email_end:Integer.parseInt(endMonth);
 
@@ -67,9 +68,15 @@ public class EmailSendUtil {
         Properties properties = System.getProperties();
 
         // set server
+        properties.setProperty("mail.smtp.starttls.enable", "true");
+
         properties.setProperty("mail.smtp.host", email_host);
 
-        properties.put("mail.smtp.auth", "true");
+        properties.setProperty("mail.smtp.auth", "true");
+
+        properties.setProperty("mail.smtp.port", "587");
+
+
 
         Session session = Session.getDefaultInstance(properties,new Authenticator(){
             public PasswordAuthentication getPasswordAuthentication()
