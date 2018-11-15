@@ -283,6 +283,8 @@ public class ViewPanel extends DetailPanel {
         txtFirstName.setEditable(true);
         txtLastName.setEditable(true);
         genderCombo.setEnabled(true);
+        txtFatherName.setEditable(true);
+        txtMotherName.setEditable(true);
 //        txtAge.setEditable(true);
         btnSave.setEnabled(true);
         btnUpdate.setEnabled(false);
@@ -311,8 +313,10 @@ public class ViewPanel extends DetailPanel {
         student.setlName(txtLastName.getText());
         student.setGender(genderCombo.getSelectedItem().toString());
         student.setAge(Integer.parseInt(txtAge.getText()));
+        student.setFatherName(txtFatherName.getText());
+        student.setMotherName(txtMotherName.getText());
         //need updateStudent api;
-//        studentService.updateStudent(student);
+        studentService.updateStudent(student);
         JOptionPane.showMessageDialog(null, "Update Successfully!!");
     }//GEN-LAST:event_btnSaveActionPerformed
 
