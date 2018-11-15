@@ -51,13 +51,16 @@ public class ImmunityTimer extends TimerTask {
                     List<String> idList = Lists.transform(vaccineList,(x)->{return x.getStudentId();  });
                     if(idList!=null&&!idList.isEmpty()){
                         sb.append(vaccineType).append(": ").append(idList.size()).append(" students are not immunized");
-                        sb.append(Arrays.toString(idList.toArray()));
-                        EmailSendUtil.sendEmail(subject,sb.toString());
+                        sb.append(Arrays.toString(idList.toArray())+"\n");
                         System.out.println(Arrays.toString(idList.toArray()));
+
                     }
                 }
 
             }
+            if(sb.toString()!=null&&!sb.toString().isEmpty())
+              EmailSendUtil.sendEmail(subject,sb.toString());
+
 
 
         } catch (Exception e) {
