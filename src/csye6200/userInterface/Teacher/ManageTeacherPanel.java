@@ -12,7 +12,10 @@ import csye6200.entity.Student;
 import csye6200.entity.Teacher;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
+
+import csye6200.service.ClassroomService;
 import csye6200.service.TeacherService;
+import csye6200.service.impl.ClassroomServiceImpl;
 import csye6200.userInterface.AbstractManagePanel;
 import csye6200.userInterface.DetailPanel;
 
@@ -302,11 +305,17 @@ private static final Map<Integer,String> MAP= new HashMap<Integer,String>(){{
         }
         String ts = (String)tblTeacher.getValueAt(row, 0);
         List<Student> getS=teacherService.getStudentByTeacherId(ts);
-        if(getS==null || getS.isEmpty()){
-        teacherService.deleteTeacher(ts);
-        }else{
+        if(getS!=null && !getS.isEmpty()){
             JOptionPane.showMessageDialog(null,"This teacher have assigned student(s)","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
         }
+        ClassroomService classroomService = new ClassroomServiceImpl();
+        if(classroomService.isTeacherInAClassroom(ts)){
+            JOptionPane.showMessageDialog(null,"This teacher have been  assigned to a classroom","Warning",JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        teacherService.deleteTeacher(ts);
+
         populateTable();
     }//GEN-LAST:event_btnDeleteActionPerformed
 
