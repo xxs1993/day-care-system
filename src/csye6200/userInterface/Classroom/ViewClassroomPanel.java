@@ -418,9 +418,10 @@ public class ViewClassroomPanel extends DetailPanel implements AbstractViewPanel
     }//GEN-LAST:event_jRemove1ActionPerformed
 
     private void AddTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddTeacherButtonActionPerformed
-        int age = RegulationUtil.getAgeRangeType(this.classroom.getAgeRange());
+        int age = this.classroom.getAgeRange();
+        List<Teacher> teachers = classroomService.getClassroomById(classroom.getId()).getTeachers();
         int maxTNum = RegulationUtil.getRegulationMap(age).get(Constants.MAX_GROUP_AMOUNT);
-        if (this.classroom.getTeachers() != null && !this.classroom.getTeachers().isEmpty() && this.classroom.getTeachers().size() == maxTNum) {
+        if (teachers != null && !teachers.isEmpty() && teachers.size() > maxTNum - 1) {
             JOptionPane.showMessageDialog(null, "Maxium teacher number reached. Cannot add teacher to this classroom.", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             AddTeachersToClassroomPanel atcp = new AddTeachersToClassroomPanel(RightPanel,this.classroom);
