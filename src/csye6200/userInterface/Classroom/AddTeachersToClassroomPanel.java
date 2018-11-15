@@ -5,6 +5,7 @@
  */
 package csye6200.userInterface.Classroom;
 
+import csye6200.constants.Constants;
 import csye6200.entity.ClassRoom;
 import csye6200.entity.Teacher;
 import csye6200.service.ClassroomService;
@@ -15,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 import csye6200.userInterface.DetailPanel;
+import csye6200.util.RegulationUtil;
 
 /**
  *
@@ -143,11 +145,11 @@ public class AddTeachersToClassroomPanel extends DetailPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
                 .addGap(39, 39, 39)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
@@ -159,7 +161,14 @@ public class AddTeachersToClassroomPanel extends DetailPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int row = jTeaTable.getSelectedRow();
+        int age = this.classroom.getAgeRange();
+        ClassroomServiceImpl csi = new ClassroomServiceImpl();
+        List<Teacher> teachers = csi.getClassroomById(classroom.getId()).getTeachers();
+        int maxTNum = RegulationUtil.getRegulationMap(age).get(Constants.MAX_GROUP_AMOUNT);
+        if (teachers != null && !teachers.isEmpty() && teachers.size() > maxTNum - 1) {
+            JOptionPane.showMessageDialog(null, "Maxium teacher number reached. Cannot add teacher to this classroom.", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            int row = jTeaTable.getSelectedRow();
         if (row < 0) {
             JOptionPane.showMessageDialog(null, "Please select a teacher from the table", "Warning", JOptionPane.WARNING_MESSAGE);
             return;
@@ -167,10 +176,11 @@ public class AddTeachersToClassroomPanel extends DetailPanel {
         String tid = (String) jTeaTable.getValueAt(row, 0);
         TeacherServiceImpl tsi = new TeacherServiceImpl();
         Teacher teacher = tsi.getTeacherById(tid);
-        ClassroomServiceImpl csi = new ClassroomServiceImpl();
         String result = csi.addTeacher(teacher,this.classroom.getId());
         if (result.equals("Duplicate")) JOptionPane.showMessageDialog(null, "Add fail!! This teacher has already been added to a classroom!!");
         else JOptionPane.showMessageDialog(null, "Teacher successfully added to classroom!!");
+        }
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
